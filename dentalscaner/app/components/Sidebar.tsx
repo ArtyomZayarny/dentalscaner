@@ -6,7 +6,7 @@ import Image from "next/image";
 
 function Sidebar() {
   return (
-    <aside className="w-64 bg-white border-r border-blue-500 flex flex-col">
+    <aside className="max-w-62 box-border bg-white border-r border-blue-500 flex flex-col w-full">
       <div className="flex items-center px-6 py-5 border-b bg-blue-700">
         <Image
           width={34}
@@ -29,13 +29,13 @@ function Sidebar() {
         {/* Navigation */}
         <nav className="flex flex-col gap-10">
           <Link
-            href="#"
+            href="/"
             className="flex items-center px-6 py-2 rounded bg-blue-50 text-blue-700 font-medium"
           >
             <Home className="mr-2 w-5 h-5" /> Overview
           </Link>
           <Link
-            href="#"
+            href="/appointments"
             className="flex items-center px-6 py-2 rounded hover:bg-gray-100"
           >
             <Calendar className="mr-2 w-5 h-5" /> Appointments
