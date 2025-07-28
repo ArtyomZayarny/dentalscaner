@@ -1,28 +1,26 @@
-import React from "react";
-import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import React from 'react';
+import Link from 'next/link';
+import { ChevronRight } from 'lucide-react';
+import Section from '../components/Section';
+import Card from '../components/Card';
 
 function AppointmentPage() {
   return (
     <>
       {/* Greeting section */}
-      <div>
-        <h1>Welcome Beatrice</h1>
-      </div>
+      <h1 className="text-3xl font-semibold mb-8">Welcome Beatrice</h1>
 
       {/* Breadcrumbs section  */}
-      <div className="flex gap-1 items-center">
-        <Link href={"/profile"}>User</Link>
+      <div className="flex gap-1 items-center text-[#616061] font-medium text-xs mb-8">
+        <Link href={'/profile'}>User</Link>
         <ChevronRight className="w-4 h-4 " />
-        <Link href={"/profile"}>Appointments</Link>
+        <Link href={'/profile'}>Appointments</Link>
       </div>
 
       {/*  Upcoming Appoinments */}
-      <div className="p-4 border-1 border-gray-400 rounded-md">
-        <div>
-          <h2>Upcoming Appointments</h2>
-        </div>
-      </div>
+      <Section title="Upcoming Appointments">
+        <Card />
+      </Section>
     </>
   );
 }
