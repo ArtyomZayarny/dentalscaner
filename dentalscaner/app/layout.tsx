@@ -25,7 +25,7 @@ export default function RootLayout({
           {/* Sidebar */}
           <Sidebar />
           {/* Main Content */}
-          <main className="flex flex-col w-full">
+          <main className="flex flex-col w-full overflow-y-scroll">
             <Topbar />
             {/* Page Content */}
             <div className="px-8 py-4 bg-white">
