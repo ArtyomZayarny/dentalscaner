@@ -6,6 +6,7 @@ import Topbar from './components/Topbar';
 
 const montseratSans = Montserrat({
   variable: '--montserrat-sans',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
