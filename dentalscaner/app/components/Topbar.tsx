@@ -1,6 +1,5 @@
 import React from 'react';
-import { BellIcon, ChevronRight, Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { BellIcon } from 'lucide-react';
 
 function Topbar() {
   return (
@@ -9,12 +8,7 @@ function Topbar() {
       <header className=" bg-blue-700 flex items-center justify-between px-8 py-4  font-semibold text-lg w-full">
         {/* top panel */}
         {/* Search bar  */}
-        <div className="w-full mr-5">
-          {/* <div className="relative flex items-center ">
-            <Search className="w-5 h-5 absolute ml-2 text-gray-300" />
-            <Input className="w-full px-4 py-2 border-gray-300 outline-0 pl-8 text-base text-black" />
-          </div> */}
-        </div>
+        <div className="w-full mr-5"></div>
 
         <div className="flex gap-4">
           {/*Notification icon */}

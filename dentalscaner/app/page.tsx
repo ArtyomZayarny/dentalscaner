@@ -41,14 +41,14 @@ function OverviewPage() {
           <div className="flex items-center mb-2">
             <span className="mr-2">🗂️</span>
             <span className="text-gray-700">
-              Status of recent appointments:{' '}
+              Status of recent appointments:
               <span className="font-medium">awaiting confirmation / completed</span>
             </span>
           </div>
           <div className="flex items-center mt-2">
             <span className="mr-2">🎯</span>
             <span className="text-gray-700">
-              It's been more than 6 months since your last visit — time for a check-up!
+              It&apos;s been more than 6 months since your last visit — time for a check-up!
             </span>
           </div>
         </div>

@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 
-import { Home, MapPin, Calendar, CircleUser, Settings } from 'lucide-react';
+import { Home, Calendar, Settings } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
