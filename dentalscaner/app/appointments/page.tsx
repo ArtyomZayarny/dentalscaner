@@ -75,7 +75,6 @@ async function AppointmentPage() {
         </Section>
 
         <Section title="All Appointments">
-          {/* <Table /> */}
           <DataTable columns={columns} data={data} />
         </Section>
       </div>
