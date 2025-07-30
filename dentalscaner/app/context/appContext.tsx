@@ -16,9 +16,9 @@ export function AppContextProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [appointments, setAppointments] = useState(null);
+  const [appointments, setAppointments] = useState<IAppointment[]>([]);
   const { user } = useUser();
-  async function getData(): Promise<IAppointment[]> {
+  async function getData(): Promise<IAppointment[] | []> {
     // Fetch data from your API here.
     return [
       {
