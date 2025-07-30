@@ -22,7 +22,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
   return (
     <div className="overflow-hidden border">
       <Table>

@@ -4,6 +4,8 @@ import { ClerkProvider, RedirectToSignIn, SignedIn, SignedOut } from '@clerk/nex
 import './globals.css';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
+import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { AppContextProvider } from './context/appContext';
 
 const montseratSans = Montserrat({
   variable: '--montserrat-sans',
@@ -25,18 +27,20 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <SignedIn>
-            <div className="flex h-screen">
-              {/* Sidebar */}
-              <Sidebar />
-              {/* Main Content */}
-              <main className="flex flex-col w-full overflow-y-scroll">
-                <Topbar />
-                {/* Page Content */}
-                <div className="px-8 py-4 bg-white">
-                  <div className="mx-auto">{children}</div>
-                </div>
-              </main>
-            </div>
+            <AppContextProvider>
+              <div className="flex h-screen">
+                {/* Sidebar */}
+                <Sidebar />
+                {/* Main Content */}
+                <main className="flex flex-col w-full overflow-y-scroll">
+                  <Topbar />
+                  {/* Page Content */}
+                  <div className="px-8 py-4 bg-white">
+                    <div className="mx-auto">{children}</div>
+                  </div>
+                </main>
+              </div>
+            </AppContextProvider>
           </SignedIn>
           <SignedOut>
             <div className="min-h-screen flex items-center justify-center bg-[url('/login-back.jpg')] bg-cover">

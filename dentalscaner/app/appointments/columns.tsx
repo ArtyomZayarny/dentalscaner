@@ -1,21 +1,12 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
+import { IAppointment } from '../types';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-  id: string;
-  amount: number;
-  date: string;
-  time: string;
-  clinic: string;
-  procedure: string;
-  status: 'pending' | 'processing' | 'success' | 'failed';
-  actions: 'Rebook' | 'Complete';
-};
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<IAppointment>[] = [
   {
     accessorKey: 'date',
     header: 'Date',
@@ -23,10 +14,6 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: 'time',
     header: 'Time',
-  },
-  {
-    accessorKey: 'clinic',
-    header: 'Clinic',
   },
   {
     accessorKey: 'procedure',
