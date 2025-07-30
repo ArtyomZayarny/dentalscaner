@@ -39,7 +39,9 @@ export default function RootLayout({
             </div>
           </SignedIn>
           <SignedOut>
-            <RedirectToSignIn />
+            <div className="min-h-screen flex items-center justify-center bg-[url('/login-back.jpg')] bg-cover">
+              {children}
+            </div>
           </SignedOut>
         </body>
       </html>

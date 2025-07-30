@@ -1,5 +1,6 @@
 import React from 'react';
 import { BellIcon } from 'lucide-react';
+import { UserButton } from '@clerk/nextjs';
 
 function Topbar() {
   return (
@@ -22,9 +23,7 @@ function Topbar() {
 
           {/* User icon */}
           <div>
-            <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-[url('/avatar.png')] border border-white" />
-            </div>
+            <UserButton />
           </div>
         </div>
       </header>
