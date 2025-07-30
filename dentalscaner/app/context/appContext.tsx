@@ -60,7 +60,7 @@ export function AppContextProvider({
       // ...
     ];
   }
-
+  //Fixed
   useEffect(() => {
     if (user) {
       (async () => {
