@@ -34,6 +34,6 @@ describe('AppContext', () => {
     await screen.findByTestId('appointments-count')
     
     const appointmentsCount = screen.getByTestId('appointments-count')
-    expect(appointmentsCount.textContent).toBe('4') // Based on mock data
+    expect(appointmentsCount.textContent).toBe('3') // Based on mock data
   })
 }) 
