@@ -25,6 +25,7 @@ Make sure to set these environment variables in your Vercel dashboard:
 ### Build Settings
 
 Vercel will automatically:
+
 - Install dependencies from `client/package.json`
 - Run `npm run build` from the `client/` directory
 - Deploy the Next.js application
@@ -32,6 +33,7 @@ Vercel will automatically:
 ### Backend Deployment
 
 The backend (`server/` directory) should be deployed separately to a platform like:
+
 - Railway
 - Heroku
 - DigitalOcean App Platform
@@ -43,6 +45,6 @@ The backend (`server/` directory) should be deployed separately to a platform li
 # Frontend
 cd client && npm run dev
 
-# Backend  
+# Backend
 cd server && npm run start:dev
 ```
