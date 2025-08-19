@@ -10,7 +10,7 @@ export default function ClerkErrorBoundary({ children }: ClerkErrorBoundaryProps
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Простая задержка для загрузки Clerk
+    // Simple delay for Clerk loading
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
