@@ -16,6 +16,8 @@ function ProcedurePage() {
 
   // Filter procedures based on search and category
   const filteredProcedures = useMemo(() => {
+    if (!procedures) return [];
+
     return procedures.filter((procedure) => {
       const matchesSearch =
         procedure.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -25,7 +27,8 @@ function ProcedurePage() {
     });
   }, [procedures, searchQuery, selectedCategory]);
 
-  if (!user || !appointments) return <Loading />;
+  if (!user || !appointments || !procedures || !doctors || !clinics || !timeSlots)
+    return <Loading />;
 
   const categories = [
     { id: 'all', name: 'All Procedures' },

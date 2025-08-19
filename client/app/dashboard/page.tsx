@@ -12,7 +12,8 @@ import List from '../components/List';
 function OverviewPage() {
   const { user, appointments, doctors, clinics, procedures, timeSlots } = useAppContext();
 
-  if (!user || !appointments) return <Loading />;
+  if (!user || !appointments || !doctors || !clinics || !procedures || !timeSlots)
+    return <Loading />;
 
   // Calculate statistics
   const totalAppointments = appointments.length;

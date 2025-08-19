@@ -31,7 +31,7 @@ function ProfilePage() {
     dateOfBirth: user?.dateOfBirth || '',
   });
 
-  if (!user || !appointments) return <Loading />;
+  if (!user || !appointments || !doctors || !clinics || !procedures) return <Loading />;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditForm({ ...editForm, [e.target.name]: e.target.value });

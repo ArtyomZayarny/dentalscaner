@@ -24,12 +24,16 @@ function DoctorsPage() {
 
   // Get unique specializations
   const specializations = useMemo(() => {
+    if (!doctors) return ['all'];
+
     const specs = doctors.map((doctor) => doctor.specialization);
     return ['all', ...Array.from(new Set(specs))];
   }, [doctors]);
 
   // Filter doctors based on search and specialization
   const filteredDoctors = useMemo(() => {
+    if (!doctors) return [];
+
     return doctors.filter((doctor) => {
       const matchesSearch =
         doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -40,7 +44,7 @@ function DoctorsPage() {
     });
   }, [doctors, searchQuery, selectedSpecialization]);
 
-  if (!user || !appointments) return <Loading />;
+  if (!user || !appointments || !doctors) return <Loading />;
 
   const formatWorkingHours = (hours: { start: string; end: string }) => {
     return `${hours.start} - ${hours.end}`;

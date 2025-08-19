@@ -52,7 +52,7 @@ export default function BookingDialog({
 
   // Get available dates for selected doctor
   const availableDates = useMemo(() => {
-    if (!selectedDoctor) return [];
+    if (!selectedDoctor || !timeSlots) return [];
 
     const doctorTimeSlots = timeSlots.filter((slot) => slot.doctorId === selectedDoctor);
     const dates = [...new Set(doctorTimeSlots.map((slot) => slot.date))];
@@ -71,7 +71,7 @@ export default function BookingDialog({
 
   // Get available time slots for selected doctor and date
   const availableTimeSlots = useMemo(() => {
-    if (!selectedDoctor || !selectedDate) return [];
+    if (!selectedDoctor || !selectedDate || !timeSlots) return [];
 
     return timeSlots
       .filter(
@@ -88,7 +88,7 @@ export default function BookingDialog({
 
   // Get doctor's primary clinic
   const doctorPrimaryClinic = useMemo(() => {
-    if (!selectedDoctor) return null;
+    if (!selectedDoctor || !clinics) return null;
     return clinics.find((clinic) => clinic.doctors.includes(selectedDoctor));
   }, [selectedDoctor, clinics]);
 
