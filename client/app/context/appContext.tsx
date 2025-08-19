@@ -43,15 +43,13 @@ export function AppContextProvider({
   const user: IUser = session?.user
     ? {
         id: session.user.email || 'unknown',
-        name: session.user.name || 'Unknown User',
+        fullName: session.user.name || 'Unknown User',
         email: session.user.email || '',
-        role: 'patient',
       }
     : {
         id: '',
-        name: '',
+        fullName: '',
         email: '',
-        role: 'patient',
       };
 
   async function getData(): Promise<IAppointment[] | []> {
