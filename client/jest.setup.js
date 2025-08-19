@@ -1,18 +1,19 @@
 import '@testing-library/jest-dom';
 
-// Mock Clerk
-jest.mock('@clerk/nextjs', () => ({
-  useUser: () => ({
-    user: {
-      id: 'test-user-id',
-      fullName: 'Test User',
-      email: 'test@example.com',
+// Mock NextAuth
+jest.mock('next-auth/react', () => ({
+  useSession: () => ({
+    data: {
+      user: {
+        name: 'Test User',
+        email: 'test@example.com',
+      },
     },
-    isLoaded: true,
+    status: 'authenticated',
   }),
-  SignedIn: ({ children }) => children,
-  SignedOut: ({ children }) => children,
-  ClerkProvider: ({ children }) => children,
+  signIn: jest.fn(),
+  signOut: jest.fn(),
+  SessionProvider: ({ children }) => children,
 }));
 
 // Mock Next.js router
@@ -20,13 +21,9 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({
     push: jest.fn(),
     replace: jest.fn(),
-    prefetch: jest.fn(),
     back: jest.fn(),
-    forward: jest.fn(),
-    refresh: jest.fn(),
   }),
   usePathname: () => '/',
-  useSearchParams: () => new URLSearchParams(),
 }));
 
 // Mock Next.js image

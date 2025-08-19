@@ -1,5 +1,5 @@
 'use client';
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { IAppointment, IUser, IDoctor, IClinic, IProcedure, ITimeSlot } from '../types';
 import {
@@ -37,7 +37,22 @@ export function AppContextProvider({
   const [procedures, setProcedures] = useState<IProcedure[]>([]);
   const [timeSlots, setTimeSlots] = useState<ITimeSlot[]>([]);
 
-  const { user } = useUser();
+  const { data: session } = useSession();
+
+  // Convert NextAuth session to our IUser format
+  const user: IUser = session?.user
+    ? {
+        id: session.user.email || 'unknown',
+        name: session.user.name || 'Unknown User',
+        email: session.user.email || '',
+        role: 'patient',
+      }
+    : {
+        id: '',
+        name: '',
+        email: '',
+        role: 'patient',
+      };
 
   async function getData(): Promise<IAppointment[] | []> {
     // In a real app, this would fetch from your API
@@ -63,7 +78,7 @@ export function AppContextProvider({
   };
 
   useEffect(() => {
-    if (user) {
+    if (session?.user) {
       // Load mock data
       setDoctors(mockDoctors);
       setClinics(mockClinics);
@@ -75,7 +90,7 @@ export function AppContextProvider({
         setAppointments(data);
       })();
     }
-  }, [user]);
+  }, [session]);
 
   const value = {
     user,
