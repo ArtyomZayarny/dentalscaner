@@ -38,11 +38,36 @@ const handler = NextAuth({
     signIn: '/sign-in',
   },
   callbacks: {
-    async session({ session, token }) {
+    async session({ session, token, user }) {
+      // Ensure session has user data
+      if (token && session.user) {
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
+      }
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
+      // Persist user data in token
+      if (user) {
+        token.name = user.name;
+        token.email = user.email;
+      }
       return token;
+    },
+  },
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+      },
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
