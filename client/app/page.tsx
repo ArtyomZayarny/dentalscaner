@@ -1,21 +1,25 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import Link from 'next/link';
 
 export default function HomePage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    // Redirect to sign-in page immediately
-    router.push('/sign-in');
-  }, [router]);
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[url('/login-back.jpg')] bg-cover">
+    <div className="min-h-screen flex items-center justify-center bg-blue-100">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Redirecting...</p>
+        <h1 className="text-4xl font-bold text-blue-600 mb-4">Dentalscaner</h1>
+        <p className="text-gray-700 mb-6">Welcome to the dental appointment system</p>
+        <div className="space-y-4">
+          <Link
+            href="/sign-in"
+            className="block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Sign In
+          </Link>
+          <Link
+            href="/test"
+            className="block px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            Test Page
+          </Link>
+        </div>
       </div>
     </div>
   );
