@@ -1,44 +1,47 @@
 'use client';
 
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function SignInPage() {
-  const { data: session, status } = useSession();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (session) {
-      router.push('/dashboard');
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      await signIn('google', { callbackUrl: '/dashboard' });
+    } catch (error) {
+      console.error('Google sign in error:', error);
+      setIsLoading(false);
     }
-  }, [session, router]);
-
-  const handleGoogleSignIn = () => {
-    signIn('google', { callbackUrl: '/dashboard' });
   };
 
-  const handleDemoSignIn = (e: React.FormEvent) => {
+  const handleDemoSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    signIn('credentials', {
-      email,
-      password,
-      callbackUrl: '/dashboard',
-    });
-  };
+    setIsLoading(true);
 
-  if (status === 'loading') {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[url('/login-back.jpg')] bg-cover">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        console.error('Sign in error:', result.error);
+        setIsLoading(false);
+      } else {
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      console.error('Demo sign in error:', error);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[url('/login-back.jpg')] bg-cover py-12 px-4 sm:px-6 lg:px-8">
@@ -52,9 +55,10 @@ export default function SignInPage() {
           {/* Google Sign In - only show if Google provider is available */}
           <button
             onClick={handleGoogleSignIn}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            disabled={isLoading}
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
           >
-            Sign in with Google
+            {isLoading ? 'Signing in...' : 'Sign in with Google'}
           </button>
 
           <div className="relative">
@@ -100,9 +104,10 @@ export default function SignInPage() {
             </div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              disabled={isLoading}
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
             >
-              Demo Sign In
+              {isLoading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
         </div>
