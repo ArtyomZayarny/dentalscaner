@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Appointment = exports.AppointmentStatus = void 0;
 const typeorm_1 = require("typeorm");
+const graphql_1 = require("@nestjs/graphql");
 const user_entity_1 = require("./user.entity");
 const doctor_entity_1 = require("./doctor.entity");
 const procedure_entity_1 = require("./procedure.entity");
@@ -22,6 +23,9 @@ var AppointmentStatus;
     AppointmentStatus["COMPLETED"] = "completed";
     AppointmentStatus["CANCELLED"] = "cancelled";
 })(AppointmentStatus || (exports.AppointmentStatus = AppointmentStatus = {}));
+(0, graphql_1.registerEnumType)(AppointmentStatus, {
+    name: 'AppointmentStatus',
+});
 let Appointment = class Appointment {
     id;
     date;
@@ -44,18 +48,22 @@ let Appointment = class Appointment {
 };
 exports.Appointment = Appointment;
 __decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], Appointment.prototype, "id", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, typeorm_1.Column)({ type: 'date' }),
     __metadata("design:type", Date)
 ], Appointment.prototype, "date", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, typeorm_1.Column)({ type: 'time' }),
     __metadata("design:type", String)
 ], Appointment.prototype, "time", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => AppointmentStatus),
     (0, typeorm_1.Column)({
         type: 'enum',
         enum: AppointmentStatus,
@@ -64,18 +72,22 @@ __decorate([
     __metadata("design:type", String)
 ], Appointment.prototype, "status", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, typeorm_1.Column)({ type: 'decimal', precision: 10, scale: 2 }),
     __metadata("design:type", Number)
 ], Appointment.prototype, "amount", void 0);
 __decorate([
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Appointment.prototype, "notes", void 0);
 __decorate([
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Appointment.prototype, "stripePaymentIntentId", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)
 ], Appointment.prototype, "isPaid", void 0);
@@ -120,6 +132,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Appointment.prototype, "updatedAt", void 0);
 exports.Appointment = Appointment = __decorate([
+    (0, graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)('appointments')
 ], Appointment);
 //# sourceMappingURL=appointment.entity.js.map

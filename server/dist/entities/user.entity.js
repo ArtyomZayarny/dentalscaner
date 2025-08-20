@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
+const graphql_1 = require("@nestjs/graphql");
 const appointment_entity_1 = require("./appointment.entity");
 let User = class User {
     id;
@@ -28,46 +29,57 @@ let User = class User {
 };
 exports.User = User;
 __decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], User.prototype, "id", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], User.prototype, "firstName", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], User.prototype, "lastName", void 0);
 __decorate([
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "phone", void 0);
 __decorate([
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Date)
 ], User.prototype, "dateOfBirth", void 0);
 __decorate([
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "address", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, typeorm_1.Column)({ default: 'patient' }),
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
 __decorate([
+    (0, graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "avatar", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], User.prototype, "createdAt", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], User.prototype, "updatedAt", void 0);
@@ -76,6 +88,7 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "appointments", void 0);
 exports.User = User = __decorate([
+    (0, graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)('users')
 ], User);
 //# sourceMappingURL=user.entity.js.map
