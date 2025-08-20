@@ -16,5 +16,6 @@
     "src/main.ts": {
       "maxDuration": 30
     }
-  }
+  },
+  "outputDirectory": "dist"
 }
