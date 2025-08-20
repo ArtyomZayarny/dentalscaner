@@ -4,10 +4,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Appointment } from './appointment.entity';
 
 @ObjectType()
 @Entity('users')
@@ -55,7 +53,4 @@ export class User {
   @Field()
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @OneToMany(() => Appointment, (appointment) => appointment.user)
-  appointments: Appointment[];
 }
