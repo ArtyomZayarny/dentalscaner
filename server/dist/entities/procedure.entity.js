@@ -69,11 +69,11 @@ __decorate([
     __metadata("design:type", Date)
 ], Procedure.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => appointment_entity_1.Appointment, appointment => appointment.procedure),
+    (0, typeorm_1.OneToMany)(() => appointment_entity_1.Appointment, (appointment) => appointment.procedure),
     __metadata("design:type", Array)
 ], Procedure.prototype, "appointments", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => doctor_entity_1.Doctor, doctor => doctor.procedures),
+    (0, typeorm_1.ManyToMany)(() => doctor_entity_1.Doctor, (doctor) => doctor.procedures),
     __metadata("design:type", Array)
 ], Procedure.prototype, "doctors", void 0);
 exports.Procedure = Procedure = __decorate([

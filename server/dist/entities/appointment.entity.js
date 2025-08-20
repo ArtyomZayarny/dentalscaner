@@ -80,7 +80,7 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Appointment.prototype, "isPaid", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.appointments),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.appointments),
     __metadata("design:type", user_entity_1.User)
 ], Appointment.prototype, "user", void 0);
 __decorate([
@@ -88,7 +88,7 @@ __decorate([
     __metadata("design:type", String)
 ], Appointment.prototype, "userId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => doctor_entity_1.Doctor, doctor => doctor.appointments),
+    (0, typeorm_1.ManyToOne)(() => doctor_entity_1.Doctor, (doctor) => doctor.appointments),
     __metadata("design:type", doctor_entity_1.Doctor)
 ], Appointment.prototype, "doctor", void 0);
 __decorate([
@@ -96,7 +96,7 @@ __decorate([
     __metadata("design:type", String)
 ], Appointment.prototype, "doctorId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => procedure_entity_1.Procedure, procedure => procedure.appointments),
+    (0, typeorm_1.ManyToOne)(() => procedure_entity_1.Procedure, (procedure) => procedure.appointments),
     __metadata("design:type", procedure_entity_1.Procedure)
 ], Appointment.prototype, "procedure", void 0);
 __decorate([

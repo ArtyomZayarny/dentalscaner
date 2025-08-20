@@ -58,7 +58,9 @@ let AppointmentService = class AppointmentService {
             where: { id: input.doctorId },
             relations: ['clinic'],
         });
-        const procedure = await this.procedureRepository.findOne({ where: { id: input.procedureId } });
+        const procedure = await this.procedureRepository.findOne({
+            where: { id: input.procedureId },
+        });
         if (!user || !doctor || !procedure) {
             throw new Error('User, doctor, or procedure not found');
         }

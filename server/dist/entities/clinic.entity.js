@@ -67,7 +67,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Clinic.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => doctor_entity_1.Doctor, doctor => doctor.clinic),
+    (0, typeorm_1.OneToMany)(() => doctor_entity_1.Doctor, (doctor) => doctor.clinic),
     __metadata("design:type", Array)
 ], Clinic.prototype, "doctors", void 0);
 exports.Clinic = Clinic = __decorate([

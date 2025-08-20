@@ -18,8 +18,10 @@ const clinic_entity_1 = require("./entities/clinic.entity");
 const doctor_entity_1 = require("./entities/doctor.entity");
 const procedure_entity_1 = require("./entities/procedure.entity");
 const appointment_entity_1 = require("./entities/appointment.entity");
+const user_service_1 = require("./services/user.service");
 const appointment_service_1 = require("./services/appointment.service");
 const stripe_service_1 = require("./services/stripe.service");
+const user_resolver_1 = require("./graphql/resolvers/user.resolver");
 const appointment_resolver_1 = require("./graphql/resolvers/appointment.resolver");
 const stripe_webhook_controller_1 = require("./controllers/stripe-webhook.controller");
 let AppModule = class AppModule {
@@ -41,8 +43,10 @@ exports.AppModule = AppModule = __decorate([
         ],
         controllers: [stripe_webhook_controller_1.StripeWebhookController],
         providers: [
+            user_service_1.UserService,
             appointment_service_1.AppointmentService,
             stripe_service_1.StripeService,
+            user_resolver_1.UserResolver,
             appointment_resolver_1.AppointmentResolver,
         ],
     })

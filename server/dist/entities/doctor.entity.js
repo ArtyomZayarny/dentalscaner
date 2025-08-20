@@ -69,7 +69,7 @@ __decorate([
     __metadata("design:type", Object)
 ], Doctor.prototype, "availability", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => clinic_entity_1.Clinic, clinic => clinic.doctors),
+    (0, typeorm_1.ManyToOne)(() => clinic_entity_1.Clinic, (clinic) => clinic.doctors),
     __metadata("design:type", clinic_entity_1.Clinic)
 ], Doctor.prototype, "clinic", void 0);
 __decorate([
@@ -77,7 +77,7 @@ __decorate([
     __metadata("design:type", String)
 ], Doctor.prototype, "clinicId", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => appointment_entity_1.Appointment, appointment => appointment.doctor),
+    (0, typeorm_1.OneToMany)(() => appointment_entity_1.Appointment, (appointment) => appointment.doctor),
     __metadata("design:type", Array)
 ], Doctor.prototype, "appointments", void 0);
 __decorate([

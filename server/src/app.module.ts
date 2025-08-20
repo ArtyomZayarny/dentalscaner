@@ -13,10 +13,12 @@ import { Procedure } from './entities/procedure.entity';
 import { Appointment } from './entities/appointment.entity';
 
 // Services
+import { UserService } from './services/user.service';
 import { AppointmentService } from './services/appointment.service';
 import { StripeService } from './services/stripe.service';
 
 // Resolvers
+import { UserResolver } from './graphql/resolvers/user.resolver';
 import { AppointmentResolver } from './graphql/resolvers/appointment.resolver';
 
 // Controllers
@@ -36,6 +38,12 @@ import { StripeWebhookController } from './controllers/stripe-webhook.controller
     }),
   ],
   controllers: [StripeWebhookController],
-  providers: [AppointmentService, StripeService, AppointmentResolver],
+  providers: [
+    UserService,
+    AppointmentService,
+    StripeService,
+    UserResolver,
+    AppointmentResolver,
+  ],
 })
 export class AppModule {}
