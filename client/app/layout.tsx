@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 import SessionProvider from './components/SessionProvider';
-import { ApolloProvider } from '@apollo/client';
-import { client } from '@/lib/apollo-client';
+import ApolloProvider from './components/ApolloProvider';
 
 const montseratSans = Montserrat({
   variable: '--montserrat-sans',
@@ -22,8 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script src="https://js.stripe.com/v3/" async></script>
+      </head>
       <body className={montseratSans.variable}>
-        <ApolloProvider client={client}>
+        <ApolloProvider>
           <SessionProvider>{children}</SessionProvider>
         </ApolloProvider>
       </body>

@@ -10,10 +10,42 @@ import StatCard from '../components/StatCard';
 import List from '../components/List';
 
 function OverviewPage() {
-  const { user, appointments, doctors, clinics, procedures, timeSlots } = useAppContext();
+  const {
+    user,
+    appointments,
+    appointmentsLoading,
+    appointmentsError,
+    doctors,
+    clinics,
+    procedures,
+    timeSlots,
+  } = useAppContext();
 
-  if (!user || !appointments || !doctors || !clinics || !procedures || !timeSlots)
-    return <Loading />;
+  if (!user) return <Loading />;
+
+  if (appointmentsLoading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (appointmentsError) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-center">
+          <div className="text-red-600 text-xl mb-4">❌</div>
+          <p className="text-gray-600">Error loading dashboard: {appointmentsError.message}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!doctors || !clinics || !procedures || !timeSlots) return <Loading />;
 
   // Calculate statistics
   const totalAppointments = appointments.length;

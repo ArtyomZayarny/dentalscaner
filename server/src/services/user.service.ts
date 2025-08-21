@@ -62,4 +62,41 @@ export class UserService {
     const result = await this.userRepository.delete(id);
     return (result.affected || 0) > 0;
   }
+
+  async login(email: string, password: string): Promise<User> {
+    // For demo purposes, accept any email/password combination
+    // In production, you would hash the password and verify it
+    let user = await this.findByEmail(email);
+    
+    if (!user) {
+      // Create a demo user if they don't exist
+      user = await this.create({
+        email,
+        firstName: 'Demo',
+        lastName: 'User',
+        role: 'patient',
+      });
+    }
+    
+    return user;
+  }
+
+  async googleLogin(token: string): Promise<User> {
+    // For demo purposes, create a user from Google token
+    // In production, you would verify the Google token and extract user info
+    const email = `google-${Date.now()}@example.com`;
+    
+    let user = await this.findByEmail(email);
+    
+    if (!user) {
+      user = await this.create({
+        email,
+        firstName: 'Google',
+        lastName: 'User',
+        role: 'patient',
+      });
+    }
+    
+    return user;
+  }
 }

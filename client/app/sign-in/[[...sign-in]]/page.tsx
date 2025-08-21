@@ -3,7 +3,7 @@
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { client } from '@/lib/apollo-client';
+import { getApolloClient } from '@/lib/apollo-client';
 import { REGISTER_MUTATION } from '@/lib/auth-mutations';
 
 export default function SignInPage() {
@@ -65,6 +65,7 @@ export default function SignInPage() {
     setError('');
 
     try {
+      const client = getApolloClient();
       const { data } = await client.mutate({
         mutation: REGISTER_MUTATION,
         variables: {

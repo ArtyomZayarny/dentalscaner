@@ -2,7 +2,7 @@ import { IDoctor, IClinic, IProcedure, ITimeSlot, IAppointment } from '../types'
 
 export const mockDoctors: IDoctor[] = [
   {
-    id: 'doc-1',
+    id: '550e8400-e29b-41d4-a716-446655440001',
     name: 'Dr. Sarah Johnson',
     specialization: 'General Dentistry',
     experience: 8,
@@ -13,7 +13,7 @@ export const mockDoctors: IDoctor[] = [
     workingHours: { start: '09:00', end: '17:00' },
   },
   {
-    id: 'doc-2',
+    id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Dr. Michael Chen',
     specialization: 'Orthodontics',
     experience: 12,
@@ -24,7 +24,7 @@ export const mockDoctors: IDoctor[] = [
     workingHours: { start: '10:00', end: '18:00' },
   },
   {
-    id: 'doc-3',
+    id: '550e8400-e29b-41d4-a716-446655440003',
     name: 'Dr. Emily Rodriguez',
     specialization: 'Endodontics',
     experience: 6,
@@ -38,7 +38,7 @@ export const mockDoctors: IDoctor[] = [
 
 export const mockClinics: IClinic[] = [
   {
-    id: 'clinic-1',
+    id: '550e8400-e29b-41d4-a716-446655440101',
     name: 'Bright Smile Dental Clinic',
     address: '123 Main Street, Downtown',
     phone: '+1 (555) 123-4567',
@@ -46,10 +46,10 @@ export const mockClinics: IClinic[] = [
     image: '/clinics/clinic-1.jpg',
     rating: 4.6,
     workingHours: { start: '08:00', end: '18:00' },
-    doctors: ['doc-1', 'doc-2'],
+    doctors: ['550e8400-e29b-41d4-a716-446655440001', '550e8400-e29b-41d4-a716-446655440002'],
   },
   {
-    id: 'clinic-2',
+    id: '550e8400-e29b-41d4-a716-446655440102',
     name: 'Family Dental Care',
     address: '456 Oak Avenue, Westside',
     phone: '+1 (555) 987-6543',
@@ -57,13 +57,13 @@ export const mockClinics: IClinic[] = [
     image: '/clinics/clinic-2.jpg',
     rating: 4.4,
     workingHours: { start: '09:00', end: '17:00' },
-    doctors: ['doc-1', 'doc-3'],
+    doctors: ['550e8400-e29b-41d4-a716-446655440001', '550e8400-e29b-41d4-a716-446655440003'],
   },
 ];
 
 export const mockProcedures: IProcedure[] = [
   {
-    id: 'proc-1',
+    id: '550e8400-e29b-41d4-a716-446655440201',
     name: 'Routine Dental Check-up',
     description: 'Comprehensive oral examination including X-rays and cleaning',
     duration: 60,
@@ -72,7 +72,7 @@ export const mockProcedures: IProcedure[] = [
     image: '/procedures/checkup.jpg',
   },
   {
-    id: 'proc-2',
+    id: '550e8400-e29b-41d4-a716-446655440202',
     name: 'Professional Teeth Cleaning',
     description: 'Deep cleaning to remove plaque and tartar buildup',
     duration: 45,
@@ -81,7 +81,7 @@ export const mockProcedures: IProcedure[] = [
     image: '/procedures/cleaning.jpg',
   },
   {
-    id: 'proc-3',
+    id: '550e8400-e29b-41d4-a716-446655440203',
     name: 'Cavity Filling',
     description: 'Painless treatment to restore damaged teeth',
     duration: 30,
@@ -90,7 +90,7 @@ export const mockProcedures: IProcedure[] = [
     image: '/procedures/filling.jpg',
   },
   {
-    id: 'proc-4',
+    id: '550e8400-e29b-41d4-a716-446655440204',
     name: 'Teeth Whitening',
     description: 'Professional whitening treatment for a brighter smile',
     duration: 90,
@@ -99,7 +99,7 @@ export const mockProcedures: IProcedure[] = [
     image: '/procedures/whitening.jpg',
   },
   {
-    id: 'proc-5',
+    id: '550e8400-e29b-41d4-a716-446655440205',
     name: 'Emergency Tooth Extraction',
     description: 'Urgent removal of severely damaged or infected teeth',
     duration: 45,
@@ -184,10 +184,10 @@ export const mockTimeSlots: ITimeSlot[] = generateTimeSlots(
 export const mockAppointments: IAppointment[] = [
   {
     id: 'apt-1',
-    userId: 'user-1',
-    doctorId: 'doc-1',
-    clinicId: 'clinic-1',
-    procedureId: 'proc-1',
+    userId: 'f7984366-3ae9-49d8-b133-47474d4d1231', // John Doe's ID
+    doctorId: '550e8400-e29b-41d4-a716-446655440001',
+    clinicId: '550e8400-e29b-41d4-a716-446655440101',
+    procedureId: '550e8400-e29b-41d4-a716-446655440201',
     date: '2025-08-15',
     time: '09:00',
     duration: 60,
@@ -199,10 +199,10 @@ export const mockAppointments: IAppointment[] = [
   },
   {
     id: 'apt-2',
-    userId: 'user-1',
-    doctorId: 'doc-2',
-    clinicId: 'clinic-1',
-    procedureId: 'proc-2',
+    userId: 'f7984366-3ae9-49d8-b133-47474d4d1231', // John Doe's ID
+    doctorId: '550e8400-e29b-41d4-a716-446655440002',
+    clinicId: '550e8400-e29b-41d4-a716-446655440101',
+    procedureId: '550e8400-e29b-41d4-a716-446655440202',
     date: '2025-08-20',
     time: '14:00',
     duration: 45,
@@ -214,10 +214,10 @@ export const mockAppointments: IAppointment[] = [
   },
   {
     id: 'apt-3',
-    userId: 'user-1',
-    doctorId: 'doc-3',
-    clinicId: 'clinic-2',
-    procedureId: 'proc-3',
+    userId: 'f7984366-3ae9-49d8-b133-47474d4d1231', // John Doe's ID
+    doctorId: '550e8400-e29b-41d4-a716-446655440003',
+    clinicId: '550e8400-e29b-41d4-a716-446655440102',
+    procedureId: '550e8400-e29b-41d4-a716-446655440203',
     date: '2025-09-05',
     time: '11:00',
     duration: 30,

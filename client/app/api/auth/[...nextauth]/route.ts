@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { client } from '@/lib/apollo-client';
+import { serverClient } from '@/lib/apollo-client-server';
 import { LOGIN_MUTATION, GOOGLE_LOGIN_MUTATION } from '@/lib/auth-mutations';
 
 const handler = NextAuth({
@@ -23,7 +23,7 @@ const handler = NextAuth({
 
         try {
           // Call your GraphQL backend
-          const { data } = await client.mutate({
+          const { data } = await serverClient.mutate({
             mutation: LOGIN_MUTATION,
             variables: {
               email: credentials.email,
@@ -32,11 +32,6 @@ const handler = NextAuth({
           });
 
           if (data?.login?.token) {
-            // Store the token for GraphQL requests
-            if (typeof window !== 'undefined') {
-              localStorage.setItem('auth-token', data.login.token);
-            }
-
             return {
               id: data.login.user.id,
               name: data.login.user.name,
@@ -69,7 +64,7 @@ const handler = NextAuth({
       // Handle Google OAuth
       if (account?.provider === 'google') {
         try {
-          const { data } = await client.mutate({
+          const { data } = await serverClient.mutate({
             mutation: GOOGLE_LOGIN_MUTATION,
             variables: {
               token: account.id_token,
@@ -77,10 +72,6 @@ const handler = NextAuth({
           });
 
           if (data?.googleLogin?.token) {
-            if (typeof window !== 'undefined') {
-              localStorage.setItem('auth-token', data.googleLogin.token);
-            }
-
             token.id = data.googleLogin.user.id;
             token.role = data.googleLogin.user.role;
             token.accessToken = data.googleLogin.token;

@@ -34,4 +34,19 @@ export class UserResolver {
   async removeUser(@Args('id', { type: () => String }) id: string) {
     return this.userService.remove(id);
   }
+
+  @Mutation(() => User)
+  async login(
+    @Args('email', { type: () => String }) email: string,
+    @Args('password', { type: () => String }) password: string,
+  ) {
+    return this.userService.login(email, password);
+  }
+
+  @Mutation(() => User)
+  async googleLogin(
+    @Args('token', { type: () => String }) token: string,
+  ) {
+    return this.userService.googleLogin(token);
+  }
 }
