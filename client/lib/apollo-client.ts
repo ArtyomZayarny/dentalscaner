@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-let client: ApolloClient<any> | null = null;
+let client: ApolloClient<unknown> | null = null;
 
 export function getApolloClient() {
   if (!client) {

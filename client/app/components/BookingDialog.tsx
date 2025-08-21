@@ -11,14 +11,16 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Plus, Calendar, Clock, User } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { BookingType, IDoctor, IClinic, IProcedure, ITimeSlot } from '../types';
+// import { useRouter } from 'next/navigation'; // Commented out as not currently used
+import { IDoctor, IClinic, IProcedure, ITimeSlot } from '../types';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 
 // Add Stripe to window type
 declare global {
   interface Window {
-    Stripe: any;
+    Stripe: (publishableKey: string) => {
+      redirectToCheckout: (options: { sessionId: string }) => Promise<{ error?: { message: string } }>;
+    };
   }
 }
 
@@ -143,7 +145,7 @@ export default function BookingDialog({
     setNotes('');
   };
 
-  const router = useRouter();
+  // const router = useRouter(); // Commented out as not currently used
 
   const getSelectedDoctor = () => doctors.find((d) => d.id === selectedDoctor);
 

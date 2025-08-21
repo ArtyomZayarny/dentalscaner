@@ -1,9 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ChevronRight, Plus } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Section from '../components/Section';
-import Card from '../components/Card';
 import { Button } from '@/components/ui/button';
 
 import { DataTable } from './data-table';

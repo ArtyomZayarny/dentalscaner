@@ -66,6 +66,11 @@ export default function SignInPage() {
 
     try {
       const client = getApolloClient();
+      if (!client) {
+        setError('Failed to initialize client');
+        setIsLoading(false);
+        return;
+      }
       const { data } = await client.mutate({
         mutation: REGISTER_MUTATION,
         variables: {
@@ -89,9 +94,9 @@ export default function SignInPage() {
           router.push('/dashboard');
         }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Registration error:', error);
-      setError(error.message || 'Registration failed');
+      setError((error as Error).message || 'Registration failed');
       setIsLoading(false);
     }
   };

@@ -11,7 +11,7 @@ type AppContextType = {
   getData: () => void;
   appointments: IAppointment[];
   appointmentsLoading: boolean;
-  appointmentsError: any;
+  appointmentsError: Error | undefined;
   doctors: IDoctor[];
   clinics: IClinic[];
   procedures: IProcedure[];

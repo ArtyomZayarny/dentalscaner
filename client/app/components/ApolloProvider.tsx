@@ -1,6 +1,6 @@
 'use client';
 
-import { ApolloProvider as BaseApolloProvider } from '@apollo/client';
+import { ApolloProvider as BaseApolloProvider, ApolloClient } from '@apollo/client';
 import { getApolloClient } from '@/lib/apollo-client';
 import { useState, useEffect } from 'react';
 
@@ -9,7 +9,7 @@ interface ApolloProviderProps {
 }
 
 export default function ApolloProvider({ children }: ApolloProviderProps) {
-  const [client, setClient] = useState<any>(null);
+  const [client, setClient] = useState<ApolloClient<unknown> | null>(null);
 
   useEffect(() => {
     setClient(getApolloClient());
