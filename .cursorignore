@@ -1,0 +1,13 @@
+# Allow .env files to be edited in Cursor
+!**/.env
+!**/.env.local
+!**/.env.example
+
+# Ignore other sensitive files
+**/node_modules/**
+**/.git/**
+**/.next/**
+**/dist/**
+**/build/**
+**/.DS_Store
+**/Thumbs.db

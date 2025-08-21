@@ -105,15 +105,12 @@ Nest.js backend with GraphQL API for the dental appointment booking system.
 
 - GraphQL API with Apollo Server
 - PostgreSQL database with TypeORM
-- Stripe payment integration
-- Webhook handling for payment events
 - User, Doctor, Clinic, Procedure, and Appointment management
 
 ## Prerequisites
 
 - Node.js (v18 or higher)
 - PostgreSQL database
-- Stripe account
 
 ## Installation
 
@@ -139,16 +136,11 @@ DB_USERNAME=postgres
 DB_PASSWORD=your_password
 DB_NAME=dental_clinic
 
-# Stripe
-STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
-STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key
-STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
-
-# Frontend URL
-FRONTEND_URL=http://localhost:3000
-
 # Environment
 NODE_ENV=development
+
+# Server Port (optional, defaults to 3000)
+PORT=3000
 ```
 
 4. Create PostgreSQL database:
@@ -178,7 +170,6 @@ http://localhost:3001/graphql
 ## API Endpoints
 
 - **GraphQL**: `POST /graphql`
-- **Stripe Webhook**: `POST /webhooks/stripe`
 
 ## Database Schema
 
@@ -189,14 +180,6 @@ The application uses the following entities:
 - **Doctor**: Medical staff
 - **Procedure**: Available dental procedures
 - **Appointment**: Patient appointments
-
-## Stripe Integration
-
-The backend integrates with Stripe for payment processing:
-
-- Creates checkout sessions for appointments
-- Handles webhook events for payment confirmation
-- Supports refunds and payment status updates
 
 ## Development
 

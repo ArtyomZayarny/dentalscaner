@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 import SessionProvider from './components/SessionProvider';
+import { ApolloProvider } from '@apollo/client';
+import { client } from '@/lib/apollo-client';
 
 const montseratSans = Montserrat({
   variable: '--montserrat-sans',
@@ -21,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={montseratSans.variable}>
-        <SessionProvider>{children}</SessionProvider>
+        <ApolloProvider client={client}>
+          <SessionProvider>{children}</SessionProvider>
+        </ApolloProvider>
       </body>
     </html>
   );

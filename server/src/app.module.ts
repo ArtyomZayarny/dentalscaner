@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { databaseConfig } from './config/database.config';
+import { getDatabaseConfig } from './config/database.config';
 
 // Entities
 import { User } from './entities/user.entity';
@@ -23,8 +23,13 @@ import { HealthController } from './controllers/health.controller';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: '.env',
     }),
-    TypeOrmModule.forRoot(databaseConfig),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: getDatabaseConfig,
+      inject: [ConfigService],
+    }),
     TypeOrmModule.forFeature([User]),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

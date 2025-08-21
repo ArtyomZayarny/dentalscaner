@@ -1,13 +1,29 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { ConfigService } from '@nestjs/config';
 
-export const databaseConfig: TypeOrmModuleOptions = {
-  type: 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '5432'),
-  username: process.env.DB_USERNAME || 'postgres',
-  password: process.env.DB_PASSWORD || 'password',
-  database: process.env.DB_NAME || 'postgres', // Using default postgres database
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  synchronize: process.env.NODE_ENV !== 'production', // В продакшене отключить
-  logging: process.env.NODE_ENV !== 'production',
+export const getDatabaseConfig = (
+  configService: ConfigService,
+): TypeOrmModuleOptions => {
+  // Debug: Log environment variables
+  console.log('Database Config Debug:');
+  console.log('DATABASE_HOST:', configService.get('DATABASE_HOST'));
+  console.log('DATABASE_USER:', configService.get('DATABASE_USER'));
+  console.log('DATABASE_NAME:', configService.get('DATABASE_NAME'));
+  console.log('DATABASE_PORT:', configService.get('DATABASE_PORT'));
+  console.log('NODE_ENV:', configService.get('NODE_ENV'));
+
+  return {
+    type: 'postgres',
+    host: configService.get('DATABASE_HOST') || 'localhost',
+    port: parseInt(configService.get('DATABASE_PORT') || '5432'),
+    username: configService.get('DATABASE_USER') || 'postgres',
+    password: configService.get('DATABASE_PASSWORD') || 'password',
+    database: configService.get('DATABASE_NAME') || 'postgres',
+    entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+    synchronize: configService.get('NODE_ENV') !== 'production',
+    logging: configService.get('NODE_ENV') !== 'production',
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  };
 };

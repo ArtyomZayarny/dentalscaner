@@ -3,14 +3,18 @@
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { client } from '@/lib/apollo-client';
+import { REGISTER_MUTATION } from '@/lib/auth-mutations';
 
 export default function SignInPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isRegistering, setIsRegistering] = useState(false);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -25,11 +29,12 @@ export default function SignInPage() {
       await signIn('google', { callbackUrl: '/dashboard' });
     } catch (error) {
       console.error('Google sign in error:', error);
+      setError('Failed to sign in with Google');
       setIsLoading(false);
     }
   };
 
-  const handleDemoSignIn = async (e: React.FormEvent) => {
+  const handleCredentialsSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
@@ -48,8 +53,44 @@ export default function SignInPage() {
         router.push('/dashboard');
       }
     } catch (error) {
-      console.error('Demo sign in error:', error);
+      console.error('Sign in error:', error);
       setError('An unexpected error occurred');
+      setIsLoading(false);
+    }
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const { data } = await client.mutate({
+        mutation: REGISTER_MUTATION,
+        variables: {
+          email,
+          password,
+          name,
+        },
+      });
+
+      if (data?.register?.token) {
+        // Auto sign in after registration
+        const result = await signIn('credentials', {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (result?.error) {
+          setError(result.error);
+        } else {
+          router.push('/dashboard');
+        }
+      }
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      setError(error.message || 'Registration failed');
       setIsLoading(false);
     }
   };
@@ -71,7 +112,9 @@ export default function SignInPage() {
       <div className="max-w-md w-full space-y-8 bg-white/90 p-6 rounded-md shadow-lg">
         <div className="text-center">
           <h2 className="mt-6 text-2xl font-extrabold text-gray-900">Welcome to Dentalscaner</h2>
-          <p className="mt-2 text-sm text-gray-600">Sign in to your account</p>
+          <p className="mt-2 text-sm text-gray-600">
+            {isRegistering ? 'Create your account' : 'Sign in to your account'}
+          </p>
         </div>
 
         {error && (
@@ -99,8 +142,29 @@ export default function SignInPage() {
             </div>
           </div>
 
-          {/* Demo Login Form */}
-          <form onSubmit={handleDemoSignIn} className="space-y-4">
+          {/* Credentials Form */}
+          <form
+            onSubmit={isRegistering ? handleRegister : handleCredentialsSignIn}
+            className="space-y-4"
+          >
+            {isRegistering && (
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required={isRegistering}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="John Doe"
+                />
+              </div>
+            )}
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email
@@ -113,9 +177,10 @@ export default function SignInPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="demo@example.com"
+                placeholder="your@email.com"
               />
             </div>
+
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
@@ -128,17 +193,40 @@ export default function SignInPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="any password"
+                placeholder="••••••••"
               />
             </div>
+
             <button
               type="submit"
               disabled={isLoading}
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
             >
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading
+                ? isRegistering
+                  ? 'Creating account...'
+                  : 'Signing in...'
+                : isRegistering
+                ? 'Create Account'
+                : 'Sign In'}
             </button>
           </form>
+
+          {/* Toggle between sign in and register */}
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={() => {
+                setIsRegistering(!isRegistering);
+                setError('');
+              }}
+              className="text-sm text-blue-600 hover:text-blue-500"
+            >
+              {isRegistering
+                ? 'Already have an account? Sign in'
+                : "Don't have an account? Sign up"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
