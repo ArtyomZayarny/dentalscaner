@@ -5,8 +5,24 @@ let client: ApolloClient<unknown> | null = null;
 
 export function getApolloClient() {
   if (!client) {
+    // Determine the GraphQL URL based on environment
+    let graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL;
+
+    // If no environment variable is set, try to determine the URL
+    if (!graphqlUrl) {
+      if (typeof window !== 'undefined') {
+        // In browser, use the same origin for the API
+        const protocol = window.location.protocol;
+        const host = window.location.host;
+        graphqlUrl = `${protocol}//${host.replace('dentalscaner-fe', 'dentalscaner-be')}/graphql`;
+      } else {
+        // Fallback for server-side rendering
+        graphqlUrl = 'http://localhost:3001/graphql';
+      }
+    }
+
     const httpLink = createHttpLink({
-      uri: process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:3001/graphql',
+      uri: graphqlUrl,
     });
 
     const authLink = setContext((_, { headers }) => {

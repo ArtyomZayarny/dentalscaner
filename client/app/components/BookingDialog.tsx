@@ -11,7 +11,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Plus, Calendar, Clock, User } from 'lucide-react';
-// import { useRouter } from 'next/navigation'; // Commented out as not currently used
+import { useMutation } from '@apollo/client';
+import { CREATE_APPOINTMENT } from '@/lib/graphql-queries';
 import { IDoctor, IClinic, IProcedure, ITimeSlot } from '../types';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 
@@ -19,7 +20,9 @@ import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 declare global {
   interface Window {
     Stripe: (publishableKey: string) => {
-      redirectToCheckout: (options: { sessionId: string }) => Promise<{ error?: { message: string } }>;
+      redirectToCheckout: (options: {
+        sessionId: string;
+      }) => Promise<{ error?: { message: string } }>;
     };
   }
 }
@@ -53,6 +56,8 @@ export default function BookingDialog({
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [selectedProcedure, setSelectedProcedure] = useState<string>('');
   const [notes, setNotes] = useState('');
+
+  const [createAppointment, { loading: creatingAppointment }] = useMutation(CREATE_APPOINTMENT);
 
   // Get selected procedure details
   const selectedProcedureDetails = useMemo(() => {
@@ -157,89 +162,41 @@ export default function BookingDialog({
     }
 
     try {
-      // Create appointment via GraphQL
-      const response = await fetch(process.env.NEXT_PUBLIC_GRAPHQL_URL!, {
+      // Create appointment via Apollo Client
+      const { data } = await createAppointment({
+        variables: {
+          userId,
+          doctorId: selectedDoctor,
+          clinicId: doctorPrimaryClinic?.id || '',
+          procedureId: selectedProcedure,
+          date: selectedDate,
+          time: selectedTime,
+          duration: selectedProcedureDetails.duration,
+          amount: selectedProcedureDetails.price.min,
+          notes: notes || undefined,
+        },
+      });
+
+      const appointmentId = data.createAppointment.id;
+
+      // Create checkout session and redirect to Stripe's hosted payment page
+      let baseUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL?.replace('/graphql', '');
+      if (!baseUrl) {
+        if (typeof window !== 'undefined') {
+          const protocol = window.location.protocol;
+          const host = window.location.host;
+          baseUrl = `${protocol}//${host.replace('dentalscaner-fe', 'dentalscaner-be')}`;
+        } else {
+          baseUrl = 'http://localhost:3001';
+        }
+      }
+      const paymentResponse = await fetch(`${baseUrl}/payment/create-checkout-session`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          query: `
-            mutation CreateAppointment(
-              $userId: String!
-              $doctorId: String!
-              $clinicId: String!
-              $procedureId: String!
-              $date: String!
-              $time: String!
-              $duration: Int!
-              $amount: Float!
-              $notes: String
-            ) {
-              createAppointment(
-                userId: $userId
-                doctorId: $doctorId
-                clinicId: $clinicId
-                procedureId: $procedureId
-                date: $date
-                time: $time
-                duration: $duration
-                amount: $amount
-                notes: $notes
-              ) {
-                id
-                userId
-                doctorId
-                clinicId
-                procedureId
-                date
-                time
-                duration
-                amount
-                status
-                paid
-                notes
-                createdAt
-                updatedAt
-              }
-            }
-          `,
-          variables: {
-            userId,
-            doctorId: selectedDoctor,
-            clinicId: doctorPrimaryClinic?.id || '',
-            procedureId: selectedProcedure,
-            date: selectedDate,
-            time: selectedTime,
-            duration: selectedProcedureDetails.duration,
-            amount: selectedProcedureDetails.price.min,
-            notes: notes || undefined,
-          },
-        }),
+        body: JSON.stringify({ appointmentId }),
       });
-
-      const result = await response.json();
-
-      if (result.errors) {
-        throw new Error(result.errors[0].message);
-      }
-
-      const appointmentId = result.data.createAppointment.id;
-
-      // Create checkout session and redirect to Stripe's hosted payment page
-      const paymentResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_GRAPHQL_URL?.replace(
-          '/graphql',
-          '',
-        )}/payment/create-checkout-session`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ appointmentId }),
-        },
-      );
 
       if (!paymentResponse.ok) {
         throw new Error('Failed to create checkout session');
@@ -499,7 +456,9 @@ export default function BookingDialog({
 
           {step === 'details' && (
             <DialogFooter className="mt-6">
-              <Button type="submit">Confirm Booking</Button>
+              <Button type="submit" disabled={creatingAppointment}>
+                {creatingAppointment ? 'Creating Appointment...' : 'Confirm Booking'}
+              </Button>
             </DialogFooter>
           )}
         </form>
