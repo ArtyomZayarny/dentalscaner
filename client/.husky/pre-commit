@@ -1,13 +1,22 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo "🔍 Running linting..."
-cd client && npm run lint
-
-echo "📝 Running TypeScript checks..."
-cd client && npm run typecheck
-
-echo "🧪 Running tests..."
-cd client && npm test
-
-echo "✅ All checks passed! Proceeding with commit..."
+# Check if there are any changes in the client directory
+if git diff --cached --name-only | grep -q "^client/"; then
+  echo "🔍 Client changes detected. Running pre-commit checks..."
+  
+  cd client
+  
+  echo "🔍 Running linting..."
+  npm run lint
+  
+  echo "📝 Running TypeScript checks..."
+  npm run typecheck
+  
+  echo "🧪 Running tests..."
+  npm test
+  
+  echo "✅ Client checks passed! Proceeding with commit..."
+else
+  echo "ℹ️ No client changes detected. Skipping client pre-commit checks."
+fi
