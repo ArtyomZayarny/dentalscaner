@@ -2,12 +2,12 @@
 . "$(dirname "$0")/_/husky.sh"
 
 echo "🔍 Running linting..."
-npm run lint
+cd client && npm run lint
 
 echo "📝 Running TypeScript checks..."
-npm run typecheck
+cd client && npm run typecheck
 
 echo "🧪 Running tests..."
-npm test
+cd client && npm test
 
 echo "✅ All checks passed! Proceeding with commit..."
