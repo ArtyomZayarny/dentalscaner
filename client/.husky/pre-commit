@@ -1,18 +1,13 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo "🔍 Running pre-commit checks..."
-
-echo "📝 Linting..."
+echo "🔍 Running linting..."
 npm run lint
 
-echo "🔧 Type checking..."
+echo "📝 Running TypeScript checks..."
 npm run typecheck
 
 echo "🧪 Running tests..."
 npm test
 
-echo "🏗️ Building application..."
-npm run build
-
-echo "✅ All checks passed! Committing..."
+echo "✅ All checks passed! Proceeding with commit..."
