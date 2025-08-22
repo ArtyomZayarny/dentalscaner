@@ -11,18 +11,28 @@ export function getApolloClient() {
     // If no environment variable is set, try to determine the URL
     if (!graphqlUrl) {
       if (typeof window !== 'undefined') {
-        // In browser, use the same origin for the API
-        const protocol = window.location.protocol;
-        const host = window.location.host;
-        graphqlUrl = `${protocol}//${host.replace('dentalscaner-fe', 'dentalscaner-be')}/graphql`;
+        // In browser, use environment-based URL construction
+        const isProduction = process.env.NODE_ENV === 'production';
+        const isVercel = process.env.VERCEL === '1';
+
+        if (isProduction || isVercel) {
+          // Use environment variable or construct from current domain
+          const currentHost = window.location.hostname;
+          const backendHost = currentHost.replace('dentalscaner-fe', 'dentalscaner-be');
+          graphqlUrl = `https://${backendHost}/graphql`;
+        } else {
+          // Development environment
+          graphqlUrl = 'http://localhost:3001/graphql';
+        }
       } else {
         // Fallback for server-side rendering
-        graphqlUrl = 'http://localhost:3001/graphql';
+        graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:3001/graphql';
       }
     }
 
     const httpLink = createHttpLink({
       uri: graphqlUrl,
+      credentials: 'include', // Include credentials for CORS
     });
 
     const authLink = setContext((_, { headers }) => {
