@@ -202,7 +202,7 @@ export default function BookingDialog({
           baseUrl = 'http://localhost:3001';
         }
       }
-      
+
       console.log('Payment endpoint URL:', `${baseUrl}/payment/create-checkout-session`);
       console.log('Sending appointment ID:', appointmentId);
 
@@ -220,7 +220,9 @@ export default function BookingDialog({
       if (!paymentResponse.ok) {
         const errorText = await paymentResponse.text();
         console.error('Payment response error:', errorText);
-        throw new Error(`Failed to create checkout session: ${paymentResponse.status} ${errorText}`);
+        throw new Error(
+          `Failed to create checkout session: ${paymentResponse.status} ${errorText}`,
+        );
       }
 
       const paymentData = await paymentResponse.json();
@@ -240,7 +242,7 @@ export default function BookingDialog({
       console.error('Error details:', {
         message: error instanceof Error ? error.message : 'Unknown error',
         stack: error instanceof Error ? error.stack : undefined,
-        name: error instanceof Error ? error.name : 'Unknown'
+        name: error instanceof Error ? error.name : 'Unknown',
       });
       alert('Failed to create appointment. Please try again.');
     }
