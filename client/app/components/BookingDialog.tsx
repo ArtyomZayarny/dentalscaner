@@ -16,6 +16,17 @@ import { CREATE_APPOINTMENT } from '@/lib/graphql-queries';
 import { IDoctor, IClinic, IProcedure, ITimeSlot } from '../types';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 
+// Add Stripe to window type
+declare global {
+  interface Window {
+    Stripe: (publishableKey: string) => {
+      redirectToCheckout: (options: {
+        sessionId: string;
+      }) => Promise<{ error?: { message: string } }>;
+    };
+  }
+}
+
 interface BookingDialogProps {
   userId: string;
   doctors: IDoctor[];
@@ -164,9 +175,43 @@ export default function BookingDialog({
         },
       });
 
-      // Appointment created successfully
-      alert('Appointment booked successfully!');
-      window.location.reload(); // Refresh the page to show the new appointment
+      const appointmentId = data.createAppointment.id;
+
+      // Create checkout session and redirect to Stripe's hosted payment page
+      let baseUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL?.replace('/graphql', '');
+      if (!baseUrl) {
+        if (typeof window !== 'undefined') {
+          const protocol = window.location.protocol;
+          const host = window.location.host;
+          baseUrl = `${protocol}//${host.replace('dentalscaner-fe', 'dentalscaner-three')}`;
+        } else {
+          baseUrl = 'http://localhost:3001';
+        }
+      }
+
+      const paymentResponse = await fetch(`${baseUrl}/payment/create-checkout-session`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ appointmentId }),
+      });
+
+      if (!paymentResponse.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const paymentData = await paymentResponse.json();
+
+      // Redirect to Stripe's hosted payment page
+      const stripe = window.Stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: paymentData.sessionId,
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
     } catch (error) {
       console.error('Failed to create appointment:', error);
       alert('Failed to create appointment. Please try again.');
