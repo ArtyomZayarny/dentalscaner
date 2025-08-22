@@ -1,9 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../src/app.module';
-import { ExpressAdapter } from '@nestjs/platform-express';
 import { INestApplication } from '@nestjs/common';
-import * as express from 'express';
 
 let app: INestApplication | null = null;
 
@@ -12,8 +10,7 @@ async function bootstrap() {
   try {
     if (!app) {
       console.log('Creating new NestJS application...');
-      const expressApp = express();
-      app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+      app = await NestFactory.create(AppModule);
       console.log('NestJS application created successfully');
 
       // Simplified CORS configuration
@@ -47,7 +44,6 @@ async function bootstrap() {
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   console.log('GraphQL handler called:', req.method, req.url);
   console.log('Origin:', req.headers.origin);
-  console.log('Headers:', req.headers);
 
   // Set CORS headers for all requests
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
@@ -73,15 +69,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const app = await bootstrap();
     console.log('NestJS application bootstrap completed');
 
-    console.log('Getting Express app instance...');
-    const expressApp = app
-      .getHttpAdapter()
-      .getInstance() as express.Application;
-    console.log('Express app instance obtained');
+    console.log('Getting HTTP adapter...');
+    const httpAdapter = app.getHttpAdapter();
+    console.log('HTTP adapter obtained');
 
-    console.log('Handling request with Express...');
-    // Handle the request with Express
-    expressApp(req, res);
+    console.log('Handling request with NestJS...');
+    // Use the HTTP adapter's request handler
+    const instance = httpAdapter.getInstance();
+    if (instance && typeof instance === 'function') {
+      instance(req, res);
+    } else {
+      throw new Error('HTTP adapter instance is not available');
+    }
     console.log('Request handled successfully');
   } catch (error: unknown) {
     console.error('GraphQL API Error:', error);
