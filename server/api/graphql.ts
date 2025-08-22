@@ -8,26 +8,40 @@ import * as express from 'express';
 let app: INestApplication | null = null;
 
 async function bootstrap() {
-  if (!app) {
-    const expressApp = express();
-    app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+  console.log('Starting bootstrap process...');
+  try {
+    if (!app) {
+      console.log('Creating new NestJS application...');
+      const expressApp = express();
+      app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+      console.log('NestJS application created successfully');
 
-    // Simplified CORS configuration
-    app.enableCors({
-      origin: true, // Allow all origins for now
-      credentials: true,
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-      allowedHeaders: [
-        'Content-Type',
-        'Authorization',
-        'X-Requested-With',
-        'Apollo-Require-Preflight',
-      ],
-    });
+      // Simplified CORS configuration
+      console.log('Configuring CORS...');
+      app.enableCors({
+        origin: true, // Allow all origins for now
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        allowedHeaders: [
+          'Content-Type',
+          'Authorization',
+          'X-Requested-With',
+          'Apollo-Require-Preflight',
+        ],
+      });
+      console.log('CORS configured successfully');
 
-    await app.init();
+      console.log('Initializing NestJS application...');
+      await app.init();
+      console.log('NestJS application initialized successfully');
+    } else {
+      console.log('Using existing NestJS application');
+    }
+    return app;
+  } catch (error) {
+    console.error('Error in bootstrap:', error);
+    throw error;
   }
-  return app;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -55,18 +69,35 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    console.log('Starting NestJS application bootstrap...');
     const app = await bootstrap();
+    console.log('NestJS application bootstrap completed');
+
+    console.log('Getting Express app instance...');
     const expressApp = app
       .getHttpAdapter()
       .getInstance() as express.Application;
+    console.log('Express app instance obtained');
 
+    console.log('Handling request with Express...');
     // Handle the request with Express
     expressApp(req, res);
-  } catch (error) {
+    console.log('Request handled successfully');
+  } catch (error: unknown) {
     console.error('GraphQL API Error:', error);
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : undefined;
+
+    console.error('Error stack:', errorStack);
+    console.error('Error message:', errorMessage);
+
+    // Send a more detailed error response
     res.status(500).json({
       error: 'Internal Server Error',
       message: 'GraphQL server error',
+      details: errorMessage,
+      stack: process.env.NODE_ENV === 'development' ? errorStack : undefined,
     });
   }
 }
