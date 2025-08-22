@@ -12,32 +12,17 @@ async function bootstrap() {
     const expressApp = express();
     app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 
-    // Enable CORS for both development and production
-    const allowedOrigins = [
-      'http://localhost:3000', // Development
-      'https://dentalscaner-fe.vercel.app', // Production frontend
-      process.env.FRONTEND_URL, // From environment variable
-      process.env.PRODUCTION_FRONTEND_URL, // Production frontend URL
-    ].filter(Boolean); // Remove undefined values
-
+    // Simplified CORS configuration
     app.enableCors({
-      origin: (
-        origin: string,
-        callback: (error: Error | null, allow?: boolean) => void,
-      ) => {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-
-        if (allowedOrigins.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          console.log('CORS blocked origin:', origin);
-          callback(new Error('Not allowed by CORS'));
-        }
-      },
+      origin: true, // Allow all origins for now
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Apollo-Require-Preflight'],
+      allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'X-Requested-With',
+        'Apollo-Require-Preflight',
+      ],
     });
 
     await app.init();
@@ -46,30 +31,34 @@ async function bootstrap() {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  console.log('GraphQL handler called:', req.method, req.url);
+  console.log('Origin:', req.headers.origin);
+  console.log('Headers:', req.headers);
+
+  // Set CORS headers for all requests
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, OPTIONS',
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization, X-Requested-With, Apollo-Require-Preflight',
+  );
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
   // Handle preflight requests explicitly
   if (req.method === 'OPTIONS') {
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'https://dentalscaner-fe.vercel.app',
-      process.env.FRONTEND_URL,
-      process.env.PRODUCTION_FRONTEND_URL,
-    ].filter(Boolean);
-
-    const origin = req.headers.origin;
-    if (origin && allowedOrigins.includes(origin)) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
-    }
-    
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Apollo-Require-Preflight');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    console.log('Handling OPTIONS preflight request');
     res.status(200).end();
     return;
   }
 
   try {
     const app = await bootstrap();
-    const expressApp = app.getHttpAdapter().getInstance();
+    const expressApp = app
+      .getHttpAdapter()
+      .getInstance() as express.Application;
 
     // Handle the request with Express
     expressApp(req, res);
