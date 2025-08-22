@@ -7,9 +7,20 @@
       "config": {
         "maxDuration": 30
       }
+    },
+    {
+      "src": "api/graphql.ts",
+      "use": "@vercel/node",
+      "config": {
+        "maxDuration": 30
+      }
     }
   ],
   "routes": [
+    {
+      "src": "/graphql",
+      "dest": "/api/graphql.ts"
+    },
     {
       "src": "/(.*)",
       "dest": "/api/index.ts"

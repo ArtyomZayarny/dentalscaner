@@ -69,7 +69,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
         res.status(404).json({
           error: 'Not Found',
           message: 'Endpoint not found',
-          availableEndpoints: ['/', '/health', '/status'],
+          availableEndpoints: ['/', '/health', '/status', '/graphql'],
         });
     }
   } catch (error) {

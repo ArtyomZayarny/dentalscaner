@@ -35,5 +35,5 @@ if (process.env.NODE_ENV !== 'production') {
   void bootstrap();
 }
 
-// Export for Vercel
+// Export for Vercel - always run in production
 export default bootstrap;
