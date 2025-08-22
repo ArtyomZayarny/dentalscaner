@@ -161,6 +161,18 @@ export default function BookingDialog({
     }
 
     try {
+      console.log('Creating appointment with variables:', {
+        userId,
+        doctorId: selectedDoctor,
+        clinicId: doctorPrimaryClinic?.id || '',
+        procedureId: selectedProcedure,
+        date: selectedDate,
+        time: selectedTime,
+        duration: selectedProcedureDetails.duration,
+        amount: selectedProcedureDetails.price.min,
+        notes: notes || undefined,
+      });
+
       const { data } = await createAppointment({
         variables: {
           userId,
@@ -175,6 +187,8 @@ export default function BookingDialog({
         },
       });
 
+      console.log('Appointment created successfully:', data);
+
       const appointmentId = data.createAppointment.id;
 
       // Create checkout session and redirect to Stripe's hosted payment page
@@ -188,6 +202,9 @@ export default function BookingDialog({
           baseUrl = 'http://localhost:3001';
         }
       }
+      
+      console.log('Payment endpoint URL:', `${baseUrl}/payment/create-checkout-session`);
+      console.log('Sending appointment ID:', appointmentId);
 
       const paymentResponse = await fetch(`${baseUrl}/payment/create-checkout-session`, {
         method: 'POST',
@@ -197,11 +214,17 @@ export default function BookingDialog({
         body: JSON.stringify({ appointmentId }),
       });
 
+      console.log('Payment response status:', paymentResponse.status);
+      console.log('Payment response headers:', paymentResponse.headers);
+
       if (!paymentResponse.ok) {
-        throw new Error('Failed to create checkout session');
+        const errorText = await paymentResponse.text();
+        console.error('Payment response error:', errorText);
+        throw new Error(`Failed to create checkout session: ${paymentResponse.status} ${errorText}`);
       }
 
       const paymentData = await paymentResponse.json();
+      console.log('Payment data received:', paymentData);
 
       // Redirect to Stripe's hosted payment page
       const stripe = window.Stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -212,8 +235,13 @@ export default function BookingDialog({
       if (error) {
         throw new Error(error.message);
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Failed to create appointment:', error);
+      console.error('Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        name: error instanceof Error ? error.name : 'Unknown'
+      });
       alert('Failed to create appointment. Please try again.');
     }
   };
