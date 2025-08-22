@@ -18,8 +18,12 @@ export function getApolloClient() {
         if (isProduction || isVercel) {
           // Use environment variable or construct from current domain
           const currentHost = window.location.hostname;
-          const backendHost = currentHost.replace('dentalscaner-fe', 'dentalscaner-be');
-          graphqlUrl = `https://${backendHost}/graphql`;
+          if (currentHost === 'dentalscaner-fe.vercel.app') {
+            graphqlUrl = 'https://dentalscaner-three.vercel.app/graphql';
+          } else {
+            // Fallback for other production domains
+            graphqlUrl = 'https://dentalscaner-three.vercel.app/graphql';
+          }
         } else {
           // Development environment
           graphqlUrl = 'http://localhost:3001/graphql';
