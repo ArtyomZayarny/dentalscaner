@@ -22,6 +22,10 @@
       "dest": "/api/graphql.ts"
     },
     {
+      "src": "/payment/(.*)",
+      "dest": "/api/graphql.ts"
+    },
+    {
       "src": "/(.*)",
       "dest": "/api/index.ts"
     }
