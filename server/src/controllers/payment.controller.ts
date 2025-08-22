@@ -20,14 +20,27 @@ export class PaymentController {
   @Post('create-checkout-session')
   async createCheckoutSession(@Body() body: { appointmentId: string }) {
     try {
+      console.log(
+        'Creating checkout session for appointment:',
+        body.appointmentId,
+      );
+      console.log('Environment variables check:');
+      console.log('STRIPE_SECRET_KEY exists:', !!process.env.STRIPE_SECRET_KEY);
+      console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+      console.log('PRODUCTION_FRONTEND_URL:', process.env.PRODUCTION_FRONTEND_URL);
+      console.log('Using frontend URL:', process.env.FRONTEND_URL || process.env.PRODUCTION_FRONTEND_URL);
+
       const { sessionId } = await this.appointmentService.createCheckoutSession(
         body.appointmentId,
       );
 
+      console.log('Checkout session created successfully:', sessionId);
       return {
         sessionId,
       };
     } catch (error) {
+      console.error('Error creating checkout session:', error);
+      console.error('Error stack:', error.stack);
       throw new Error(`Failed to create checkout session: ${error.message}`);
     }
   }
