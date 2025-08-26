@@ -2,14 +2,21 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function HomePage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [hasRedirected, setHasRedirected] = useState(false);
 
   useEffect(() => {
-    console.log('HomePage useEffect - status:', status, 'session:', !!session);
+    console.log('HomePage useEffect - status:', status, 'session:', !!session, 'hasRedirected:', hasRedirected);
+    
+    // Prevent multiple redirects
+    if (hasRedirected) {
+      console.log('Already redirected, skipping...');
+      return;
+    }
     
     // Only redirect when we have a definitive status
     if (status === 'loading') {
@@ -19,27 +26,29 @@ export default function HomePage() {
 
     if (status === 'authenticated') {
       console.log('Redirecting to dashboard...');
+      setHasRedirected(true);
       router.replace('/dashboard');
     } else if (status === 'unauthenticated') {
       console.log('Redirecting to sign-in...');
-      // Use setTimeout to ensure the redirect happens after the component is fully rendered
-      setTimeout(() => {
-        window.location.href = '/sign-in';
-      }, 100);
+      setHasRedirected(true);
+      router.replace('/sign-in');
     }
-  }, [status, router]);
+  }, [status, router, hasRedirected]);
 
   // Fallback: if we're stuck loading for more than 3 seconds, redirect to sign-in
   useEffect(() => {
+    if (hasRedirected) return;
+    
     const timeout = setTimeout(() => {
       if (status === 'loading') {
         console.log('Timeout reached, forcing redirect to sign-in');
-        window.location.href = '/sign-in';
+        setHasRedirected(true);
+        router.replace('/sign-in');
       }
     }, 3000);
 
     return () => clearTimeout(timeout);
-  }, [status]);
+  }, [status, router, hasRedirected]);
 
   // Always show loading while determining redirect
   return (
