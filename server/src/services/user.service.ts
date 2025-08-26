@@ -63,6 +63,7 @@ export class UserService {
     return (result.affected || 0) > 0;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async login(email: string, _password: string): Promise<User> {
     // For demo purposes, accept any email/password combination
     // In production, you would hash the password and verify it
@@ -82,15 +83,20 @@ export class UserService {
     return user;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async googleLogin(_token: string): Promise<User> {
     // For demo purposes, create a user from Google token
     // In production, you would verify the Google token and extract user info
 
-    const email = `google-${Date.now()}@example.com`;
+    // Extract email from Google token (this is a simplified version)
+    // In production, you would decode the JWT token and extract real user info
+    const email = `google-user-${Date.now()}@example.com`;
 
+    // Try to find existing user by email first
     let user = await this.findByEmail(email);
 
     if (!user) {
+      // Create a new user with proper UUID
       user = await this.create({
         email,
         firstName: 'Google',
