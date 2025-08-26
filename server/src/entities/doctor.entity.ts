@@ -24,10 +24,6 @@ export class Doctor {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  bio?: string;
-
-  @Field({ nullable: true })
-  @Column({ nullable: true })
   rating?: number;
 
   @Field({ nullable: true })
