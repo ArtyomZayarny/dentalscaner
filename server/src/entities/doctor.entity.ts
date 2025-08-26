@@ -23,19 +23,19 @@ export class Doctor {
   specialization?: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, name: 'rating' })
   rating?: number;
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, name: 'reviewCount' })
   reviewCount?: number;
 
   @Field(() => String, { nullable: true })
-  @Column({ nullable: true, type: 'json' })
+  @Column({ nullable: true, type: 'json', name: 'availability' })
   availability?: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, name: 'clinicId' })
   clinicId?: string;
 
   @Field({ nullable: true })
