@@ -65,6 +65,8 @@ const handler = NextAuth({
       if (account?.provider === 'google') {
         try {
           console.log('Google OAuth account:', account);
+          console.log('Original token.id before Google login:', token.id);
+          
           const { data } = await serverClient.mutate({
             mutation: GOOGLE_LOGIN_MUTATION,
             variables: {
@@ -74,16 +76,34 @@ const handler = NextAuth({
 
           console.log('Google login response:', data);
 
-          if (data?.googleLogin?.token) {
-            token.id = data.googleLogin.user.id;
-            token.role = data.googleLogin.user.role;
-            token.accessToken = data.googleLogin.token;
-            console.log('Updated token with UUID:', data.googleLogin.user.id);
+          if (data?.googleLogin?.token && data?.googleLogin?.user?.id) {
+            // Ensure we have a proper UUID
+            const userId = data.googleLogin.user.id;
+            console.log('Received user ID from GraphQL:', userId);
+            
+            // Validate that it's a UUID format
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+            if (uuidRegex.test(userId)) {
+              token.id = userId;
+              token.role = data.googleLogin.user.role;
+              token.accessToken = data.googleLogin.token;
+              console.log('Successfully updated token with UUID:', userId);
+            } else {
+              console.error('Invalid UUID format received:', userId);
+              // Fallback: create a proper UUID
+              const fallbackId = '00000000-0000-0000-0000-000000000000';
+              token.id = fallbackId;
+              console.log('Using fallback UUID:', fallbackId);
+            }
           } else {
-            console.error('No token in Google login response');
+            console.error('No valid response from Google login mutation');
+            console.error('Response data:', data);
           }
         } catch (error) {
           console.error('Google login error:', error);
+          // Fallback: use a default UUID
+          token.id = '00000000-0000-0000-0000-000000000000';
+          console.log('Using fallback UUID due to error');
         }
       }
 
