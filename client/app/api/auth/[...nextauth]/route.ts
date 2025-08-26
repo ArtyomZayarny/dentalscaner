@@ -64,6 +64,7 @@ const handler = NextAuth({
       // Handle Google OAuth
       if (account?.provider === 'google') {
         try {
+          console.log('Google OAuth account:', account);
           const { data } = await serverClient.mutate({
             mutation: GOOGLE_LOGIN_MUTATION,
             variables: {
@@ -71,10 +72,15 @@ const handler = NextAuth({
             },
           });
 
+          console.log('Google login response:', data);
+
           if (data?.googleLogin?.token) {
             token.id = data.googleLogin.user.id;
             token.role = data.googleLogin.user.role;
             token.accessToken = data.googleLogin.token;
+            console.log('Updated token with UUID:', data.googleLogin.user.id);
+          } else {
+            console.error('No token in Google login response');
           }
         } catch (error) {
           console.error('Google login error:', error);
@@ -89,6 +95,7 @@ const handler = NextAuth({
         session.user.id = token.id as string;
         session.user.role = token.role as string;
         session.accessToken = token.accessToken as string;
+        console.log('Session callback - user ID:', session.user.id);
       }
       return session;
     },
