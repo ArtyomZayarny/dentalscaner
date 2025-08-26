@@ -2,19 +2,23 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function HomePage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const hasRedirected = useRef(false);
 
   // Redirect if already authenticated
   useEffect(() => {
+    if (hasRedirected.current) return; // Prevent multiple redirects
+
     if (status === 'authenticated' && session) {
+      hasRedirected.current = true;
       router.push('/dashboard');
     } else if (status === 'unauthenticated') {
-      // Use window.location for more reliable redirect
-      window.location.href = '/sign-in';
+      hasRedirected.current = true;
+      router.push('/sign-in');
     }
   }, [session, status, router]);
 
