@@ -26,10 +26,6 @@ export class Procedure {
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  priceMax?: number;
-
   @Field()
   @Column()
   duration: number; // in minutes
