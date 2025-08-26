@@ -62,7 +62,7 @@ export const GET_APPOINTMENTS = gql`
       status
       notes
       stripePaymentIntentId
-      isPaid
+      paid
       createdAt
       updatedAt
     }
@@ -84,7 +84,7 @@ export const GET_APPOINTMENTS_BY_USER = gql`
       status
       notes
       stripePaymentIntentId
-      isPaid
+      paid
       createdAt
       updatedAt
     }
