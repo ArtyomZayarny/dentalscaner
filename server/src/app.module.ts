@@ -8,6 +8,9 @@ import { getDatabaseConfig } from './config/database.config';
 // Entities
 import { User } from './entities/user.entity';
 import { Appointment } from './entities/appointment.entity';
+import { Doctor } from './entities/doctor.entity';
+import { Clinic } from './entities/clinic.entity';
+import { Procedure } from './entities/procedure.entity';
 
 // Services
 import { UserService } from './services/user.service';
@@ -34,7 +37,7 @@ import { PaymentController } from './controllers/payment.controller';
       useFactory: getDatabaseConfig,
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([User, Appointment]),
+    TypeOrmModule.forFeature([User, Appointment, Doctor, Clinic, Procedure]),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,

@@ -44,23 +44,23 @@ export const mockDoctors = [
   {
     id: '550e8400-e29b-41d4-a716-446655440001',
     name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@dental.com',
     specialization: 'General Dentistry',
-    experience: 8,
-    rating: 4.8,
+    phone: '+1 (555) 123-4567',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Dr. Michael Chen',
+    email: 'michael.chen@dental.com',
     specialization: 'Orthodontics',
-    experience: 12,
-    rating: 4.9,
+    phone: '+1 (555) 123-4568',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440003',
     name: 'Dr. Emily Rodriguez',
+    email: 'emily.rodriguez@dental.com',
     specialization: 'Endodontics',
-    experience: 6,
-    rating: 4.7,
+    phone: '+1 (555) 123-4569',
   },
 ];
 
@@ -71,7 +71,7 @@ export const mockClinics = [
     address: '123 Main Street, Downtown',
     phone: '+1 (555) 123-4567',
     email: 'info@brightsmile.com',
-    rating: 4.6,
+    description: 'Modern dental clinic with state-of-the-art equipment',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440102',
@@ -79,7 +79,7 @@ export const mockClinics = [
     address: '456 Oak Avenue, Westside',
     phone: '+1 (555) 987-6543',
     email: 'contact@familydental.com',
-    rating: 4.4,
+    description: 'Family-friendly dental care for all ages',
   },
 ];
 
@@ -89,7 +89,7 @@ export const mockProcedures = [
     name: 'Routine Dental Check-up',
     description: 'Comprehensive oral examination including X-rays and cleaning',
     duration: 60,
-    price: { min: 80, max: 120, currency: 'USD' },
+    price: 80,
     category: 'checkup',
   },
   {
@@ -97,7 +97,7 @@ export const mockProcedures = [
     name: 'Professional Teeth Cleaning',
     description: 'Deep cleaning to remove plaque and tartar buildup',
     duration: 45,
-    price: { min: 60, max: 100, currency: 'USD' },
+    price: 100,
     category: 'treatment',
   },
   {
@@ -105,7 +105,7 @@ export const mockProcedures = [
     name: 'Cavity Filling',
     description: 'Painless treatment to restore damaged teeth',
     duration: 30,
-    price: { min: 150, max: 300, currency: 'USD' },
+    price: 200,
     category: 'treatment',
   },
 ];

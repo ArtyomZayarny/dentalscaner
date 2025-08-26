@@ -16,6 +16,9 @@ import {
   Float,
 } from '@nestjs/graphql';
 import { User } from './user.entity';
+import { Doctor } from './doctor.entity';
+import { Clinic } from './clinic.entity';
+import { Procedure } from './procedure.entity';
 
 export enum AppointmentStatus {
   PENDING = 'pending',
@@ -101,4 +104,19 @@ export class Appointment {
   @JoinColumn({ name: 'userId' })
   @Field(() => User, { nullable: true })
   user: User;
+
+  @ManyToOne(() => Doctor)
+  @JoinColumn({ name: 'doctorId' })
+  @Field(() => Doctor, { nullable: true })
+  doctor: Doctor;
+
+  @ManyToOne(() => Clinic)
+  @JoinColumn({ name: 'clinicId' })
+  @Field(() => Clinic, { nullable: true })
+  clinic: Clinic;
+
+  @ManyToOne(() => Procedure)
+  @JoinColumn({ name: 'procedureId' })
+  @Field(() => Procedure, { nullable: true })
+  procedure: Procedure;
 }
