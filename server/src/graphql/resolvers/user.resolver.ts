@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UserService } from '../../services/user.service';
 import { User } from '../../entities/user.entity';
 import { CreateUserInput, UpdateUserInput } from '../inputs/user.input';
+import { LoginResponse, GoogleLoginResponse } from '../types/user.type';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -35,16 +36,24 @@ export class UserResolver {
     return this.userService.remove(id);
   }
 
-  @Mutation(() => User)
+  @Mutation(() => LoginResponse)
   async login(
     @Args('email', { type: () => String }) email: string,
     @Args('password', { type: () => String }) password: string,
   ) {
-    return this.userService.login(email, password);
+    const user = await this.userService.login(email, password);
+    return {
+      token: `token-${user.id}-${Date.now()}`, // Simple token generation for demo
+      user,
+    };
   }
 
-  @Mutation(() => User)
+  @Mutation(() => GoogleLoginResponse)
   async googleLogin(@Args('token', { type: () => String }) token: string) {
-    return this.userService.googleLogin(token);
+    const user = await this.userService.googleLogin(token);
+    return {
+      token: `google-token-${user.id}-${Date.now()}`, // Simple token generation for demo
+      user,
+    };
   }
 }

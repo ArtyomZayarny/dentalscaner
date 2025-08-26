@@ -1,37 +1,20 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { User } from '../../entities/user.entity';
 
 @ObjectType()
-export class User {
-  @Field(() => ID)
-  id: string;
-
+export class LoginResponse {
   @Field()
-  email: string;
+  token: string;
 
+  @Field(() => User)
+  user: User;
+}
+
+@ObjectType()
+export class GoogleLoginResponse {
   @Field()
-  firstName: string;
+  token: string;
 
-  @Field()
-  lastName: string;
-
-  @Field({ nullable: true })
-  phone?: string;
-
-  @Field({ nullable: true })
-  dateOfBirth?: Date;
-
-  @Field({ nullable: true })
-  address?: string;
-
-  @Field()
-  role: string;
-
-  @Field({ nullable: true })
-  avatar?: string;
-
-  @Field()
-  createdAt: Date;
-
-  @Field()
-  updatedAt: Date;
+  @Field(() => User)
+  user: User;
 }
