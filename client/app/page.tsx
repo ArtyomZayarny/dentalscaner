@@ -4,15 +4,18 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { signIn } from 'next-auth/react';
-import Link from 'next/link';
+import { getApolloClient } from '@/lib/apollo-client';
+import { REGISTER_MUTATION } from '@/lib/auth-mutations';
 
 export default function HomePage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isRegistering, setIsRegistering] = useState(false);
 
   // Redirect authenticated users to dashboard
   useEffect(() => {
@@ -57,6 +60,48 @@ export default function HomePage() {
     }
   };
 
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const client = getApolloClient();
+      if (!client) {
+        setError('Failed to initialize client');
+        setIsLoading(false);
+        return;
+      }
+      const { data } = await client.mutate({
+        mutation: REGISTER_MUTATION,
+        variables: {
+          email,
+          password,
+          name,
+        },
+      });
+
+      if (data?.register?.token) {
+        // Auto sign in after registration
+        const result = await signIn('credentials', {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (result?.error) {
+          setError(result.error);
+        } else {
+          router.push('/dashboard');
+        }
+      }
+    } catch (error: unknown) {
+      console.error('Registration error:', error);
+      setError((error as Error).message || 'Registration failed');
+      setIsLoading(false);
+    }
+  };
+
   // Show loading while checking session
   if (status === 'loading') {
     return (
@@ -76,7 +121,9 @@ export default function HomePage() {
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
           <div className="text-center mb-6">
             <h1 className="text-2xl font-bold text-gray-900">Welcome to Dentalscaner</h1>
-            <p className="text-gray-600 mt-2">Sign in to your account</p>
+            <p className="text-gray-600 mt-2">
+              {isRegistering ? 'Create your account' : 'Sign in to your account'}
+            </p>
           </div>
 
           {error && (
@@ -120,7 +167,24 @@ export default function HomePage() {
             </div>
           </div>
 
-          <form onSubmit={handleCredentialsSignIn}>
+          <form onSubmit={isRegistering ? handleRegister : handleCredentialsSignIn}>
+            {isRegistering && (
+              <div className="mb-4">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required={isRegistering}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="John Doe"
+                />
+              </div>
+            )}
+
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email
@@ -156,17 +220,30 @@ export default function HomePage() {
               disabled={isLoading}
               className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50"
             >
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading
+                ? isRegistering
+                  ? 'Creating account...'
+                  : 'Signing in...'
+                : isRegistering
+                ? 'Create Account'
+                : 'Sign In'}
             </button>
           </form>
 
+          {/* Toggle between sign in and register */}
           <div className="mt-4 text-center">
-            <p className="text-sm text-gray-600">
-              Don&apos;t have an account?{' '}
-              <Link href="/sign-in" className="text-blue-600 hover:text-blue-500">
-                Sign up here
-              </Link>
-            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setIsRegistering(!isRegistering);
+                setError('');
+              }}
+              className="text-sm text-blue-600 hover:text-blue-500"
+            >
+              {isRegistering
+                ? 'Already have an account? Sign in'
+                : "Don't have an account? Sign up"}
+            </button>
           </div>
         </div>
       </div>
