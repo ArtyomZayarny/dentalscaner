@@ -23,7 +23,7 @@ export default function SignInPage() {
     if (mode === 'register') {
       setIsRegistering(true);
     }
-  }, [searchParams]);
+  }, []); // Only run once on mount, not on every searchParams change
 
   // Redirect if already authenticated
   useEffect(() => {
