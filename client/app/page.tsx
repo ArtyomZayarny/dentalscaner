@@ -22,7 +22,10 @@ export default function HomePage() {
       router.replace('/dashboard');
     } else if (status === 'unauthenticated') {
       console.log('Redirecting to sign-in...');
-      router.replace('/sign-in');
+      // Use setTimeout to ensure the redirect happens after the component is fully rendered
+      setTimeout(() => {
+        window.location.href = '/sign-in';
+      }, 100);
     }
   }, [status, router]);
 
@@ -31,12 +34,12 @@ export default function HomePage() {
     const timeout = setTimeout(() => {
       if (status === 'loading') {
         console.log('Timeout reached, forcing redirect to sign-in');
-        router.replace('/sign-in');
+        window.location.href = '/sign-in';
       }
     }, 3000);
 
     return () => clearTimeout(timeout);
-  }, [status, router]);
+  }, [status]);
 
   // Always show loading while determining redirect
   return (
