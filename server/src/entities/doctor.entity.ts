@@ -40,7 +40,7 @@ export class Doctor {
 
   @Field({ nullable: true })
   @Column({ nullable: true, type: 'json' })
-  availability?: any;
+  availability?: Record<string, any>;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
