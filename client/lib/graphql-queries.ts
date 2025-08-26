@@ -26,8 +26,6 @@ export const GET_CLINICS = gql`
       phone
       email
       description
-      image
-      workingHours
     }
   }
 `;
