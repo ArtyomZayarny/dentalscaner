@@ -90,7 +90,7 @@ export const mockProcedures = [
     description: 'Comprehensive oral examination including X-rays and cleaning',
     duration: 60,
     price: 80,
-    image: null,
+    image: undefined,
     isActive: true,
   },
   {
@@ -99,7 +99,7 @@ export const mockProcedures = [
     description: 'Deep cleaning to remove plaque and tartar buildup',
     duration: 45,
     price: 100,
-    image: null,
+    image: undefined,
     isActive: true,
   },
   {
@@ -108,7 +108,7 @@ export const mockProcedures = [
     description: 'Painless treatment to restore damaged teeth',
     duration: 30,
     price: 200,
-    image: null,
+    image: undefined,
     isActive: true,
   },
 ];
