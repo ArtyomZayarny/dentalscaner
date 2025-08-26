@@ -16,11 +16,11 @@ export class Doctor {
 
   @Field()
   @Column()
-  name: string;
+  firstName: string;
 
   @Field()
   @Column()
-  email: string;
+  lastName: string;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
@@ -28,7 +28,23 @@ export class Doctor {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  phone?: string;
+  bio?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  rating?: number;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  reviewCount?: number;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true, type: 'json' })
+  availability?: any;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  clinicId?: string;
 
   @Field({ nullable: true })
   @Column({ nullable: true })

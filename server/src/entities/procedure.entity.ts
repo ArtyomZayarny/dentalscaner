@@ -26,13 +26,21 @@ export class Procedure {
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  priceMax?: number;
+
   @Field()
   @Column()
   duration: number; // in minutes
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  category?: string;
+  image?: string;
+
+  @Field()
+  @Column({ default: true })
+  isActive: boolean;
 
   @Field()
   @CreateDateColumn()
