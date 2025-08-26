@@ -38,9 +38,9 @@ export class Doctor {
   @Column({ nullable: true })
   reviewCount?: number;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   @Column({ nullable: true, type: 'json' })
-  availability?: Record<string, any>;
+  availability?: string;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
