@@ -1,12 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { UserService } from './user.service';
 import { User } from '../entities/user.entity';
 
 describe('UserService', () => {
   let service: UserService;
-  let repository: Repository<User>;
 
   const mockRepository = {
     find: jest.fn(),
@@ -29,7 +27,6 @@ describe('UserService', () => {
     }).compile();
 
     service = module.get<UserService>(UserService);
-    repository = module.get<Repository<User>>(getRepositoryToken(User));
   });
 
   it('should be defined', () => {
@@ -52,7 +49,7 @@ describe('UserService', () => {
 
       const result = await service.findAll();
       expect(result).toEqual(mockUsers);
-      expect(repository.find).toHaveBeenCalled();
+      expect(mockRepository.find).toHaveBeenCalled();
     });
   });
 
@@ -70,7 +67,9 @@ describe('UserService', () => {
 
       const result = await service.findOne('1');
       expect(result).toEqual(mockUser);
-      expect(repository.findOne).toHaveBeenCalledWith({ where: { id: '1' } });
+      expect(mockRepository.findOne).toHaveBeenCalledWith({
+        where: { id: '1' },
+      });
     });
 
     it('should return null if user not found', async () => {
@@ -97,8 +96,8 @@ describe('UserService', () => {
 
       const result = await service.create(createUserDto);
       expect(result).toEqual(mockUser);
-      expect(repository.create).toHaveBeenCalledWith(createUserDto);
-      expect(repository.save).toHaveBeenCalledWith(mockUser);
+      expect(mockRepository.create).toHaveBeenCalledWith(createUserDto);
+      expect(mockRepository.save).toHaveBeenCalledWith(mockUser);
     });
   });
 
@@ -121,7 +120,7 @@ describe('UserService', () => {
 
       const result = await service.update('1', updateUserDto);
       expect(result).toEqual(mockUser);
-      expect(repository.update).toHaveBeenCalledWith('1', updateUserDto);
+      expect(mockRepository.update).toHaveBeenCalledWith('1', updateUserDto);
     });
 
     it('should return null if user not found for update', async () => {
@@ -140,7 +139,7 @@ describe('UserService', () => {
 
       const result = await service.remove('1');
       expect(result).toBe(true);
-      expect(repository.delete).toHaveBeenCalledWith('1');
+      expect(mockRepository.delete).toHaveBeenCalledWith('1');
     });
 
     it('should return false if user not found for removal', async () => {

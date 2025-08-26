@@ -4,7 +4,6 @@ import { UserService } from '../../services/user.service';
 
 describe('UserResolver', () => {
   let resolver: UserResolver;
-  let userService: UserService;
 
   const mockUserService = {
     findAll: jest.fn(),
@@ -26,7 +25,6 @@ describe('UserResolver', () => {
     }).compile();
 
     resolver = module.get<UserResolver>(UserResolver);
-    userService = module.get<UserService>(UserService);
   });
 
   it('should be defined', () => {
@@ -49,7 +47,7 @@ describe('UserResolver', () => {
 
       const result = await resolver.findAll();
       expect(result).toEqual(mockUsers);
-      expect(userService.findAll).toHaveBeenCalled();
+      expect(mockUserService.findAll).toHaveBeenCalled();
     });
   });
 
@@ -67,7 +65,7 @@ describe('UserResolver', () => {
 
       const result = await resolver.findOne('1');
       expect(result).toEqual(mockUser);
-      expect(userService.findOne).toHaveBeenCalledWith('1');
+      expect(mockUserService.findOne).toHaveBeenCalledWith('1');
     });
   });
 
@@ -86,7 +84,7 @@ describe('UserResolver', () => {
 
       const result = await resolver.createUser(createUserInput);
       expect(result).toEqual(mockUser);
-      expect(userService.create).toHaveBeenCalledWith(createUserInput);
+      expect(mockUserService.create).toHaveBeenCalledWith(createUserInput);
     });
   });
 
@@ -108,7 +106,7 @@ describe('UserResolver', () => {
 
       const result = await resolver.updateUser('1', updateUserInput);
       expect(result).toEqual(mockUser);
-      expect(userService.update).toHaveBeenCalledWith('1', updateUserInput);
+      expect(mockUserService.update).toHaveBeenCalledWith('1', updateUserInput);
     });
   });
 
@@ -118,7 +116,7 @@ describe('UserResolver', () => {
 
       const result = await resolver.removeUser('1');
       expect(result).toBe(true);
-      expect(userService.remove).toHaveBeenCalledWith('1');
+      expect(mockUserService.remove).toHaveBeenCalledWith('1');
     });
   });
 });
