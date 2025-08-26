@@ -163,7 +163,7 @@ export default function HomePage() {
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
               Don&apos;t have an account?{' '}
-              <Link href="/sign-in?mode=register" className="text-blue-600 hover:text-blue-500">
+              <Link href="/sign-in" className="text-blue-600 hover:text-blue-500">
                 Sign up here
               </Link>
             </p>

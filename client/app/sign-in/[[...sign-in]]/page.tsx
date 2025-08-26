@@ -1,7 +1,7 @@
 'use client';
 
 import { signIn, useSession } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getApolloClient } from '@/lib/apollo-client';
 import { REGISTER_MUTATION } from '@/lib/auth-mutations';
@@ -9,21 +9,12 @@ import { REGISTER_MUTATION } from '@/lib/auth-mutations';
 export default function SignInPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
-
-  // Check for mode=register query parameter
-  useEffect(() => {
-    const mode = searchParams.get('mode');
-    if (mode === 'register') {
-      setIsRegistering(true);
-    }
-  }, []); // Only run once on mount, not on every searchParams change
 
   // Redirect if already authenticated
   useEffect(() => {
