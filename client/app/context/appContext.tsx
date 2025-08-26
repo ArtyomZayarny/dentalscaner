@@ -1,30 +1,32 @@
 'use client';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { IAppointment, IUser, IDoctor, IClinic, IProcedure, ITimeSlot } from '../types';
 import { useQuery } from '@apollo/client';
 import {
   GET_APPOINTMENTS_BY_USER,
   GET_DOCTORS,
   GET_CLINICS,
   GET_PROCEDURES,
-} from '../../lib/graphql-queries';
+} from '@/lib/graphql-queries';
+import { ITimeSlot } from '../types';
+// Import generated types
+import { User, Doctor, Clinic, Procedure, Appointment } from '../types/generated';
 
-type AppContextType = {
-  user: IUser;
-  getData: () => void;
-  appointments: IAppointment[];
+interface AppContextType {
+  user: User;
+  getData: () => Promise<Appointment[] | []>;
+  appointments: Appointment[];
   appointmentsLoading: boolean;
-  appointmentsError: Error | undefined;
-  doctors: IDoctor[];
-  clinics: IClinic[];
-  procedures: IProcedure[];
+  appointmentsError: any;
+  doctors: Doctor[];
+  clinics: Clinic[];
+  procedures: Procedure[];
   timeSlots: ITimeSlot[];
   getAvailableTimeSlots: (doctorId: string, date: string) => ITimeSlot[];
-  getDoctorById: (id: string) => IDoctor | undefined;
-  getClinicById: (id: string) => IClinic | undefined;
-  getProcedureById: (id: string) => IProcedure | undefined;
-};
+  getDoctorById: (id: string) => Doctor | undefined;
+  getClinicById: (id: string) => Clinic | undefined;
+  getProcedureById: (id: string) => Procedure | undefined;
+}
 
 const AppContext = createContext({} as AppContextType);
 
@@ -37,17 +39,25 @@ export function AppContextProvider({
 
   const { data: session } = useSession();
 
-  // Convert NextAuth session to our IUser format
-  const user: IUser = session?.user
+  // Convert NextAuth session to our User format
+  const user: User = session?.user
     ? {
-        id: session.user.id || '', // Use real user ID from session
-        fullName: session.user.name || 'Unknown User',
+        id: session.user.id || 'f77704e8-ef73-4a74-af76-510469cd3fcb', // Use real user ID from session or fallback to first user
+        firstName: session.user.name?.split(' ')[0] || 'Unknown',
+        lastName: session.user.name?.split(' ').slice(1).join(' ') || 'User',
         email: session.user.email || '',
+        role: 'patient' as const,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }
     : {
-        id: '',
-        fullName: '',
-        email: '',
+        id: 'f77704e8-ef73-4a74-af76-510469cd3fcb', // Use first user as fallback
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@example.com',
+        role: 'patient' as const,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
 
   // Fetch real data from GraphQL
@@ -64,12 +74,12 @@ export function AppContextProvider({
   const { data: clinicsData } = useQuery(GET_CLINICS);
   const { data: proceduresData } = useQuery(GET_PROCEDURES);
 
-  const appointments: IAppointment[] = appointmentsData?.appointmentsByUserId || [];
-  const doctors: IDoctor[] = doctorsData?.doctors || [];
-  const clinics: IClinic[] = clinicsData?.clinics || [];
-  const procedures: IProcedure[] = proceduresData?.procedures || [];
+  const appointments: Appointment[] = appointmentsData?.appointmentsByUserId || [];
+  const doctors: Doctor[] = doctorsData?.doctors || [];
+  const clinics: Clinic[] = clinicsData?.clinics || [];
+  const procedures: Procedure[] = proceduresData?.procedures || [];
 
-  async function getData(): Promise<IAppointment[] | []> {
+  async function getData(): Promise<Appointment[] | []> {
     // This is now handled by GraphQL query
     return appointments;
   }
@@ -80,24 +90,55 @@ export function AppContextProvider({
     );
   };
 
-  const getDoctorById = (id: string): IDoctor | undefined => {
+  const getDoctorById = (id: string): Doctor | undefined => {
     return doctors.find((doctor) => doctor.id === id);
   };
 
-  const getClinicById = (id: string): IClinic | undefined => {
+  const getClinicById = (id: string): Clinic | undefined => {
     return clinics.find((clinic) => clinic.id === id);
   };
 
-  const getProcedureById = (id: string): IProcedure | undefined => {
+  const getProcedureById = (id: string): Procedure | undefined => {
     return procedures.find((procedure) => procedure.id === id);
   };
 
   useEffect(() => {
-    if (session?.user) {
-      // Load mock time slots for now (we'll replace with real data later)
-      setTimeSlots([]);
+    if (session?.user && doctors.length > 0 && clinics.length > 0) {
+      // Generate mock time slots for the next 30 days
+      const mockTimeSlots: ITimeSlot[] = [];
+      const today = new Date();
+
+      // Generate slots for the next 30 days
+      for (let i = 0; i < 30; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        const dateString = date.toISOString().split('T')[0];
+
+        // Generate time slots from 9 AM to 5 PM
+        const timeSlots = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'];
+
+        // For each doctor, create time slots
+        doctors.forEach((doctor) => {
+          timeSlots.forEach((time) => {
+            // Make some slots unavailable randomly (but not all)
+            const isAvailable = Math.random() > 0.3; // 70% chance of being available
+
+            mockTimeSlots.push({
+              id: `slot-${dateString}-${time}-${doctor.id}`,
+              doctorId: doctor.id,
+              clinicId: clinics[0]?.id || '', // Use first clinic as default
+              date: dateString,
+              time: time,
+              isAvailable: isAvailable,
+              duration: 60, // Default 60 minutes
+            });
+          });
+        });
+      }
+
+      setTimeSlots(mockTimeSlots);
     }
-  }, [session]);
+  }, [session?.user, doctors.length, clinics.length]);
 
   const value = {
     user,

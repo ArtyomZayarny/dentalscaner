@@ -12,7 +12,6 @@ export class ProcedureService {
 
   async findAll(): Promise<Procedure[]> {
     return this.procedureRepository.find({
-      where: { isActive: true },
       order: { name: 'ASC' },
     });
   }

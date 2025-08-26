@@ -100,11 +100,15 @@ export default function BookingDialog({
       .sort((a, b) => a.time.localeCompare(b.time));
   }, [selectedDoctor, selectedDate, timeSlots]);
 
-  // Get doctor's primary clinic
+  // Get doctor's primary clinic - fallback to first clinic if no clinicId
   const doctorPrimaryClinic = useMemo(() => {
-    if (!selectedDoctor || !clinics) return null;
-    return clinics.find((clinic) => clinic.doctors.includes(selectedDoctor));
-  }, [selectedDoctor, clinics]);
+    if (!clinics || clinics.length === 0) return null;
+    if (!selectedDoctor || !doctors) return clinics[0]; // Fallback to first clinic
+    const doctor = doctors.find((d) => d.id === selectedDoctor);
+    if (!doctor) return clinics[0]; // Fallback to first clinic
+    // For now, use the first clinic since we don't have clinicId in the database
+    return clinics[0];
+  }, [selectedDoctor, clinics, doctors]);
 
   const handleDoctorSelect = (doctorId: string) => {
     setSelectedDoctor(doctorId);
@@ -169,7 +173,7 @@ export default function BookingDialog({
         date: selectedDate,
         time: selectedTime,
         duration: selectedProcedureDetails.duration,
-        amount: selectedProcedureDetails.price.min,
+        amount: selectedProcedureDetails.price,
         notes: notes || undefined,
       });
 
@@ -182,7 +186,7 @@ export default function BookingDialog({
           date: selectedDate,
           time: selectedTime,
           duration: selectedProcedureDetails.duration,
-          amount: selectedProcedureDetails.price.min,
+          amount: selectedProcedureDetails.price,
           notes: notes || undefined,
         },
       });
@@ -420,7 +424,7 @@ export default function BookingDialog({
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-gray-700">Price:</span>
               <span className="text-lg font-bold text-blue-600">
-                ${selectedProcedureDetails.price.min}
+                ${selectedProcedureDetails.price}
               </span>
             </div>
             <div className="flex items-center justify-between mt-1">

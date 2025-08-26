@@ -30,13 +30,13 @@ export class Procedure {
   @Column()
   duration: number; // in minutes
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  image?: string;
+  // @Field({ nullable: true })
+  // @Column({ nullable: true })
+  // image?: string;
 
-  @Field()
-  @Column({ default: true })
-  isActive: boolean;
+  // @Field()
+  // @Column({ default: true })
+  // isActive: boolean;
 
   @Field()
   @CreateDateColumn()

@@ -9,6 +9,13 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      authorization: {
+        params: {
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+        },
+      },
     }),
     CredentialsProvider({
       name: 'Credentials',
@@ -53,6 +60,36 @@ const handler = NextAuth({
     signIn: '/sign-in',
   },
   callbacks: {
+    async signIn({ user, account, profile }) {
+      // Handle Google OAuth sign in
+      if (account?.provider === 'google') {
+        console.log('Google OAuth signIn callback triggered');
+        console.log('User:', user);
+        console.log('Account:', account);
+        console.log('Profile:', profile);
+
+        try {
+          const { data } = await serverClient.mutate({
+            mutation: GOOGLE_LOGIN_MUTATION,
+            variables: {
+              token: account.id_token,
+            },
+          });
+
+          console.log('Google login mutation result:', data);
+
+          if (data?.googleLogin?.user?.id) {
+            // Update the user object with the UUID from our database
+            user.id = data.googleLogin.user.id;
+            console.log('Updated user ID to UUID:', user.id);
+            return true;
+          }
+        } catch (error) {
+          console.error('Error in signIn callback:', error);
+        }
+      }
+      return true;
+    },
     async jwt({ token, user, account }) {
       // Persist user data and token in JWT
       if (user) {
@@ -66,7 +103,7 @@ const handler = NextAuth({
         try {
           console.log('Google OAuth account:', account);
           console.log('Original token.id before Google login:', token.id);
-          
+
           const { data } = await serverClient.mutate({
             mutation: GOOGLE_LOGIN_MUTATION,
             variables: {
@@ -80,9 +117,10 @@ const handler = NextAuth({
             // Ensure we have a proper UUID
             const userId = data.googleLogin.user.id;
             console.log('Received user ID from GraphQL:', userId);
-            
+
             // Validate that it's a UUID format
-            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+            const uuidRegex =
+              /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
             if (uuidRegex.test(userId)) {
               token.id = userId;
               token.role = data.googleLogin.user.role;

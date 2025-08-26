@@ -1,0 +1,52 @@
+name: Type Check & Validation
+on: [push, pull_request]
+
+jobs:
+  type-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies (Client)
+        run: |
+          cd client
+          npm ci
+
+      - name: Install dependencies (Server)
+        run: |
+          cd server
+          npm ci
+
+      - name: Start server
+        run: |
+          cd server
+          npm run build
+          npm run start:prod &
+          sleep 10
+
+      - name: Generate GraphQL types
+        run: |
+          cd client
+          npm run codegen
+
+      - name: Type check frontend
+        run: |
+          cd client
+          npm run type-check
+
+      - name: Type check backend
+        run: |
+          cd server
+          npm run build
+
+      - name: Run tests
+        run: |
+          cd server
+          npm test

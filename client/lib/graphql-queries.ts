@@ -4,15 +4,9 @@ export const GET_DOCTORS = gql`
   query GetDoctors {
     doctors {
       id
-      firstName
-      lastName
+      name
       specialization
-      bio
       avatar
-      rating
-      reviewCount
-      availability
-      clinicId
     }
   }
 `;
@@ -37,10 +31,7 @@ export const GET_PROCEDURES = gql`
       name
       description
       price
-      priceMax
       duration
-      image
-      isActive
     }
   }
 `;
@@ -130,38 +121,4 @@ export const CREATE_APPOINTMENT = gql`
   }
 `;
 
-export const GET_ALL_APPOINTMENTS = gql`
-  query GetAllAppointments {
-    appointments {
-      id
-      userId
-      doctorId
-      clinicId
-      procedureId
-      date
-      time
-      duration
-      amount
-      status
-      paid
-      notes
-      createdAt
-      updatedAt
-    }
-  }
-`;
 
-export const GET_USERS = gql`
-  query GetUsers {
-    users {
-      id
-      email
-      firstName
-      lastName
-      role
-      phone
-      address
-      dateOfBirth
-    }
-  }
-`;

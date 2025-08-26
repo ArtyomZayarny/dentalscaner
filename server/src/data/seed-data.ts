@@ -44,23 +44,20 @@ export const mockDoctors = [
   {
     id: '550e8400-e29b-41d4-a716-446655440001',
     name: 'Dr. Sarah Johnson',
-    email: 'sarah.johnson@dental.com',
     specialization: 'General Dentistry',
-    phone: '+1 (555) 123-4567',
+    avatar: 'https://example.com/avatar1.jpg',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Dr. Michael Chen',
-    email: 'michael.chen@dental.com',
     specialization: 'Orthodontics',
-    phone: '+1 (555) 123-4568',
+    avatar: 'https://example.com/avatar2.jpg',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440003',
     name: 'Dr. Emily Rodriguez',
-    email: 'emily.rodriguez@dental.com',
     specialization: 'Endodontics',
-    phone: '+1 (555) 123-4569',
+    avatar: 'https://example.com/avatar3.jpg',
   },
 ];
 
@@ -90,8 +87,6 @@ export const mockProcedures = [
     description: 'Comprehensive oral examination including X-rays and cleaning',
     duration: 60,
     price: 80,
-    image: undefined,
-    isActive: true,
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440202',
@@ -99,8 +94,6 @@ export const mockProcedures = [
     description: 'Deep cleaning to remove plaque and tartar buildup',
     duration: 45,
     price: 100,
-    image: undefined,
-    isActive: true,
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440203',
@@ -108,7 +101,5 @@ export const mockProcedures = [
     description: 'Painless treatment to restore damaged teeth',
     duration: 30,
     price: 200,
-    image: undefined,
-    isActive: true,
   },
 ];

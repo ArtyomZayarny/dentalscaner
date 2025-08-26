@@ -1,42 +1,32 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Enable CORS for both development and production
-  const allowedOrigins = [
-    'http://localhost:3000', // Development
-    process.env.FRONTEND_URL, // From environment variable
-    process.env.PRODUCTION_FRONTEND_URL, // Production frontend URL
-  ].filter(Boolean); // Remove undefined values
-
+  // Enable CORS
   app.enableCors({
-    origin: (
-      origin: string | undefined,
-      callback: (err: Error | null, allow?: boolean) => void,
-    ) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: [
+      process.env.FRONTEND_URL || 'http://localhost:3000',
+      process.env.PRODUCTION_FRONTEND_URL ||
+        'https://dentalscaner-fe.vercel.app',
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
-  await app.listen(process.env.PORT ?? 3001);
-}
+  // Enable global validation
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // Remove properties that don't have decorators
+      forbidNonWhitelisted: true, // Throw error if non-whitelisted properties are present
+      transform: true, // Transform payloads to DTO instances
+    }),
+  );
 
-// For Vercel serverless deployment
-if (process.env.NODE_ENV !== 'production') {
-  void bootstrap();
+  await app.listen(process.env.PORT || 3001);
+  console.log(`🚀 Server running on port ${process.env.PORT || 3001}`);
 }
-
-// Export for Vercel - always run in production
-export default bootstrap;
+bootstrap();
