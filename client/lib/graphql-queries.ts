@@ -1,5 +1,74 @@
 import { gql } from '@apollo/client';
 
+export const GET_DOCTORS = gql`
+  query GetDoctors {
+    doctors {
+      id
+      firstName
+      lastName
+      specialization
+      bio
+      avatar
+      rating
+      reviewCount
+      availability
+      clinicId
+    }
+  }
+`;
+
+export const GET_CLINICS = gql`
+  query GetClinics {
+    clinics {
+      id
+      name
+      address
+      phone
+      email
+      description
+      image
+      workingHours
+    }
+  }
+`;
+
+export const GET_PROCEDURES = gql`
+  query GetProcedures {
+    procedures {
+      id
+      name
+      description
+      price
+      priceMax
+      duration
+      image
+      isActive
+    }
+  }
+`;
+
+export const GET_APPOINTMENTS = gql`
+  query GetAppointments {
+    appointments {
+      id
+      userId
+      doctorId
+      clinicId
+      procedureId
+      date
+      time
+      duration
+      amount
+      status
+      notes
+      stripePaymentIntentId
+      isPaid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 export const GET_APPOINTMENTS_BY_USER = gql`
   query GetAppointmentsByUserId($userId: String!) {
     appointmentsByUserId(userId: $userId) {
@@ -13,8 +82,9 @@ export const GET_APPOINTMENTS_BY_USER = gql`
       duration
       amount
       status
-      paid
       notes
+      stripePaymentIntentId
+      isPaid
       createdAt
       updatedAt
     }

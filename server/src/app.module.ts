@@ -16,10 +16,16 @@ import { Procedure } from './entities/procedure.entity';
 import { UserService } from './services/user.service';
 import { SeederService } from './services/seeder.service';
 import { AppointmentService } from './services/appointment.service';
+import { DoctorService } from './services/doctor.service';
+import { ClinicService } from './services/clinic.service';
+import { ProcedureService } from './services/procedure.service';
 
 // Resolvers
 import { UserResolver } from './graphql/resolvers/user.resolver';
 import { AppointmentResolver } from './graphql/resolvers/appointment.resolver';
+import { DoctorResolver } from './graphql/resolvers/doctor.resolver';
+import { ClinicResolver } from './graphql/resolvers/clinic.resolver';
+import { ProcedureResolver } from './graphql/resolvers/procedure.resolver';
 
 // Controllers
 import { SeederController } from './controllers/seeder.controller';
@@ -49,8 +55,14 @@ import { PaymentController } from './controllers/payment.controller';
     UserService,
     SeederService,
     AppointmentService,
+    DoctorService,
+    ClinicService,
+    ProcedureService,
     UserResolver,
     AppointmentResolver,
+    DoctorResolver,
+    ClinicResolver,
+    ProcedureResolver,
   ],
 })
 export class AppModule {}
