@@ -2,9 +2,13 @@
 import { useSession } from 'next-auth/react';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { IAppointment, IUser, IDoctor, IClinic, IProcedure, ITimeSlot } from '../types';
-import { mockDoctors, mockClinics, mockProcedures, mockTimeSlots } from '../data/mockData';
 import { useQuery } from '@apollo/client';
-import { GET_APPOINTMENTS_BY_USER } from '../../lib/graphql-queries';
+import {
+  GET_APPOINTMENTS_BY_USER,
+  GET_DOCTORS,
+  GET_CLINICS,
+  GET_PROCEDURES,
+} from '../../lib/graphql-queries';
 
 type AppContextType = {
   user: IUser;
@@ -29,9 +33,6 @@ export function AppContextProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [doctors, setDoctors] = useState<IDoctor[]>([]);
-  const [clinics, setClinics] = useState<IClinic[]>([]);
-  const [procedures, setProcedures] = useState<IProcedure[]>([]);
   const [timeSlots, setTimeSlots] = useState<ITimeSlot[]>([]);
 
   const { data: session } = useSession();
@@ -39,7 +40,7 @@ export function AppContextProvider({
   // Convert NextAuth session to our IUser format
   const user: IUser = session?.user
     ? {
-        id: 'f7984366-3ae9-49d8-b133-47474d4d1231', // Use John Doe's UUID for testing
+        id: session.user.id || '', // Use real user ID from session
         fullName: session.user.name || 'Unknown User',
         email: session.user.email || '',
       }
@@ -49,7 +50,7 @@ export function AppContextProvider({
         email: '',
       };
 
-  // Fetch real appointments from GraphQL
+  // Fetch real data from GraphQL
   const {
     data: appointmentsData,
     loading: appointmentsLoading,
@@ -59,7 +60,14 @@ export function AppContextProvider({
     skip: !user.id,
   });
 
+  const { data: doctorsData } = useQuery(GET_DOCTORS);
+  const { data: clinicsData } = useQuery(GET_CLINICS);
+  const { data: proceduresData } = useQuery(GET_PROCEDURES);
+
   const appointments: IAppointment[] = appointmentsData?.appointmentsByUserId || [];
+  const doctors: IDoctor[] = doctorsData?.doctors || [];
+  const clinics: IClinic[] = clinicsData?.clinics || [];
+  const procedures: IProcedure[] = proceduresData?.procedures || [];
 
   async function getData(): Promise<IAppointment[] | []> {
     // This is now handled by GraphQL query
@@ -86,12 +94,8 @@ export function AppContextProvider({
 
   useEffect(() => {
     if (session?.user) {
-      // Load mock data for doctors, clinics, procedures, and time slots
-      // (We'll replace these with real data later)
-      setDoctors(mockDoctors);
-      setClinics(mockClinics);
-      setProcedures(mockProcedures);
-      setTimeSlots(mockTimeSlots);
+      // Load mock time slots for now (we'll replace with real data later)
+      setTimeSlots([]);
     }
   }, [session]);
 
