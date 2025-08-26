@@ -12,7 +12,7 @@ export class DoctorService {
 
   async findAll(): Promise<Doctor[]> {
     return this.doctorRepository.find({
-      order: { firstName: 'ASC' },
+      order: { name: 'ASC' },
     });
   }
 

@@ -16,11 +16,7 @@ export class Doctor {
 
   @Field()
   @Column()
-  firstName: string;
-
-  @Field()
-  @Column()
-  lastName: string;
+  name: string;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
