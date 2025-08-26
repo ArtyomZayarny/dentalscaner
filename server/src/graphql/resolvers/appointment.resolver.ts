@@ -1,15 +1,9 @@
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  ResolveField,
-  Parent,
-  Int,
-  Float,
-} from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Float } from '@nestjs/graphql';
 import { AppointmentService } from '../../services/appointment.service';
-import { Appointment } from '../../entities/appointment.entity';
+import {
+  Appointment,
+  AppointmentStatus,
+} from '../../entities/appointment.entity';
 
 @Resolver(() => Appointment)
 export class AppointmentResolver {
@@ -64,8 +58,8 @@ export class AppointmentResolver {
     @Args('paid', { type: () => Boolean, nullable: true }) paid?: boolean,
     @Args('notes', { type: () => String, nullable: true }) notes?: string,
   ) {
-    const updateData: any = {};
-    if (status) updateData.status = status;
+    const updateData: Partial<Appointment> = {};
+    if (status) updateData.status = status as AppointmentStatus;
     if (paid !== undefined) updateData.paid = paid;
     if (notes) updateData.notes = notes;
 

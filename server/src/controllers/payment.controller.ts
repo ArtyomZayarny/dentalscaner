@@ -44,10 +44,13 @@ export class PaymentController {
       return {
         sessionId,
       };
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error creating checkout session:', error);
-      console.error('Error stack:', error.stack);
-      throw new Error(`Failed to create checkout session: ${error.message}`);
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
+      const errorStack = error instanceof Error ? error.stack : undefined;
+      console.error('Error stack:', errorStack);
+      throw new Error(`Failed to create checkout session: ${errorMessage}`);
     }
   }
 
@@ -63,29 +66,32 @@ export class PaymentController {
 
     try {
       event = this.stripe.webhooks.constructEvent(
-        req.body,
+        req.body as string | Buffer,
         sig as string,
         endpointSecret,
       );
-    } catch (err) {
-      console.error('Webhook signature verification failed:', err.message);
-      return res.status(400).send(`Webhook Error: ${err.message}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      console.error('Webhook signature verification failed:', errorMessage);
+      return res.status(400).send(`Webhook Error: ${errorMessage}`);
     }
 
     // Handle the event
     switch (event.type) {
-      case 'checkout.session.completed':
-        const session = event.data.object as Stripe.Checkout.Session;
+      case 'checkout.session.completed': {
+        const session = event.data.object;
         console.log('Checkout session completed!');
 
         // Update appointment as paid
         await this.appointmentService.confirmPayment(session.id);
         break;
+      }
 
-      case 'checkout.session.expired':
-        const expiredSession = event.data.object as Stripe.Checkout.Session;
+      case 'checkout.session.expired': {
+        const expiredSession = event.data.object;
         console.log('Checkout session expired:', expiredSession.id);
         break;
+      }
 
       default:
         console.log(`Unhandled event type ${event.type}`);
@@ -105,7 +111,7 @@ export class PaymentController {
   }
 
   @Get('cancel/:appointmentId')
-  async paymentCancel(@Param('appointmentId') appointmentId: string) {
+  paymentCancel() {
     return {
       success: false,
       message: 'Payment was cancelled. You can try booking again.',

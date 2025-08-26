@@ -44,9 +44,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  async googleLogin(
-    @Args('token', { type: () => String }) token: string,
-  ) {
+  async googleLogin(@Args('token', { type: () => String }) token: string) {
     return this.userService.googleLogin(token);
   }
 }
