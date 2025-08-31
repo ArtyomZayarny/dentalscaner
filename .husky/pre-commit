@@ -1,12 +1,19 @@
 #!/usr/bin/env sh
+set -e  # Exit on any error
 
 echo "🔍 Running pre-commit checks..."
 
 # Run client checks
 cd client
 echo "📱 Checking client..."
+
+echo "🔍 Running lint..."
 npm run lint
+
+echo "🔍 Running TypeScript check..."
 npm run type-check
+
+echo "🔍 Running build..."
 npm run build
 
 echo "✅ Pre-commit checks completed!"

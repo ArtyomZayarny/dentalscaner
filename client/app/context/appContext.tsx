@@ -8,9 +8,19 @@ import {
   GET_CLINICS,
   GET_PROCEDURES,
 } from '@/lib/graphql-queries';
-import { ITimeSlot } from '../types';
 // Import generated types
 import { User, Doctor, Clinic, Procedure, Appointment } from '../types/generated';
+
+// Define TimeSlot interface locally since it's not in generated types
+interface TimeSlot {
+  id: string;
+  doctorId: string;
+  clinicId: string;
+  date: string;
+  time: string;
+  isAvailable: boolean;
+  duration: number;
+}
 
 interface AppContextType {
   user: User;
@@ -21,8 +31,8 @@ interface AppContextType {
   doctors: Doctor[];
   clinics: Clinic[];
   procedures: Procedure[];
-  timeSlots: ITimeSlot[];
-  getAvailableTimeSlots: (doctorId: string, date: string) => ITimeSlot[];
+  timeSlots: TimeSlot[];
+  getAvailableTimeSlots: (doctorId: string, date: string) => TimeSlot[];
   getDoctorById: (id: string) => Doctor | undefined;
   getClinicById: (id: string) => Clinic | undefined;
   getProcedureById: (id: string) => Procedure | undefined;
@@ -35,7 +45,7 @@ export function AppContextProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [timeSlots, setTimeSlots] = useState<ITimeSlot[]>([]);
+  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
 
   const { data: session } = useSession();
 
@@ -77,14 +87,17 @@ export function AppContextProvider({
   const appointments: Appointment[] = appointmentsData?.appointmentsByUserId || [];
   const doctors: Doctor[] = useMemo(() => doctorsData?.doctors || [], [doctorsData?.doctors]);
   const clinics: Clinic[] = useMemo(() => clinicsData?.clinics || [], [clinicsData?.clinics]);
-  const procedures: Procedure[] = useMemo(() => proceduresData?.procedures || [], [proceduresData?.procedures]);
+  const procedures: Procedure[] = useMemo(
+    () => proceduresData?.procedures || [],
+    [proceduresData?.procedures],
+  );
 
   async function getData(): Promise<Appointment[] | []> {
     // This is now handled by GraphQL query
     return appointments;
   }
 
-  const getAvailableTimeSlots = (doctorId: string, date: string): ITimeSlot[] => {
+  const getAvailableTimeSlots = (doctorId: string, date: string): TimeSlot[] => {
     return timeSlots.filter(
       (slot) => slot.doctorId === doctorId && slot.date === date && slot.isAvailable,
     );
@@ -105,7 +118,7 @@ export function AppContextProvider({
   useEffect(() => {
     if (session?.user && doctors.length > 0 && clinics.length > 0) {
       // Generate mock time slots for the next 30 days
-      const mockTimeSlots: ITimeSlot[] = [];
+      const mockTimeSlots: TimeSlot[] = [];
       const today = new Date();
 
       // Generate slots for the next 30 days
