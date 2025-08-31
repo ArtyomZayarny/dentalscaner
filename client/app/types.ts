@@ -1,7 +1,4 @@
-// Import shared types to ensure consistency
-export * from '../../shared/types';
-
-// Frontend-specific types can be added here
+// Frontend-specific types
 export interface IFilterOptions {
   date?: string;
   doctorId?: string;
