@@ -18,6 +18,10 @@ export class Doctor {
   @Column()
   name: string;
 
+  @Field()
+  @Column()
+  email: string;
+
   @Field({ nullable: true })
   @Column({ nullable: true })
   specialization?: string;

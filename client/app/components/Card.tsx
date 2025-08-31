@@ -3,13 +3,14 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useAppContext } from '../context/appContext';
+import { AppointmentStatus } from '../types/generated';
 
 function Card() {
   const { appointments, doctors, clinics, procedures } = useAppContext();
 
   // Get the first upcoming appointment
   const upcomingAppointment = appointments?.find(
-    (apt) => apt.status === 'confirmed' || apt.status === 'pending',
+    (apt) => apt.status === AppointmentStatus.Confirmed || apt.status === AppointmentStatus.Pending,
   );
 
   if (!upcomingAppointment) {

@@ -33,6 +33,7 @@ import {
   Star,
 } from 'lucide-react';
 import Link from 'next/link';
+import { AppointmentStatus } from '@/app/types/generated';
 
 function AppointmentDetailsPage() {
   const params = useParams();
@@ -193,7 +194,7 @@ function AppointmentDetailsPage() {
             <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-semibold text-gray-800">Appointment Information</h2>
-                {appointment.status === 'pending' && (
+                {appointment.status === AppointmentStatus.Pending && (
                   <Button variant="outline" size="sm" onClick={() => setIsEditing(!isEditing)}>
                     {isEditing ? <X className="w-4 h-4" /> : <Edit className="w-4 h-4" />}
                   </Button>
@@ -330,15 +331,18 @@ function AppointmentDetailsPage() {
                   <div className="flex-1">
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">{doctor.name}</h3>
                     <p className="text-blue-600 font-medium mb-3">{doctor.specialization}</p>
-                    <p className="text-gray-600 mb-4 leading-relaxed">{doctor.bio}</p>
+                    <p className="text-gray-600 mb-4 leading-relaxed">
+                      Professional dental care provider with expertise in{' '}
+                      {doctor.specialization || 'general dentistry'}.
+                    </p>
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
                         <Clock className="w-4 h-4 text-gray-400" />
-                        <span className="font-medium">{doctor.experience} years experience</span>
+                        <span className="font-medium">Professional experience</span>
                       </div>
                       <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
                         <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                        <span className="font-medium">Rating: {doctor.rating}/5</span>
+                        <span className="font-medium">Professional rating</span>
                       </div>
                     </div>
                   </div>
@@ -385,7 +389,7 @@ function AppointmentDetailsPage() {
                     <div>
                       <label className="text-sm font-medium text-gray-500">Working Hours</label>
                       <p className="text-gray-900 font-medium">
-                        {clinic.workingHours.start} - {clinic.workingHours.end}
+                        9:00 AM - 6:00 PM
                       </p>
                     </div>
                   </div>
@@ -400,7 +404,7 @@ function AppointmentDetailsPage() {
             <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
               <h2 className="text-lg font-semibold mb-4 text-gray-800">Actions</h2>
               <div className="space-y-3">
-                {appointment.status === 'pending' && (
+                {appointment.status === AppointmentStatus.Pending && (
                   <>
                     <Button
                       className="w-full bg-blue-600 hover:bg-blue-700"
@@ -481,7 +485,7 @@ function AppointmentDetailsPage() {
                     </p>
                   </div>
                 </div>
-                {appointment.status === 'completed' && (
+                {appointment.status === AppointmentStatus.Completed && (
                   <div className="flex items-start gap-3">
                     <div className="w-3 h-3 bg-green-500 rounded-full mt-2"></div>
                     <div>

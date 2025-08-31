@@ -81,7 +81,7 @@ function AppointmentPage() {
       )}
 
       {/* Greeting section */}
-      <h1 className="text-3xl font-semibold mb-8">{`Welcome ${user.fullName}`}</h1>
+      <h1 className="text-3xl font-semibold mb-8">{`Welcome ${user.firstName} ${user.lastName}`}</h1>
 
       {/* Breadcrumbs section  */}
       <div className="flex gap-1 items-center text-[#616061] font-medium text-xs mb-8">

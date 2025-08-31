@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useAppContext } from '../context/appContext';
+import { AppointmentStatus } from '../types/generated';
 import Loading from '../components/Loading';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,7 +25,7 @@ function ProfilePage() {
   const { user, appointments, doctors, clinics, procedures } = useAppContext();
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
-    fullName: user?.fullName || '',
+    fullName: `${user?.firstName || ''} ${user?.lastName || ''}`.trim(),
     email: user?.email || '',
     phone: user?.phone || '',
     address: user?.address || '',
@@ -44,7 +45,7 @@ function ProfilePage() {
 
   const handleCancel = () => {
     setEditForm({
-      fullName: user?.fullName || '',
+      fullName: `${user?.firstName || ''} ${user?.lastName || ''}`.trim(),
       email: user?.email || '',
       phone: user?.phone || '',
       address: user?.address || '',
@@ -55,21 +56,21 @@ function ProfilePage() {
 
   // Calculate statistics
   const totalAppointments = appointments.length;
-  const completedAppointments = appointments.filter((apt) => apt.status === 'completed').length;
-  const pendingAppointments = appointments.filter((apt) => apt.status === 'pending').length;
-  const confirmedAppointments = appointments.filter((apt) => apt.status === 'confirmed').length;
+  const completedAppointments = appointments.filter((apt) => apt.status === AppointmentStatus.Completed).length;
+  const pendingAppointments = appointments.filter((apt) => apt.status === AppointmentStatus.Pending).length;
+  const confirmedAppointments = appointments.filter((apt) => apt.status === AppointmentStatus.Confirmed).length;
 
 
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed':
+      case AppointmentStatus.Completed:
         return 'bg-green-100 text-green-800';
-      case 'confirmed':
+      case AppointmentStatus.Confirmed:
         return 'bg-blue-100 text-blue-800';
-      case 'pending':
+      case AppointmentStatus.Pending:
         return 'bg-yellow-100 text-yellow-800';
-      case 'cancelled':
+      case AppointmentStatus.Cancelled:
         return 'bg-red-100 text-red-800';
       default:
         return 'bg-gray-100 text-gray-800';
@@ -132,7 +133,7 @@ function ProfilePage() {
                       className="mt-1"
                     />
                   ) : (
-                    <p className="text-gray-900">{user.fullName}</p>
+                    <p className="text-gray-900">{user.firstName} {user.lastName}</p>
                   )}
                 </div>
               </div>
@@ -167,7 +168,7 @@ function ProfilePage() {
                       className="mt-1"
                     />
                   ) : (
-                    <p className="text-gray-900">{user.phone || 'Not provided'}</p>
+                    <p className="text-gray-900">Not provided</p>
                   )}
                 </div>
               </div>
@@ -202,7 +203,7 @@ function ProfilePage() {
                       className="mt-1"
                     />
                   ) : (
-                    <p className="text-gray-900">{user.dateOfBirth || 'Not provided'}</p>
+                    <p className="text-gray-900">Not provided</p>
                   )}
                 </div>
               </div>

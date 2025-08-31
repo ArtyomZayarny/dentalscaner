@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { useQuery } from '@apollo/client';
 import {
@@ -17,7 +17,7 @@ interface AppContextType {
   getData: () => Promise<Appointment[] | []>;
   appointments: Appointment[];
   appointmentsLoading: boolean;
-  appointmentsError: any;
+  appointmentsError: Error | undefined;
   doctors: Doctor[];
   clinics: Clinic[];
   procedures: Procedure[];
@@ -75,9 +75,9 @@ export function AppContextProvider({
   const { data: proceduresData } = useQuery(GET_PROCEDURES);
 
   const appointments: Appointment[] = appointmentsData?.appointmentsByUserId || [];
-  const doctors: Doctor[] = doctorsData?.doctors || [];
-  const clinics: Clinic[] = clinicsData?.clinics || [];
-  const procedures: Procedure[] = proceduresData?.procedures || [];
+  const doctors: Doctor[] = useMemo(() => doctorsData?.doctors || [], [doctorsData?.doctors]);
+  const clinics: Clinic[] = useMemo(() => clinicsData?.clinics || [], [clinicsData?.clinics]);
+  const procedures: Procedure[] = useMemo(() => proceduresData?.procedures || [], [proceduresData?.procedures]);
 
   async function getData(): Promise<Appointment[] | []> {
     // This is now handled by GraphQL query
@@ -138,7 +138,7 @@ export function AppContextProvider({
 
       setTimeSlots(mockTimeSlots);
     }
-  }, [session?.user, doctors.length, clinics.length]);
+  }, [session?.user, doctors, clinics]);
 
   const value = {
     user,

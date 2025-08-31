@@ -13,8 +13,16 @@ import {
 import { Plus, Calendar, Clock, User } from 'lucide-react';
 import { useMutation } from '@apollo/client';
 import { CREATE_APPOINTMENT } from '@/lib/graphql-queries';
-import { IDoctor, IClinic, IProcedure, ITimeSlot } from '../types';
+import { Doctor, Clinic, Procedure } from '../types/generated';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+
+interface TimeSlot {
+  id: string;
+  doctorId: string;
+  date: string;
+  time: string;
+  isAvailable: boolean;
+}
 
 // Add Stripe to window type
 declare global {
@@ -29,10 +37,10 @@ declare global {
 
 interface BookingDialogProps {
   userId: string;
-  doctors: IDoctor[];
-  clinics: IClinic[];
-  procedures: IProcedure[];
-  timeSlots: ITimeSlot[];
+  doctors: Doctor[];
+  clinics: Clinic[];
+  procedures: Procedure[];
+  timeSlots: TimeSlot[];
   trigger?: React.ReactNode;
   triggerClassName?: string;
   title?: string;
@@ -271,11 +279,11 @@ export default function BookingDialog({
               <div className="flex-1">
                 <h4 className="font-medium">{doctor.name}</h4>
                 <p className="text-sm text-gray-600">{doctor.specialization}</p>
-                <p className="text-sm text-gray-500">{doctor.experience} years experience</p>
+                <p className="text-sm text-gray-500">Professional experience</p>
               </div>
               <div className="flex items-center gap-1">
                 <span className="text-yellow-500">★</span>
-                <span className="text-sm font-medium">{doctor.rating}</span>
+                <span className="text-sm font-medium">Professional</span>
               </div>
             </div>
           </div>

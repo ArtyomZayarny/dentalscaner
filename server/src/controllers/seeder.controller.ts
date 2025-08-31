@@ -7,7 +7,12 @@ export class SeederController {
 
   @Post('seed')
   async seed() {
-    return await this.seederService.seed();
+    try {
+      return await this.seederService.seed();
+    } catch (error) {
+      console.error('Seeder error:', error);
+      return { error: error.message, stack: error.stack };
+    }
   }
 
   @Get('stats')

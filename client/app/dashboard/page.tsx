@@ -8,6 +8,7 @@ import Link from 'next/link';
 import BookingDialog from '../components/BookingDialog';
 import StatCard from '../components/StatCard';
 import List from '../components/List';
+import { AppointmentStatus } from '../types/generated';
 
 function OverviewPage() {
   const {
@@ -50,20 +51,20 @@ function OverviewPage() {
   // Calculate statistics
   const totalAppointments = appointments.length;
   const upcomingAppointments = appointments
-    .filter((apt) => apt.status === 'confirmed' || apt.status === 'pending')
+    .filter((apt) => apt.status === AppointmentStatus.Confirmed || apt.status === AppointmentStatus.Pending)
     .slice(0, 3);
-  const completedAppointments = appointments.filter((apt) => apt.status === 'completed').length;
-  const pendingAppointments = appointments.filter((apt) => apt.status === 'pending').length;
+  const completedAppointments = appointments.filter((apt) => apt.status === AppointmentStatus.Completed).length;
+  const pendingAppointments = appointments.filter((apt) => apt.status === AppointmentStatus.Pending).length;
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed':
+      case AppointmentStatus.Completed:
         return 'bg-green-100 text-green-800';
-      case 'confirmed':
+      case AppointmentStatus.Confirmed:
         return 'bg-blue-100 text-blue-800';
-      case 'pending':
+      case AppointmentStatus.Pending:
         return 'bg-yellow-100 text-yellow-800';
-      case 'cancelled':
+      case AppointmentStatus.Cancelled:
         return 'bg-red-100 text-red-800';
       default:
         return 'bg-gray-100 text-gray-800';
@@ -161,7 +162,9 @@ function OverviewPage() {
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">👋 Hello, {user.fullName}!</h1>
+        <h1 className="text-3xl font-bold mb-2">
+          👋 Hello, {user.firstName} {user.lastName}!
+        </h1>
         <p className="text-gray-600">Welcome back to your dental care dashboard</p>
       </div>
 

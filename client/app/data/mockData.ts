@@ -1,52 +1,42 @@
-import { IDoctor, IClinic, IProcedure, ITimeSlot, IAppointment } from '../types';
+import { Doctor, Clinic, Procedure, AppointmentStatus } from '../types/generated';
 
-export const mockDoctors: IDoctor[] = [
+export const mockDoctors: Doctor[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440001',
     name: 'Dr. Sarah Johnson',
     specialization: 'General Dentistry',
-    experience: 8,
-    rating: 4.8,
-    image: '/doctors/doctor-1.jpg',
-    bio: 'Experienced general dentist with focus on preventive care and patient comfort.',
-    availableDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-    workingHours: { start: '09:00', end: '17:00' },
+    avatar: '/doctors/doctor-1.jpg',
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Dr. Michael Chen',
     specialization: 'Orthodontics',
-    experience: 12,
-    rating: 4.9,
-    image: '/doctors/doctor-2.jpg',
-    bio: 'Specialist in orthodontics with expertise in braces and Invisalign treatment.',
-    availableDays: ['Monday', 'Wednesday', 'Friday'],
-    workingHours: { start: '10:00', end: '18:00' },
+    avatar: '/doctors/doctor-2.jpg',
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440003',
     name: 'Dr. Emily Rodriguez',
     specialization: 'Endodontics',
-    experience: 6,
-    rating: 4.7,
-    image: '/doctors/doctor-3.jpg',
-    bio: 'Root canal specialist committed to pain-free treatment experiences.',
-    availableDays: ['Tuesday', 'Thursday', 'Saturday'],
-    workingHours: { start: '08:00', end: '16:00' },
+    avatar: '/doctors/doctor-3.jpg',
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
 
-export const mockClinics: IClinic[] = [
+export const mockClinics: Clinic[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440101',
     name: 'Bright Smile Dental Clinic',
     address: '123 Main Street, Downtown',
     phone: '+1 (555) 123-4567',
     email: 'info@brightsmile.com',
-    image: '/clinics/clinic-1.jpg',
-    rating: 4.6,
-    workingHours: { start: '08:00', end: '18:00' },
-    doctors: ['550e8400-e29b-41d4-a716-446655440001', '550e8400-e29b-41d4-a716-446655440002'],
+    description: 'Professional dental care in downtown',
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440102',
@@ -54,69 +44,78 @@ export const mockClinics: IClinic[] = [
     address: '456 Oak Avenue, Westside',
     phone: '+1 (555) 987-6543',
     email: 'contact@familydental.com',
-    image: '/clinics/clinic-2.jpg',
-    rating: 4.4,
-    workingHours: { start: '09:00', end: '17:00' },
-    doctors: ['550e8400-e29b-41d4-a716-446655440001', '550e8400-e29b-41d4-a716-446655440003'],
+    description: 'Family-friendly dental services',
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
 
-export const mockProcedures: IProcedure[] = [
+export const mockProcedures: Procedure[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440201',
     name: 'Routine Dental Check-up',
     description: 'Comprehensive oral examination including X-rays and cleaning',
     duration: 60,
-    price: { min: 80, max: 120, currency: 'USD' },
-    category: 'checkup',
-    image: '/procedures/checkup.jpg',
+    price: 100,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440202',
     name: 'Professional Teeth Cleaning',
     description: 'Deep cleaning to remove plaque and tartar buildup',
     duration: 45,
-    price: { min: 60, max: 100, currency: 'USD' },
-    category: 'treatment',
-    image: '/procedures/cleaning.jpg',
+    price: 80,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440203',
     name: 'Cavity Filling',
     description: 'Painless treatment to restore damaged teeth',
     duration: 30,
-    price: { min: 150, max: 300, currency: 'USD' },
-    category: 'treatment',
-    image: '/procedures/filling.jpg',
+    price: 200,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440204',
     name: 'Teeth Whitening',
     description: 'Professional whitening treatment for a brighter smile',
     duration: 90,
-    price: { min: 200, max: 400, currency: 'USD' },
-    category: 'cosmetic',
-    image: '/procedures/whitening.jpg',
+    price: 300,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440205',
     name: 'Emergency Tooth Extraction',
     description: 'Urgent removal of severely damaged or infected teeth',
     duration: 45,
-    price: { min: 200, max: 500, currency: 'USD' },
-    category: 'emergency',
-    image: '/procedures/extraction.jpg',
+    price: 350,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
+
+interface TimeSlot {
+  id: string;
+  doctorId: string;
+  clinicId: string;
+  date: string;
+  time: string;
+  isAvailable: boolean;
+  duration: number;
+}
 
 // Helper function to generate time slots for a date range
 function generateTimeSlots(
   startDate: Date,
   endDate: Date,
-  doctors: IDoctor[],
-  clinics: IClinic[],
-): ITimeSlot[] {
-  const timeSlots: ITimeSlot[] = [];
+  doctors: Doctor[],
+  clinics: Clinic[],
+): TimeSlot[] {
+  const timeSlots: TimeSlot[] = [];
   let slotId = 1;
 
   // Define time slots (5 slots per day)
@@ -133,25 +132,25 @@ function generateTimeSlots(
     Saturday: 6,
   };
 
+  // Default available days for all doctors
+  const defaultAvailableDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
   for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
     const dayOfWeek = d.getDay();
     const dateStr = d.toISOString().split('T')[0];
 
     // Check each doctor's availability for this day
     doctors.forEach((doctor) => {
-      const isAvailableOnDay = doctor.availableDays.some((day) => dayMap[day] === dayOfWeek);
+      const isAvailableOnDay = defaultAvailableDays.some((day) => dayMap[day] === dayOfWeek);
 
       if (isAvailableOnDay) {
-        // Get clinics where this doctor works
-        const doctorClinics = clinics.filter((clinic) => clinic.doctors.includes(doctor.id));
-
         // Generate 5 time slots for this doctor on this day
         timeSlotsPerDay.forEach((time) => {
           // Randomly make some slots unavailable (20% chance)
           const isAvailable = Math.random() > 0.2;
 
-          // Assign to a random clinic where the doctor works
-          const clinic = doctorClinics[Math.floor(Math.random() * doctorClinics.length)];
+          // Assign to a random clinic
+          const clinic = clinics[Math.floor(Math.random() * clinics.length)];
 
           timeSlots.push({
             id: `slot-${slotId++}`,
@@ -174,14 +173,14 @@ function generateTimeSlots(
 const augustStart = new Date('2025-08-01');
 const septemberEnd = new Date('2025-09-30');
 
-export const mockTimeSlots: ITimeSlot[] = generateTimeSlots(
+export const mockTimeSlots: TimeSlot[] = generateTimeSlots(
   augustStart,
   septemberEnd,
   mockDoctors,
   mockClinics,
 );
 
-export const mockAppointments: IAppointment[] = [
+export const mockAppointments = [
   {
     id: 'apt-1',
     userId: 'f7984366-3ae9-49d8-b133-47474d4d1231', // John Doe's ID
@@ -192,10 +191,11 @@ export const mockAppointments: IAppointment[] = [
     time: '09:00',
     duration: 60,
     amount: 100,
-    status: 'confirmed',
+    status: AppointmentStatus.Confirmed,
     notes: 'Regular check-up',
-    createdAt: '2025-08-10T10:00:00Z',
-    updatedAt: '2025-08-10T10:00:00Z',
+    paid: false,
+    createdAt: new Date('2025-08-10T10:00:00Z'),
+    updatedAt: new Date('2025-08-10T10:00:00Z'),
   },
   {
     id: 'apt-2',
@@ -207,10 +207,11 @@ export const mockAppointments: IAppointment[] = [
     time: '14:00',
     duration: 45,
     amount: 80,
-    status: 'pending',
+    status: AppointmentStatus.Pending,
     notes: 'Deep cleaning session',
-    createdAt: '2025-08-12T15:30:00Z',
-    updatedAt: '2025-08-12T15:30:00Z',
+    paid: false,
+    createdAt: new Date('2025-08-12T15:30:00Z'),
+    updatedAt: new Date('2025-08-12T15:30:00Z'),
   },
   {
     id: 'apt-3',
@@ -222,9 +223,10 @@ export const mockAppointments: IAppointment[] = [
     time: '11:00',
     duration: 30,
     amount: 200,
-    status: 'completed',
+    status: AppointmentStatus.Completed,
     notes: 'Cavity filling on molar',
-    createdAt: '2025-08-25T09:15:00Z',
-    updatedAt: '2025-09-05T12:00:00Z',
+    paid: true,
+    createdAt: new Date('2025-08-25T09:15:00Z'),
+    updatedAt: new Date('2025-09-05T12:00:00Z'),
   },
 ];

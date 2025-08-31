@@ -39,23 +39,23 @@ export const seedUsers: Partial<User>[] = [
   },
 ];
 
-// Mock data for doctors, clinics, and procedures with valid UUIDs
+// Mock data for doctors, clinics, and procedures
 export const mockDoctors = [
   {
-    id: '550e8400-e29b-41d4-a716-446655440001',
     name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@dentalclinic.com',
     specialization: 'General Dentistry',
     avatar: 'https://example.com/avatar1.jpg',
   },
   {
-    id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Dr. Michael Chen',
+    email: 'michael.chen@dentalclinic.com',
     specialization: 'Orthodontics',
     avatar: 'https://example.com/avatar2.jpg',
   },
   {
-    id: '550e8400-e29b-41d4-a716-446655440003',
     name: 'Dr. Emily Rodriguez',
+    email: 'emily.rodriguez@dentalclinic.com',
     specialization: 'Endodontics',
     avatar: 'https://example.com/avatar3.jpg',
   },
@@ -63,7 +63,6 @@ export const mockDoctors = [
 
 export const mockClinics = [
   {
-    id: '550e8400-e29b-41d4-a716-446655440101',
     name: 'Bright Smile Dental Clinic',
     address: '123 Main Street, Downtown',
     phone: '+1 (555) 123-4567',
@@ -71,7 +70,6 @@ export const mockClinics = [
     description: 'Modern dental clinic with state-of-the-art equipment',
   },
   {
-    id: '550e8400-e29b-41d4-a716-446655440102',
     name: 'Family Dental Care',
     address: '456 Oak Avenue, Westside',
     phone: '+1 (555) 987-6543',
@@ -82,21 +80,18 @@ export const mockClinics = [
 
 export const mockProcedures = [
   {
-    id: '550e8400-e29b-41d4-a716-446655440201',
     name: 'Routine Dental Check-up',
     description: 'Comprehensive oral examination including X-rays and cleaning',
     duration: 60,
     price: 80,
   },
   {
-    id: '550e8400-e29b-41d4-a716-446655440202',
     name: 'Professional Teeth Cleaning',
     description: 'Deep cleaning to remove plaque and tartar buildup',
     duration: 45,
     price: 100,
   },
   {
-    id: '550e8400-e29b-41d4-a716-446655440203',
     name: 'Cavity Filling',
     description: 'Painless treatment to restore damaged teeth',
     duration: 30,

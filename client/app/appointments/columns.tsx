@@ -1,7 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { IAppointment } from '../types';
+import { Appointment, AppointmentStatus } from '@/app/types/generated';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MoreHorizontal, Calendar, Clock, User, MapPin, Eye } from 'lucide-react';
@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
 
-export const columns: ColumnDef<IAppointment>[] = [
+export const columns: ColumnDef<Appointment>[] = [
   {
     accessorKey: 'date',
     header: 'Date',
@@ -166,7 +166,7 @@ export const columns: ColumnDef<IAppointment>[] = [
               Copy appointment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            {appointment.status === 'pending' && (
+            {appointment.status === AppointmentStatus.Pending && (
               <>
                 <DropdownMenuItem>Reschedule</DropdownMenuItem>
                 <DropdownMenuItem className="text-red-600">Cancel appointment</DropdownMenuItem>

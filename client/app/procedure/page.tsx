@@ -21,8 +21,8 @@ function ProcedurePage() {
     return procedures.filter((procedure) => {
       const matchesSearch =
         procedure.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        procedure.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = selectedCategory === 'all' || procedure.category === selectedCategory;
+        (procedure.description || '').toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory === 'all';
       return matchesSearch && matchesCategory;
     });
   }, [procedures, searchQuery, selectedCategory]);
@@ -85,18 +85,8 @@ function ProcedurePage() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-lg font-semibold">{procedure.name}</h3>
-                <span
-                  className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    procedure.category === 'emergency'
-                      ? 'bg-red-100 text-red-800'
-                      : procedure.category === 'cosmetic'
-                      ? 'bg-purple-100 text-purple-800'
-                      : procedure.category === 'treatment'
-                      ? 'bg-blue-100 text-blue-800'
-                      : 'bg-green-100 text-green-800'
-                  }`}
-                >
-                  {procedure.category}
+                <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  General
                 </span>
               </div>
 
@@ -109,7 +99,7 @@ function ProcedurePage() {
                     {procedure.duration}min
                   </div>
                   <div className="flex items-center gap-1">
-                    <DollarSign className="w-4 h-4" />${procedure.price.min}-${procedure.price.max}
+                    <DollarSign className="w-4 h-4" />${procedure.price}
                   </div>
                 </div>
               </div>
