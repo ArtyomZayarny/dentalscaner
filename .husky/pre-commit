@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+echo "🔍 Running pre-commit checks..."
+
+# Run client checks
+cd client
+echo "📱 Checking client..."
+npm run lint
+npm run type-check
+npm run build
+
+echo "✅ Pre-commit checks completed!"
