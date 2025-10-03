@@ -114,7 +114,7 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             <span className="font-bold text-2xl text-white">Dentalscaner</span>
           </Link>
         </div>
-        <div className="flex-1 px-8 py-6 bg-blue-700">
+        <div className="flex-1 px-8 py-6 bg-[#EBF4FBBF]">
           {/* Navigation */}
           <nav className="flex flex-col gap-4">
             {navigationItems.map((item) => {
@@ -128,8 +128,8 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                   onClick={handleLinkClick}
                   className={`flex items-center px-6 py-3 rounded-lg transition-colors ${
                     isActive
-                      ? 'bg-blue-600 text-white font-medium shadow-sm'
-                      : 'hover:bg-blue-600 text-blue-100'
+                      ? 'bg-blue-100 text-blue-700 font-medium shadow-sm'
+                      : 'hover:bg-gray-100 text-gray-700'
                   }`}
                 >
                   <Icon className="mr-3 w-5 h-5" />
