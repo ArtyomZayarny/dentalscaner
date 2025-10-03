@@ -70,8 +70,8 @@ export class AppointmentService {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.FRONTEND_URL}/appointments?payment=success&appointmentId=${appointmentId}`,
-      cancel_url: `${process.env.FRONTEND_URL}/appointments?payment=cancelled&appointmentId=${appointmentId}`,
+      success_url: `https://dentalscaner-fe.vercel.app/appointments?payment=success&appointmentId=${appointmentId}`,
+      cancel_url: `https://dentalscaner-fe.vercel.app/appointments?payment=cancelled&appointmentId=${appointmentId}`,
       metadata: {
         appointmentId: appointment.id,
         userId: appointment.userId,

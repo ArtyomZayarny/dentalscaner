@@ -26,7 +26,6 @@ export class PaymentController {
       );
       console.log('Environment variables check:');
       console.log('STRIPE_SECRET_KEY exists:', !!process.env.STRIPE_SECRET_KEY);
-      console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 
       const { sessionId } = await this.appointmentService.createCheckoutSession(
         body.appointmentId,
