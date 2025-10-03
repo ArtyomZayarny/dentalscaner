@@ -61,22 +61,7 @@ export const mockDoctors = [
   },
 ];
 
-export const mockClinics = [
-  {
-    name: 'Bright Smile Dental Clinic',
-    address: '123 Main Street, Downtown',
-    phone: '+1 (555) 123-4567',
-    email: 'info@brightsmile.com',
-    description: 'Modern dental clinic with state-of-the-art equipment',
-  },
-  {
-    name: 'Family Dental Care',
-    address: '456 Oak Avenue, Westside',
-    phone: '+1 (555) 987-6543',
-    email: 'contact@familydental.com',
-    description: 'Family-friendly dental care for all ages',
-  },
-];
+// Removed mockClinics - not needed
 
 export const mockProcedures = [
   {

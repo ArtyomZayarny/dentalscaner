@@ -30,7 +30,6 @@ export class AppointmentResolver {
   async createAppointment(
     @Args('userId', { type: () => String }) userId: string,
     @Args('doctorId', { type: () => String }) doctorId: string,
-    @Args('clinicId', { type: () => String }) clinicId: string,
     @Args('procedureId', { type: () => String }) procedureId: string,
     @Args('date', { type: () => String }) date: string,
     @Args('time', { type: () => String }) time: string,
@@ -41,7 +40,6 @@ export class AppointmentResolver {
     return this.appointmentService.create({
       userId,
       doctorId,
-      clinicId,
       procedureId,
       date,
       time,

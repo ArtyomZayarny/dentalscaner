@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Appointment, AppointmentStatus } from '../entities/appointment.entity';
+import { Doctor } from '../entities/doctor.entity';
 import Stripe from 'stripe';
 
 @Injectable()
@@ -11,6 +12,8 @@ export class AppointmentService {
   constructor(
     @InjectRepository(Appointment)
     private appointmentRepository: Repository<Appointment>,
+    @InjectRepository(Doctor)
+    private doctorRepository: Repository<Doctor>,
   ) {
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     if (!stripeKey) {
@@ -24,7 +27,6 @@ export class AppointmentService {
   async create(createAppointmentDto: {
     userId: string;
     doctorId: string;
-    clinicId: string;
     procedureId: string;
     date: string;
     time: string;

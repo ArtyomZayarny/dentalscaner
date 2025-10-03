@@ -3,12 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { Doctor } from '../entities/doctor.entity';
-import { Clinic } from '../entities/clinic.entity';
+// Removed Clinic - not needed
 import { Procedure } from '../entities/procedure.entity';
 import {
   seedUsers,
   mockDoctors,
-  mockClinics,
+  // Removed mockClinics - not needed
   mockProcedures,
 } from '../data/seed-data';
 
@@ -19,8 +19,7 @@ export class SeederService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Doctor)
     private readonly doctorRepository: Repository<Doctor>,
-    @InjectRepository(Clinic)
-    private readonly clinicRepository: Repository<Clinic>,
+    // Removed clinicRepository - not needed
     @InjectRepository(Procedure)
     private readonly procedureRepository: Repository<Procedure>,
   ) {}
@@ -40,9 +39,7 @@ export class SeederService {
       const doctors = await this.seedDoctors();
       console.log(`✅ Seeded ${doctors.length} doctors`);
 
-      // Seed clinics
-      const clinics = await this.seedClinics();
-      console.log(`✅ Seeded ${clinics.length} clinics`);
+      // Removed clinics - not needed
 
       // Seed procedures
       const procedures = await this.seedProcedures();
@@ -52,7 +49,6 @@ export class SeederService {
       return {
         users: users.length,
         doctors: doctors.length,
-        clinics: clinics.length,
         procedures: procedures.length,
       };
     } catch (error) {
@@ -66,7 +62,7 @@ export class SeederService {
     // Clear all tables in the correct order (respecting foreign key constraints)
     await this.userRepository.createQueryBuilder().delete().execute();
     await this.doctorRepository.createQueryBuilder().delete().execute();
-    await this.clinicRepository.createQueryBuilder().delete().execute();
+    // Removed clinic deletion - not needed
     await this.procedureRepository.createQueryBuilder().delete().execute();
   }
 
@@ -80,10 +76,7 @@ export class SeederService {
     return await this.doctorRepository.save(doctors);
   }
 
-  private async seedClinics(): Promise<Clinic[]> {
-    const clinics = this.clinicRepository.create(mockClinics);
-    return await this.clinicRepository.save(clinics);
-  }
+  // Removed seedClinics - not needed
 
   private async seedProcedures(): Promise<Procedure[]> {
     const procedures = this.procedureRepository.create(mockProcedures);
@@ -93,13 +86,13 @@ export class SeederService {
   async getSeedStats() {
     const userCount = await this.userRepository.count();
     const doctorCount = await this.doctorRepository.count();
-    const clinicCount = await this.clinicRepository.count();
+    // Removed clinicCount - not needed
     const procedureCount = await this.procedureRepository.count();
 
     return {
       users: userCount,
       doctors: doctorCount,
-      clinics: clinicCount,
+      // Removed clinics - not needed
       procedures: procedureCount,
     };
   }

@@ -48,9 +48,7 @@ export class Appointment {
   @Field()
   doctorId: string;
 
-  @Column()
-  @Field()
-  clinicId: string;
+  // Removed clinicId - not needed
 
   @Column()
   @Field()

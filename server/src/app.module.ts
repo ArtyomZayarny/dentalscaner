@@ -9,7 +9,7 @@ import { getDatabaseConfig } from './config/database.config';
 import { User } from './entities/user.entity';
 import { Appointment } from './entities/appointment.entity';
 import { Doctor } from './entities/doctor.entity';
-import { Clinic } from './entities/clinic.entity';
+// Removed Clinic - not needed
 import { Procedure } from './entities/procedure.entity';
 
 // Services
@@ -17,14 +17,14 @@ import { UserService } from './services/user.service';
 import { SeederService } from './services/seeder.service';
 import { AppointmentService } from './services/appointment.service';
 import { DoctorService } from './services/doctor.service';
-import { ClinicService } from './services/clinic.service';
+// Removed ClinicService - not needed
 import { ProcedureService } from './services/procedure.service';
 
 // Resolvers
 import { UserResolver } from './graphql/resolvers/user.resolver';
 import { AppointmentResolver } from './graphql/resolvers/appointment.resolver';
 import { DoctorResolver } from './graphql/resolvers/doctor.resolver';
-import { ClinicResolver } from './graphql/resolvers/clinic.resolver';
+// Removed ClinicResolver - not needed
 import { ProcedureResolver } from './graphql/resolvers/procedure.resolver';
 
 // Controllers
@@ -43,7 +43,7 @@ import { PaymentController } from './controllers/payment.controller';
       useFactory: getDatabaseConfig,
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([User, Appointment, Doctor, Clinic, Procedure]),
+    TypeOrmModule.forFeature([User, Appointment, Doctor, Procedure]),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
@@ -56,12 +56,12 @@ import { PaymentController } from './controllers/payment.controller';
     SeederService,
     AppointmentService,
     DoctorService,
-    ClinicService,
+    // Removed ClinicService - not needed
     ProcedureService,
     UserResolver,
     AppointmentResolver,
     DoctorResolver,
-    ClinicResolver,
+    // Removed ClinicResolver - not needed
     ProcedureResolver,
   ],
 })
