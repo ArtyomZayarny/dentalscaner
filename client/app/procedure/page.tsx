@@ -10,7 +10,15 @@ import BookingDialog from '../components/BookingDialog';
 import List from '../components/List';
 
 function ProcedurePage() {
-  const { user, appointments, procedures, doctors, clinics, timeSlots } = useAppContext();
+  const { 
+    user, 
+    appointments, 
+    procedures, 
+    proceduresLoading, 
+    doctors, 
+    clinics, 
+    timeSlots 
+  } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
@@ -27,7 +35,12 @@ function ProcedurePage() {
     });
   }, [procedures, searchQuery, selectedCategory]);
 
-  if (!user || !appointments || !procedures || !doctors || !clinics || !timeSlots)
+  // Show loading while procedures are being fetched
+  if (proceduresLoading) {
+    return <Loading />;
+  }
+
+  if (!user || !appointments || !doctors || !clinics || !timeSlots)
     return <Loading />;
 
   const categories = [

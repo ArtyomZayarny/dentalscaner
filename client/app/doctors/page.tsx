@@ -17,7 +17,13 @@ import {
 } from '@/components/ui/dialog';
 
 function DoctorsPage() {
-  const { user, appointments, doctors, clinics } = useAppContext();
+  const { 
+    user, 
+    appointments, 
+    doctors, 
+    doctorsLoading, 
+    clinics 
+  } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSpecialization, setSelectedSpecialization] = useState<string>('all');
 
@@ -44,7 +50,12 @@ function DoctorsPage() {
     });
   }, [doctors, searchQuery, selectedSpecialization]);
 
-  if (!user || !appointments || !doctors) return <Loading />;
+  // Show loading while doctors are being fetched
+  if (doctorsLoading) {
+    return <Loading />;
+  }
+
+  if (!user || !appointments) return <Loading />;
 
   return (
     <div className="p-8 max-w-7xl mx-auto">

@@ -29,8 +29,14 @@ interface AppContextType {
   appointmentsLoading: boolean;
   appointmentsError: Error | undefined;
   doctors: Doctor[];
+  doctorsLoading: boolean;
+  doctorsError: Error | undefined;
   clinics: Clinic[];
+  clinicsLoading: boolean;
+  clinicsError: Error | undefined;
   procedures: Procedure[];
+  proceduresLoading: boolean;
+  proceduresError: Error | undefined;
   timeSlots: TimeSlot[];
   getAvailableTimeSlots: (doctorId: string, date: string) => TimeSlot[];
   getDoctorById: (id: string) => Doctor | undefined;
@@ -80,9 +86,23 @@ export function AppContextProvider({
     skip: !user.id,
   });
 
-  const { data: doctorsData } = useQuery(GET_DOCTORS);
-  const { data: clinicsData } = useQuery(GET_CLINICS);
-  const { data: proceduresData } = useQuery(GET_PROCEDURES);
+  const { 
+    data: doctorsData, 
+    loading: doctorsLoading, 
+    error: doctorsError 
+  } = useQuery(GET_DOCTORS);
+  
+  const { 
+    data: clinicsData, 
+    loading: clinicsLoading, 
+    error: clinicsError 
+  } = useQuery(GET_CLINICS);
+  
+  const { 
+    data: proceduresData, 
+    loading: proceduresLoading, 
+    error: proceduresError 
+  } = useQuery(GET_PROCEDURES);
 
   const appointments: Appointment[] = appointmentsData?.appointmentsByUserId || [];
   const doctors: Doctor[] = useMemo(() => doctorsData?.doctors || [], [doctorsData?.doctors]);
@@ -160,8 +180,14 @@ export function AppContextProvider({
     appointmentsLoading,
     appointmentsError,
     doctors,
+    doctorsLoading,
+    doctorsError,
     clinics,
+    clinicsLoading,
+    clinicsError,
     procedures,
+    proceduresLoading,
+    proceduresError,
     timeSlots,
     getAvailableTimeSlots,
     getDoctorById,
