@@ -78,11 +78,11 @@ function ProcedurePage() {
       <List
         data={filteredProcedures}
         renderItem={(procedure) => (
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full">
             <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
               <div className="text-6xl">🦷</div>
             </div>
-            <div className="p-6">
+            <div className="p-6 flex flex-col flex-grow">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-lg font-semibold">{procedure.name}</h3>
                 <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
@@ -90,7 +90,7 @@ function ProcedurePage() {
                 </span>
               </div>
 
-              <p className="text-gray-600 text-sm mb-4">{procedure.description}</p>
+              <p className="text-gray-600 text-sm mb-4 flex-grow">{procedure.description}</p>
 
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4 text-sm text-gray-500">
