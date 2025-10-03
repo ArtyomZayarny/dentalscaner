@@ -86,22 +86,14 @@ export function AppContextProvider({
     skip: !user.id,
   });
 
-  const { 
-    data: doctorsData, 
-    loading: doctorsLoading, 
-    error: doctorsError 
-  } = useQuery(GET_DOCTORS);
-  
-  const { 
-    data: clinicsData, 
-    loading: clinicsLoading, 
-    error: clinicsError 
-  } = useQuery(GET_CLINICS);
-  
-  const { 
-    data: proceduresData, 
-    loading: proceduresLoading, 
-    error: proceduresError 
+  const { data: doctorsData, loading: doctorsLoading, error: doctorsError } = useQuery(GET_DOCTORS);
+
+  const { data: clinicsData, loading: clinicsLoading, error: clinicsError } = useQuery(GET_CLINICS);
+
+  const {
+    data: proceduresData,
+    loading: proceduresLoading,
+    error: proceduresError,
   } = useQuery(GET_PROCEDURES);
 
   const appointments: Appointment[] = appointmentsData?.appointmentsByUserId || [];

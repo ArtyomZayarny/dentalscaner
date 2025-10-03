@@ -17,13 +17,7 @@ import {
 } from '@/components/ui/dialog';
 
 function DoctorsPage() {
-  const { 
-    user, 
-    appointments, 
-    doctors, 
-    doctorsLoading, 
-    clinics 
-  } = useAppContext();
+  const { user, appointments, doctors, doctorsLoading, clinics } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSpecialization, setSelectedSpecialization] = useState<string>('all');
 
