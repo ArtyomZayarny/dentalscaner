@@ -21,7 +21,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "health-check": "npm run test -- --passWithNoTests",
-    "deploy-check": "npm run health-check && npm run build"
+    "deploy-check": "npm run health-check && npm run build",
+    "seed": "ts-node -r tsconfig-paths/register src/scripts/seed.ts",
+    "seed:dev": "npm run build && npm run seed"
   },
   "dependencies": {
     "@nestjs/apollo": "^13.1.0",

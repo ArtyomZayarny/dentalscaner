@@ -83,13 +83,13 @@ export const mockProcedures = [
     name: 'Routine Dental Check-up',
     description: 'Comprehensive oral examination including X-rays and cleaning',
     duration: 60,
-    price: 80,
+    price: 100,
   },
   {
     name: 'Professional Teeth Cleaning',
     description: 'Deep cleaning to remove plaque and tartar buildup',
     duration: 45,
-    price: 100,
+    price: 80,
   },
   {
     name: 'Cavity Filling',
