@@ -28,8 +28,7 @@ export default function HomePage() {
     setIsLoading(true);
     try {
       await signIn('google', { callbackUrl: '/dashboard' });
-    } catch (error) {
-      console.error('Google sign in error:', error);
+    } catch {
       setError('Failed to sign in with Google');
       setIsLoading(false);
     }
@@ -53,8 +52,7 @@ export default function HomePage() {
       } else {
         router.push('/dashboard');
       }
-    } catch (error) {
-      console.error('Sign in error:', error);
+    } catch {
       setError('An unexpected error occurred');
       setIsLoading(false);
     }
@@ -96,7 +94,6 @@ export default function HomePage() {
         }
       }
     } catch (error: unknown) {
-      console.error('Registration error:', error);
       setError((error as Error).message || 'Registration failed');
       setIsLoading(false);
     }

@@ -3,6 +3,8 @@ import { Montserrat } from 'next/font/google';
 import './globals.css';
 import SessionProvider from './components/SessionProvider';
 import ApolloProvider from './components/ApolloProvider';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/auth';
 
 const montseratSans = Montserrat({
   variable: '--montserrat-sans',
@@ -14,11 +16,13 @@ export const metadata: Metadata = {
   description: 'Dental heath',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <head>
@@ -26,7 +30,7 @@ export default function RootLayout({
       </head>
       <body className={montseratSans.variable}>
         <ApolloProvider>
-          <SessionProvider>{children}</SessionProvider>
+          <SessionProvider session={session}>{children}</SessionProvider>
         </ApolloProvider>
       </body>
     </html>
