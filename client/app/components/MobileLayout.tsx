@@ -26,7 +26,7 @@ export default function MobileLayout({ children }: MobileLayoutProps) {
         <div className="flex h-screen">
           {/* Sidebar */}
           <Sidebar isOpen={isMobileMenuOpen} onClose={handleMenuClose} />
-          
+
           {/* Main Content */}
           <main className="flex flex-col w-full overflow-y-scroll">
             <Topbar onMenuToggle={handleMenuToggle} />
