@@ -114,7 +114,7 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             <span className="font-bold text-2xl text-white">Dentalscaner</span>
           </Link>
         </div>
-        <div className="flex-1 px-8 py-6 bg-[#EBF4FBBF]">
+        <div className="flex-1 px-8 py-6 bg-[#EBF4FBBF] flex flex-col">
           {/* Navigation */}
           <nav className="flex flex-col gap-4">
             {navigationItems.map((item) => {
@@ -138,6 +138,19 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               );
             })}
           </nav>
+          
+          {/* User Profile Section */}
+          <div className="mt-auto pt-6">
+            <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-lg shadow-sm">
+              <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center">
+                <span className="text-white font-semibold text-sm">N</span>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-gray-900">User Name</p>
+                <p className="text-xs text-gray-500">user@example.com</p>
+              </div>
+            </div>
+          </div>
         </div>
       </aside>
     </>
