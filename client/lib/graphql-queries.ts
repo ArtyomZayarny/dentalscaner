@@ -11,18 +11,7 @@ export const GET_DOCTORS = gql`
   }
 `;
 
-export const GET_CLINICS = gql`
-  query GetClinics {
-    clinics {
-      id
-      name
-      address
-      phone
-      email
-      description
-    }
-  }
-`;
+// Removed GET_CLINICS - not needed
 
 export const GET_PROCEDURES = gql`
   query GetProcedures {
@@ -42,7 +31,6 @@ export const GET_APPOINTMENTS = gql`
       id
       userId
       doctorId
-      clinicId
       procedureId
       date
       time
@@ -64,7 +52,6 @@ export const GET_APPOINTMENTS_BY_USER = gql`
       id
       userId
       doctorId
-      clinicId
       procedureId
       date
       time
@@ -84,7 +71,6 @@ export const CREATE_APPOINTMENT = gql`
   mutation CreateAppointment(
     $userId: String!
     $doctorId: String!
-    $clinicId: String!
     $procedureId: String!
     $date: String!
     $time: String!
@@ -95,7 +81,6 @@ export const CREATE_APPOINTMENT = gql`
     createAppointment(
       userId: $userId
       doctorId: $doctorId
-      clinicId: $clinicId
       procedureId: $procedureId
       date: $date
       time: $time
@@ -106,7 +91,6 @@ export const CREATE_APPOINTMENT = gql`
       id
       userId
       doctorId
-      clinicId
       procedureId
       date
       time
@@ -120,5 +104,3 @@ export const CREATE_APPOINTMENT = gql`
     }
   }
 `;
-
-
