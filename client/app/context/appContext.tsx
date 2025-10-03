@@ -5,17 +5,15 @@ import { useQuery } from '@apollo/client';
 import {
   GET_APPOINTMENTS_BY_USER,
   GET_DOCTORS,
-  GET_CLINICS,
   GET_PROCEDURES,
 } from '@/lib/graphql-queries';
 // Import generated types
-import { User, Doctor, Clinic, Procedure, Appointment } from '../types/generated';
+import { User, Doctor, Procedure, Appointment } from '../types/generated';
 
 // Define TimeSlot interface locally since it's not in generated types
 interface TimeSlot {
   id: string;
   doctorId: string;
-  clinicId: string;
   date: string;
   time: string;
   isAvailable: boolean;
@@ -31,16 +29,14 @@ interface AppContextType {
   doctors: Doctor[];
   doctorsLoading: boolean;
   doctorsError: Error | undefined;
-  clinics: Clinic[];
-  clinicsLoading: boolean;
-  clinicsError: Error | undefined;
+  // Removed clinics - not needed
   procedures: Procedure[];
   proceduresLoading: boolean;
   proceduresError: Error | undefined;
   timeSlots: TimeSlot[];
   getAvailableTimeSlots: (doctorId: string, date: string) => TimeSlot[];
   getDoctorById: (id: string) => Doctor | undefined;
-  getClinicById: (id: string) => Clinic | undefined;
+  // Removed getClinicById - not needed
   getProcedureById: (id: string) => Procedure | undefined;
 }
 
@@ -88,7 +84,7 @@ export function AppContextProvider({
 
   const { data: doctorsData, loading: doctorsLoading, error: doctorsError } = useQuery(GET_DOCTORS);
 
-  const { data: clinicsData, loading: clinicsLoading, error: clinicsError } = useQuery(GET_CLINICS);
+  // Removed clinics - not needed
 
   const {
     data: proceduresData,
@@ -98,7 +94,7 @@ export function AppContextProvider({
 
   const appointments: Appointment[] = appointmentsData?.appointmentsByUserId || [];
   const doctors: Doctor[] = useMemo(() => doctorsData?.doctors || [], [doctorsData?.doctors]);
-  const clinics: Clinic[] = useMemo(() => clinicsData?.clinics || [], [clinicsData?.clinics]);
+  // Removed clinics - not needed
   const procedures: Procedure[] = useMemo(
     () => proceduresData?.procedures || [],
     [proceduresData?.procedures],
@@ -119,16 +115,14 @@ export function AppContextProvider({
     return doctors.find((doctor) => doctor.id === id);
   };
 
-  const getClinicById = (id: string): Clinic | undefined => {
-    return clinics.find((clinic) => clinic.id === id);
-  };
+  // Removed getClinicById - not needed
 
   const getProcedureById = (id: string): Procedure | undefined => {
     return procedures.find((procedure) => procedure.id === id);
   };
 
   useEffect(() => {
-    if (session?.user && doctors.length > 0 && clinics.length > 0) {
+    if (session?.user && doctors.length > 0) {
       // Generate mock time slots for the next 30 days
       const mockTimeSlots: TimeSlot[] = [];
       const today = new Date();
@@ -151,7 +145,7 @@ export function AppContextProvider({
             mockTimeSlots.push({
               id: `slot-${dateString}-${time}-${doctor.id}`,
               doctorId: doctor.id,
-              clinicId: clinics[0]?.id || '', // Use first clinic as default
+              // Removed clinicId - not needed
               date: dateString,
               time: time,
               isAvailable: isAvailable,
@@ -163,7 +157,7 @@ export function AppContextProvider({
 
       setTimeSlots(mockTimeSlots);
     }
-  }, [session?.user, doctors, clinics]);
+  }, [session?.user, doctors]);
 
   const value = {
     user,
@@ -174,16 +168,14 @@ export function AppContextProvider({
     doctors,
     doctorsLoading,
     doctorsError,
-    clinics,
-    clinicsLoading,
-    clinicsError,
+    // Removed clinics - not needed
     procedures,
     proceduresLoading,
     proceduresError,
     timeSlots,
     getAvailableTimeSlots,
     getDoctorById,
-    getClinicById,
+    // Removed getClinicById - not needed
     getProcedureById,
   } as unknown as AppContextType;
 

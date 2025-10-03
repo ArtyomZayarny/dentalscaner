@@ -2,8 +2,8 @@
 import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../context/appContext';
 import Loading from '../components/Loading';
-import { Doctor } from '../types/generated';
-import { Search, Star, MapPin, Award } from 'lucide-react';
+// Removed unused Doctor import
+import { Search, Award } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import List from '../components/List';
@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/dialog';
 
 function DoctorsPage() {
-  const { user, appointments, doctors, doctorsLoading, clinics } = useAppContext();
+  const { user, appointments, doctors, doctorsLoading } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSpecialization, setSelectedSpecialization] = useState<string>('all');
 
@@ -135,17 +135,7 @@ function DoctorsPage() {
                       </p>
                     </div>
 
-                    <div>
-                      <h4 className="font-semibold mb-2">Available at Clinics</h4>
-                      <div className="space-y-2">
-                        {clinics.map((clinic) => (
-                          <div key={clinic.id} className="flex items-center gap-2 text-gray-600">
-                            <MapPin className="w-4 h-4" />
-                            <span>{clinic.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                    {/* Removed clinics section - not needed */}
                   </div>
                 </DialogContent>
               </Dialog>

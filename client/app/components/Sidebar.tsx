@@ -97,8 +97,8 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       {/* Mobile sidebar */}
       <aside
         className={`
-        fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white border-r border-blue-500 
-        transform transition-transform duration-300 ease-in-out z-50 lg:hidden
+        fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-[#EBF4FB] border-r border-blue-500 
+        transform transition-transform duration-300 ease-in-out z-50 lg:hidden flex flex-col
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
       >
@@ -114,7 +114,7 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             <span className="font-bold text-2xl text-white">Dentalscaner</span>
           </Link>
         </div>
-        <div className="flex-1 px-8 py-6 bg-[#EBF4FBBF] flex flex-col">
+        <div className="flex-1 px-8 py-6">
           {/* Navigation */}
           <nav className="flex flex-col gap-4">
             {navigationItems.map((item) => {
@@ -138,19 +138,6 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               );
             })}
           </nav>
-          
-          {/* User Profile Section */}
-          <div className="mt-auto pt-6">
-            <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-lg shadow-sm">
-              <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center">
-                <span className="text-white font-semibold text-sm">N</span>
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">User Name</p>
-                <p className="text-xs text-gray-500">user@example.com</p>
-              </div>
-            </div>
-          </div>
         </div>
       </aside>
     </>

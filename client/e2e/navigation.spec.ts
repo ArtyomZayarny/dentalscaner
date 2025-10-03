@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test'
 
 test.describe('Navigation', () => {
   test('should have proper page structure', async ({ page }) => {
-    await page.goto('/sign-in')
+    await page.goto('/login')
     
     // Check if the page loads without errors
     await expect(page).toHaveTitle(/Dentalscaner/)
   })
 
   test('should have responsive design', async ({ page }) => {
-    await page.goto('/sign-in')
+    await page.goto('/login')
     
     // Test mobile viewport
     await page.setViewportSize({ width: 375, height: 667 })

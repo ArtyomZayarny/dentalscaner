@@ -10,8 +10,7 @@ import BookingDialog from '../components/BookingDialog';
 import List from '../components/List';
 
 function ProcedurePage() {
-  const { user, appointments, procedures, proceduresLoading, doctors, clinics, timeSlots } =
-    useAppContext();
+  const { user, appointments, procedures, proceduresLoading, doctors, timeSlots } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
@@ -33,7 +32,7 @@ function ProcedurePage() {
     return <Loading />;
   }
 
-  if (!user || !appointments || !doctors || !clinics || !timeSlots) return <Loading />;
+  if (!user || !appointments || !doctors || !timeSlots) return <Loading />;
 
   const categories = [
     { id: 'all', name: 'All Procedures' },
@@ -112,7 +111,6 @@ function ProcedurePage() {
               <BookingDialog
                 userId={user.id}
                 doctors={doctors}
-                clinics={clinics}
                 procedures={procedures}
                 timeSlots={timeSlots}
                 trigger={<Button className="w-full">Book Appointment</Button>}

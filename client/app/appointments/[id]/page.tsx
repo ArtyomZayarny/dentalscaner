@@ -38,7 +38,7 @@ import { AppointmentStatus } from '@/app/types/generated';
 function AppointmentDetailsPage() {
   const params = useParams();
   const router = useRouter();
-  const { user, appointments, doctors, clinics, procedures } = useAppContext();
+  const { user, appointments, doctors, procedures } = useAppContext();
   const [isEditing, setIsEditing] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
   const [editForm, setEditForm] = useState({
@@ -75,7 +75,7 @@ function AppointmentDetailsPage() {
   }
 
   const doctor = doctors.find((d) => d.id === appointment.doctorId);
-  const clinic = clinics.find((c) => c.id === appointment.clinicId);
+  // Removed clinic lookup - not needed
   const procedure = procedures.find((p) => p.id === appointment.procedureId);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -180,7 +180,7 @@ function AppointmentDetailsPage() {
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Appointment Details</h1>
             <p className="text-xl text-blue-100">
-              {procedure?.name} with {doctor?.name} at {clinic?.name}
+              {procedure?.name} with {doctor?.name} at Dental Clinic
             </p>
           </div>
         </div>
@@ -259,7 +259,7 @@ function AppointmentDetailsPage() {
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-500">Clinic</label>
-                      <p className="text-gray-900 font-medium">{clinic?.name}</p>
+                      <p className="text-gray-900 font-medium">Dental Clinic</p>
                     </div>
                   </div>
 
@@ -351,7 +351,7 @@ function AppointmentDetailsPage() {
             )}
 
             {/* Clinic Information Card */}
-            {clinic && (
+            {true && (
               <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
                 <h2 className="text-2xl font-semibold mb-6 text-gray-800">Clinic Information</h2>
                 <div className="space-y-4">
@@ -361,7 +361,7 @@ function AppointmentDetailsPage() {
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-500">Address</label>
-                      <p className="text-gray-900 font-medium">{clinic.address}</p>
+                      <p className="text-gray-900 font-medium">123 Main Street, Downtown</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
@@ -370,7 +370,7 @@ function AppointmentDetailsPage() {
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-500">Phone</label>
-                      <p className="text-gray-900 font-medium">{clinic.phone}</p>
+                      <p className="text-gray-900 font-medium">+1 (555) 123-4567</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
@@ -379,7 +379,7 @@ function AppointmentDetailsPage() {
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-500">Email</label>
-                      <p className="text-gray-900 font-medium">{clinic.email}</p>
+                      <p className="text-gray-900 font-medium">info@dentalclinic.com</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
@@ -388,9 +388,7 @@ function AppointmentDetailsPage() {
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-500">Working Hours</label>
-                      <p className="text-gray-900 font-medium">
-                        9:00 AM - 6:00 PM
-                      </p>
+                      <p className="text-gray-900 font-medium">9:00 AM - 6:00 PM</p>
                     </div>
                   </div>
                 </div>

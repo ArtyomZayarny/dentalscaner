@@ -41,16 +41,14 @@ function Topbar({ onMenuToggle }: TopbarProps) {
           </div>
 
           {/* User info and logout */}
-          <div className="flex items-center gap-3">
-            <div className="text-white text-sm hidden sm:block">
-              {session?.user?.name || session?.user?.email}
-            </div>
+          <div className="hidden lg:flex items-center gap-3">
+            <div className="text-white text-sm">{session?.user?.name || session?.user?.email}</div>
             <button
               onClick={handleSignOut}
               className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors"
             >
               <LogOut className="w-4 h-4" />
-              <span className="text-sm hidden sm:inline">Sign Out</span>
+              <span className="text-sm">Sign Out</span>
             </button>
           </div>
         </div>

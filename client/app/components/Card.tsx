@@ -6,7 +6,7 @@ import { useAppContext } from '../context/appContext';
 import { AppointmentStatus } from '../types/generated';
 
 function Card() {
-  const { appointments, doctors, clinics, procedures } = useAppContext();
+  const { appointments, doctors, procedures } = useAppContext();
 
   // Get the first upcoming appointment
   const upcomingAppointment = appointments?.find(
@@ -22,7 +22,7 @@ function Card() {
   }
 
   const doctor = doctors?.find((d) => d.id === upcomingAppointment.doctorId);
-  const clinic = clinics?.find((c) => c.id === upcomingAppointment.clinicId);
+  // Removed clinic lookup - not needed
   const procedure = procedures?.find((p) => p.id === upcomingAppointment.procedureId);
 
   const formatDate = (dateString: string) => {
@@ -55,7 +55,7 @@ function Card() {
 
       <div className="flex flex-col justify-between flex-1 min-w-0">
         <div className="flex flex-col gap-2">
-          <h4 className="font-semibold text-lg text-gray-800">{clinic?.name || 'Dental Clinic'}</h4>
+          <h4 className="font-semibold text-lg text-gray-800">Dental Clinic</h4>
           <p className="text-gray-600">{formatDate(upcomingAppointment.date)}</p>
           <div className="flex justify-between items-center">
             <p className="text-sm text-gray-700">

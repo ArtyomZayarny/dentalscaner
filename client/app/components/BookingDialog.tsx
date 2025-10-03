@@ -13,7 +13,7 @@ import {
 import { Plus, Calendar, Clock, User } from 'lucide-react';
 import { useMutation } from '@apollo/client';
 import { CREATE_APPOINTMENT } from '@/lib/graphql-queries';
-import { Doctor, Clinic, Procedure } from '../types/generated';
+import { Doctor, Procedure } from '../types/generated';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 
 interface TimeSlot {
@@ -38,7 +38,6 @@ declare global {
 interface BookingDialogProps {
   userId: string;
   doctors: Doctor[];
-  clinics: Clinic[];
   procedures: Procedure[];
   timeSlots: TimeSlot[];
   trigger?: React.ReactNode;
@@ -50,7 +49,6 @@ interface BookingDialogProps {
 export default function BookingDialog({
   userId,
   doctors,
-  clinics,
   procedures,
   timeSlots,
   trigger,
@@ -108,15 +106,7 @@ export default function BookingDialog({
       .sort((a, b) => a.time.localeCompare(b.time));
   }, [selectedDoctor, selectedDate, timeSlots]);
 
-  // Get doctor's primary clinic - fallback to first clinic if no clinicId
-  const doctorPrimaryClinic = useMemo(() => {
-    if (!clinics || clinics.length === 0) return null;
-    if (!selectedDoctor || !doctors) return clinics[0]; // Fallback to first clinic
-    const doctor = doctors.find((d) => d.id === selectedDoctor);
-    if (!doctor) return clinics[0]; // Fallback to first clinic
-    // For now, use the first clinic since we don't have clinicId in the database
-    return clinics[0];
-  }, [selectedDoctor, clinics, doctors]);
+  // Removed clinics - not needed
 
   const handleDoctorSelect = (doctorId: string) => {
     setSelectedDoctor(doctorId);
@@ -172,11 +162,12 @@ export default function BookingDialog({
       return;
     }
 
+    // No clinic needed
+
     try {
       console.log('Creating appointment with variables:', {
         userId,
         doctorId: selectedDoctor,
-        clinicId: doctorPrimaryClinic?.id || '',
         procedureId: selectedProcedure,
         date: selectedDate,
         time: selectedTime,
@@ -189,7 +180,6 @@ export default function BookingDialog({
         variables: {
           userId,
           doctorId: selectedDoctor,
-          clinicId: doctorPrimaryClinic?.id || '',
           procedureId: selectedProcedure,
           date: selectedDate,
           time: selectedTime,
@@ -457,7 +447,7 @@ export default function BookingDialog({
       <input type="hidden" name="doctorId" value={selectedDoctor} />
       <input type="hidden" name="date" value={selectedDate} />
       <input type="hidden" name="time" value={selectedTime} />
-      <input type="hidden" name="clinicId" value={doctorPrimaryClinic?.id || ''} />
+      {/* Removed clinicId - not needed */}
     </div>
   );
 

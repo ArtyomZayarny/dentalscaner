@@ -13,15 +13,8 @@ import BookingDialog from '../components/BookingDialog';
 import { useSearchParams } from 'next/navigation';
 
 function AppointmentPage() {
-  const {
-    user,
-    appointments,
-    appointmentsLoading,
-    appointmentsError,
-    doctors,
-    clinics,
-    procedures,
-  } = useAppContext();
+  const { user, appointments, appointmentsLoading, appointmentsError, doctors, procedures } =
+    useAppContext();
   const searchParams = useSearchParams();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
@@ -98,7 +91,6 @@ function AppointmentPage() {
             <BookingDialog
               userId={user.id}
               doctors={doctors}
-              clinics={clinics}
               procedures={procedures}
               timeSlots={[]}
               trigger={
@@ -118,7 +110,6 @@ function AppointmentPage() {
             <BookingDialog
               userId={user.id}
               doctors={doctors}
-              clinics={clinics}
               procedures={procedures}
               timeSlots={[]}
               trigger={

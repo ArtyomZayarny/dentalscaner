@@ -17,7 +17,6 @@ function OverviewPage() {
     appointmentsLoading,
     appointmentsError,
     doctors,
-    clinics,
     procedures,
     timeSlots,
   } = useAppContext();
@@ -46,15 +45,22 @@ function OverviewPage() {
     );
   }
 
-  if (!doctors || !clinics || !procedures || !timeSlots) return <Loading />;
+  if (!doctors || !procedures || !timeSlots) return <Loading />;
 
   // Calculate statistics
   const totalAppointments = appointments.length;
   const upcomingAppointments = appointments
-    .filter((apt) => apt.status === AppointmentStatus.Confirmed || apt.status === AppointmentStatus.Pending)
+    .filter(
+      (apt) =>
+        apt.status === AppointmentStatus.Confirmed || apt.status === AppointmentStatus.Pending,
+    )
     .slice(0, 3);
-  const completedAppointments = appointments.filter((apt) => apt.status === AppointmentStatus.Completed).length;
-  const pendingAppointments = appointments.filter((apt) => apt.status === AppointmentStatus.Pending).length;
+  const completedAppointments = appointments.filter(
+    (apt) => apt.status === AppointmentStatus.Completed,
+  ).length;
+  const pendingAppointments = appointments.filter(
+    (apt) => apt.status === AppointmentStatus.Pending,
+  ).length;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -84,10 +90,7 @@ function OverviewPage() {
     return doctor?.name || 'Unknown Doctor';
   };
 
-  const getClinicName = (clinicId: string) => {
-    const clinic = clinics.find((c) => c.id === clinicId);
-    return clinic?.name || 'Unknown Clinic';
-  };
+  // Removed getClinicName - not needed
 
   const getProcedureName = (procedureId: string) => {
     const procedure = procedures.find((p) => p.id === procedureId);
@@ -133,7 +136,6 @@ function OverviewPage() {
         <BookingDialog
           userId={user.id}
           doctors={doctors}
-          clinics={clinics}
           procedures={procedures}
           timeSlots={timeSlots}
         />
@@ -232,7 +234,7 @@ function OverviewPage() {
                     </div>
                     <div className="flex items-center gap-1">
                       <MapPin className="w-4 h-4" />
-                      <span>{getClinicName(appointment.clinicId)}</span>
+                      <span>Dental Clinic</span>
                     </div>
                   </div>
                   {appointment.notes && (
@@ -250,7 +252,6 @@ function OverviewPage() {
               <BookingDialog
                 userId={user.id}
                 doctors={doctors}
-                clinics={clinics}
                 procedures={procedures}
                 timeSlots={timeSlots}
                 trigger={<Button size="sm">Book Appointment</Button>}

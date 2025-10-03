@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 
 function ProfilePage() {
-  const { user, appointments, doctors, clinics, procedures } = useAppContext();
+  const { user, appointments, doctors, procedures } = useAppContext();
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
     fullName: `${user?.firstName || ''} ${user?.lastName || ''}`.trim(),
@@ -32,7 +32,7 @@ function ProfilePage() {
     dateOfBirth: user?.dateOfBirth || '',
   });
 
-  if (!user || !appointments || !doctors || !clinics || !procedures) return <Loading />;
+  if (!user || !appointments || !doctors || !procedures) return <Loading />;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditForm({ ...editForm, [e.target.name]: e.target.value });
@@ -56,11 +56,15 @@ function ProfilePage() {
 
   // Calculate statistics
   const totalAppointments = appointments.length;
-  const completedAppointments = appointments.filter((apt) => apt.status === AppointmentStatus.Completed).length;
-  const pendingAppointments = appointments.filter((apt) => apt.status === AppointmentStatus.Pending).length;
-  const confirmedAppointments = appointments.filter((apt) => apt.status === AppointmentStatus.Confirmed).length;
-
-
+  const completedAppointments = appointments.filter(
+    (apt) => apt.status === AppointmentStatus.Completed,
+  ).length;
+  const pendingAppointments = appointments.filter(
+    (apt) => apt.status === AppointmentStatus.Pending,
+  ).length;
+  const confirmedAppointments = appointments.filter(
+    (apt) => apt.status === AppointmentStatus.Confirmed,
+  ).length;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -90,9 +94,9 @@ function ProfilePage() {
     return doctor?.name || 'Unknown Doctor';
   };
 
-  const getClinicName = (clinicId: string) => {
-    const clinic = clinics.find((c) => c.id === clinicId);
-    return clinic?.name || 'Unknown Clinic';
+  const getClinicName = (_clinicId: string) => {
+    // Removed clinic lookup - not needed
+    return 'Dental Clinic';
   };
 
   const getProcedureName = (procedureId: string) => {
@@ -133,7 +137,9 @@ function ProfilePage() {
                       className="mt-1"
                     />
                   ) : (
-                    <p className="text-gray-900">{user.firstName} {user.lastName}</p>
+                    <p className="text-gray-900">
+                      {user.firstName} {user.lastName}
+                    </p>
                   )}
                 </div>
               </div>
