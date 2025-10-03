@@ -20,7 +20,7 @@ export const getDatabaseConfig = (
     password: configService.get('DATABASE_PASSWORD') || 'password',
     database: configService.get('DATABASE_NAME') || 'postgres',
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-    synchronize: false, // Disable auto-sync since we have the correct schema
+    synchronize: true, // Enable auto-sync to update schema
     logging: configService.get('NODE_ENV') !== 'production',
     ssl: {
       rejectUnauthorized: false,
