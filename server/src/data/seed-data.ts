@@ -45,19 +45,19 @@ export const mockDoctors = [
     name: 'Dr. Sarah Johnson',
     email: 'sarah.johnson@dentalclinic.com',
     specialization: 'General Dentistry',
-    avatar: 'https://example.com/avatar1.jpg',
+    avatar: '/images/doctors/doctor-1.png',
   },
   {
     name: 'Dr. Michael Chen',
     email: 'michael.chen@dentalclinic.com',
     specialization: 'Orthodontics',
-    avatar: 'https://example.com/avatar2.jpg',
+    avatar: '/images/doctors/doctor-2.png',
   },
   {
     name: 'Dr. Emily Rodriguez',
     email: 'emily.rodriguez@dentalclinic.com',
     specialization: 'Endodontics',
-    avatar: 'https://example.com/avatar3.jpg',
+    avatar: '/images/doctors/doctor-3.png',
   },
 ];
 
@@ -69,17 +69,20 @@ export const mockProcedures = [
     description: 'Comprehensive oral examination including X-rays and cleaning',
     duration: 60,
     price: 100,
+    image: '/images/procedures/procedure-1.png',
   },
   {
     name: 'Professional Teeth Cleaning',
     description: 'Deep cleaning to remove plaque and tartar buildup',
     duration: 45,
     price: 80,
+    image: '/images/procedures/procedure-2.png',
   },
   {
     name: 'Cavity Filling',
     description: 'Painless treatment to restore damaged teeth',
     duration: 30,
     price: 200,
+    image: '/images/procedures/procedure-3.png',
   },
 ];
