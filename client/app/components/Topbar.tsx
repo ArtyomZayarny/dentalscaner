@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { BellIcon, LogOut, Menu } from 'lucide-react';
+import { LogOut, Menu } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 
 interface TopbarProps {
@@ -31,15 +31,6 @@ function Topbar({ onMenuToggle }: TopbarProps) {
         <div className="hidden lg:block w-full mr-5"></div>
 
         <div className="flex gap-4 items-center">
-          {/*Notification icon */}
-          <div className="cursor-pointer relative w-10 h-10 flex items-center justify-center p-2">
-            <div className="w-[20px] h-[20px] bg-[#EBF4FB] rounded-full flex items-center justify-center absolute -top-2 -right-2 border border-gray-500/20">
-              <span className="text-[#3687C0] text-xs">9</span>
-            </div>
-
-            <BellIcon className="text-white" />
-          </div>
-
           {/* Logout button */}
           <div className="hidden lg:flex items-center">
             <button

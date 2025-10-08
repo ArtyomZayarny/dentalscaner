@@ -2,9 +2,10 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
-import { Home, Calendar, Settings, User, Stethoscope } from 'lucide-react';
+import { Home, Calendar, Settings, User, Stethoscope, LogOut } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -34,6 +35,13 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   ];
 
   const handleLinkClick = () => {
+    if (isMobile && onClose) {
+      onClose();
+    }
+  };
+
+  const handleSignOut = () => {
+    signOut({ callbackUrl: '/' });
     if (isMobile && onClose) {
       onClose();
     }
@@ -138,6 +146,17 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               );
             })}
           </nav>
+
+          {/* Sign Out button for mobile */}
+          <div className="mt-8">
+            <button
+              onClick={handleSignOut}
+              className="flex items-center px-6 py-3 rounded-lg transition-colors hover:bg-gray-100 text-gray-700 w-full"
+            >
+              <LogOut className="mr-3 w-5 h-5" />
+              Sign Out
+            </button>
+          </div>
         </div>
       </aside>
     </>
