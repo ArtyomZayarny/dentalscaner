@@ -1,7 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 import Section from '../components/Section';
 import { Button } from '@/components/ui/button';
 
@@ -75,13 +73,6 @@ function AppointmentPage() {
 
       {/* Greeting section */}
       <h1 className="text-3xl font-semibold mb-8">{`Welcome ${user.firstName} ${user.lastName}`}</h1>
-
-      {/* Breadcrumbs section  */}
-      <div className="flex gap-1 items-center text-[#616061] font-medium text-xs mb-8">
-        <Link href={'/profile'}>User</Link>
-        <ChevronRight className="w-4 h-4 " />
-        <Link href={'/profile'}>Appointments</Link>
-      </div>
 
       {/*  Upcoming Appointments */}
       {/* <div className="flex flex-col gap-8">

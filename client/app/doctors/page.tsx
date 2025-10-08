@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useAppContext } from '../context/appContext';
 import Loading from '../components/Loading';
 // Removed unused Doctor import
-import { Search, Award } from 'lucide-react';
+import { Search, Award, Filter, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import List from '../components/List';
@@ -21,6 +21,7 @@ function DoctorsPage() {
   const { user, appointments, doctors, doctorsLoading } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSpecialization, setSelectedSpecialization] = useState<string>('all');
+  const [showFilters, setShowFilters] = useState(false);
 
   // Get unique specializations
   const specializations = useMemo(() => {
@@ -53,27 +54,37 @@ function DoctorsPage() {
   if (!user || !appointments) return <Loading />;
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">👨‍⚕️ Our Doctors</h1>
-        <p className="text-gray-600">
+    <div className="p-4 md:p-8 max-w-7xl mx-auto">
+      <div className="mb-4 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">👨‍⚕️ Our Doctors</h1>
+        <p className="text-gray-600 text-sm md:text-base">
           Meet our experienced dental professionals committed to your oral health
         </p>
       </div>
 
       {/* Search and Filter Section */}
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              placeholder="Search doctors by name or specialization..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <div className="flex gap-2 flex-wrap">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6 mb-6 md:mb-8">
+        {/* Search Bar with Filter Button */}
+        <div className="relative mb-4 md:mb-6">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Input
+            placeholder="Search doctors by name or specialization..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-12 pr-12 h-12 text-base border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 rounded-lg"
+          />
+          {/* Mobile Filter Toggle Button */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="md:hidden absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            {showFilters ? <X className="w-5 h-5" /> : <Filter className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {/* Filter Buttons - Hidden on mobile by default, shown when toggled */}
+        <div className={`space-y-3 ${showFilters ? 'block' : 'hidden md:block'}`}>
+          <div className="flex flex-wrap gap-2 md:gap-3">
             {specializations.map((spec) => (
               <Button
                 key={spec}

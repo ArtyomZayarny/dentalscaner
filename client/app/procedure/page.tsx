@@ -6,7 +6,18 @@ import Image from 'next/image';
 import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../context/appContext';
 import Loading from '../components/Loading';
-import { Search, Clock, DollarSign } from 'lucide-react';
+import {
+  Search,
+  Clock,
+  DollarSign,
+  Stethoscope,
+  Heart,
+  Sparkles,
+  AlertTriangle,
+  Activity,
+  Filter,
+  X,
+} from 'lucide-react';
 import BookingDialog from '../components/BookingDialog';
 import List from '../components/List';
 
@@ -14,6 +25,7 @@ function ProcedurePage() {
   const { user, appointments, procedures, proceduresLoading, doctors, timeSlots } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [showFilters, setShowFilters] = useState(false);
 
   // Filter procedures based on search and category
   const filteredProcedures = useMemo(() => {
@@ -36,45 +48,100 @@ function ProcedurePage() {
   if (!user || !appointments || !doctors || !timeSlots) return <Loading />;
 
   const categories = [
-    { id: 'all', name: 'All Procedures' },
-    { id: 'checkup', name: 'Check-ups' },
-    { id: 'treatment', name: 'Treatments' },
-    { id: 'cosmetic', name: 'Cosmetic' },
-    { id: 'emergency', name: 'Emergency' },
+    {
+      id: 'all',
+      name: 'All Procedures',
+      icon: Activity,
+      color: 'bg-blue-500 hover:bg-blue-600 text-white',
+      activeColor: 'bg-blue-600 text-white shadow-lg shadow-blue-200',
+    },
+    {
+      id: 'checkup',
+      name: 'Check-ups',
+      icon: Stethoscope,
+      color: 'bg-green-50 hover:bg-green-100 text-green-700 border-green-200',
+      activeColor: 'bg-green-500 text-white shadow-lg shadow-green-200',
+    },
+    {
+      id: 'treatment',
+      name: 'Treatments',
+      icon: Heart,
+      color: 'bg-red-50 hover:bg-red-100 text-red-700 border-red-200',
+      activeColor: 'bg-red-500 text-white shadow-lg shadow-red-200',
+    },
+    {
+      id: 'cosmetic',
+      name: 'Cosmetic',
+      icon: Sparkles,
+      color: 'bg-purple-50 hover:bg-purple-100 text-purple-700 border-purple-200',
+      activeColor: 'bg-purple-500 text-white shadow-lg shadow-purple-200',
+    },
+    {
+      id: 'emergency',
+      name: 'Emergency',
+      icon: AlertTriangle,
+      color: 'bg-orange-50 hover:bg-orange-100 text-orange-700 border-orange-200',
+      activeColor: 'bg-orange-500 text-white shadow-lg shadow-orange-200',
+    },
   ];
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">🦷 Dental Procedures</h1>
-        <p className="text-gray-600">
+    <div className="p-4 md:p-8 max-w-7xl mx-auto">
+      <div className="mb-4 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">🦷 Dental Procedures</h1>
+        <p className="text-gray-600 text-sm md:text-base">
           Explore our comprehensive range of dental services and book your appointment
         </p>
       </div>
 
       {/* Search and Filter Section */}
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              placeholder="Search procedures..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <div className="flex gap-2">
-            {categories.map((category) => (
-              <Button
-                key={category.id}
-                variant={selectedCategory === category.id ? 'default' : 'outline'}
-                onClick={() => setSelectedCategory(category.id)}
-                className="whitespace-nowrap"
-              >
-                {category.name}
-              </Button>
-            ))}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6 mb-6 md:mb-8">
+        {/* Search Bar with Filter Button */}
+        <div className="relative mb-4 md:mb-6">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Input
+            placeholder="Search procedures..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-12 pr-12 h-12 text-base border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 rounded-lg"
+          />
+          {/* Mobile Filter Toggle Button */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="md:hidden absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            {showFilters ? <X className="w-5 h-5" /> : <Filter className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {/* Filter Buttons - Hidden on mobile by default, shown when toggled */}
+        <div className={`space-y-3 ${showFilters ? 'block' : 'hidden md:block'}`}>
+          <div className="flex flex-wrap gap-2 md:gap-3">
+            {categories.map((category) => {
+              const Icon = category.icon;
+              const isActive = selectedCategory === category.id;
+
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`
+                    flex items-center gap-2 px-3 md:px-4 py-2 md:py-3 rounded-lg font-medium text-xs md:text-sm
+                    transition-all duration-200 ease-in-out transform hover:scale-105
+                    border-2 border-transparent whitespace-nowrap
+                    ${
+                      isActive
+                        ? category.activeColor
+                        : `${category.color} border-gray-200 hover:border-gray-300`
+                    }
+                    ${isActive ? 'ring-2 ring-offset-2 ring-blue-200' : ''}
+                  `}
+                >
+                  <Icon className="w-3 h-3 md:w-4 md:h-4" />
+                  {category.name}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -113,7 +180,8 @@ function ProcedurePage() {
                     {procedure.duration}min
                   </div>
                   <div className="flex items-center gap-1">
-                    <DollarSign className="w-4 h-4" />${procedure.price}
+                    <DollarSign className="w-4 h-4" />
+                    {procedure.price}
                   </div>
                 </div>
               </div>

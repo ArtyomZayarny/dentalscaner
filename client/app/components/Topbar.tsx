@@ -18,7 +18,10 @@ function Topbar({ onMenuToggle }: TopbarProps) {
   return (
     <>
       {/* Top Bar */}
-      <header className="bg-blue-700 flex items-center justify-between px-4 lg:px-8 py-4 font-semibold text-lg w-full">
+      <header
+        className="bg-blue-700 flex items-center justify-between px-4 lg:px-8 font-semibold text-lg w-full"
+        style={{ minHeight: '72px' }}
+      >
         {/* Mobile menu button */}
         <button
           onClick={onMenuToggle}
