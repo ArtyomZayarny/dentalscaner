@@ -33,3 +33,6 @@ out/
 # Cache
 .cache/
 .parcel-cache/
+
+# Ignore all folders starting with a dot
+.*/
