@@ -12,7 +12,13 @@ function Topbar({ onMenuToggle }: TopbarProps) {
   const { data: session } = useSession();
 
   const handleSignOut = () => {
-    signOut({ callbackUrl: '/' });
+    console.log('🚪 Topbar - Starting signOut without callbackUrl');
+    signOut();
+    // Force redirect to landing page after signout
+    setTimeout(() => {
+      console.log('🚀 Topbar - Force redirecting to /');
+      window.location.href = '/';
+    }, 100);
   };
 
   return (
@@ -45,10 +51,10 @@ function Topbar({ onMenuToggle }: TopbarProps) {
             <div className="text-white text-sm">{session?.user?.name || session?.user?.email}</div>
             <button
               onClick={handleSignOut}
-              className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors"
+              className="flex items-center text-white hover:text-gray-200 transition-colors"
+              title="Sign Out"
             >
-              <LogOut className="w-4 h-4" />
-              <span className="text-sm">Sign Out</span>
+              <LogOut className="w-5 h-5" />
             </button>
           </div>
         </div>

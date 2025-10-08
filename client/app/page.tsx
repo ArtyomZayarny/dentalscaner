@@ -11,7 +11,12 @@ export default function HomePage() {
 
   // Redirect authenticated users to dashboard
   useEffect(() => {
+    console.log('🔍 page.tsx - Session status:', status);
+    console.log('🔍 page.tsx - Session data:', session);
+    console.log('🔍 page.tsx - Current URL:', window.location.pathname);
+
     if (status === 'authenticated' && session) {
+      console.log('🚀 page.tsx - Redirecting to dashboard');
       router.replace('/dashboard');
     }
   }, [session, status, router]);
@@ -71,18 +76,12 @@ export default function HomePage() {
               Streamline your operations, enhance patient care, and grow your practice with our
               all-in-one solution.
             </p>
-            <div className="mt-10 flex justify-center space-x-4">
+            <div className="mt-10 flex justify-center">
               <Link
                 href="/login"
                 className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg"
               >
                 Get Started
-              </Link>
-              <Link
-                href="/about"
-                className="px-8 py-3 border border-2 border-blue-600 text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 transition-colors shadow-lg"
-              >
-                Learn More
               </Link>
             </div>
           </div>
