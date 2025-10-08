@@ -95,20 +95,12 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      console.log('🔄 auth.ts redirect - url:', url);
-      console.log('🔄 auth.ts redirect - baseUrl:', baseUrl);
-
       // If redirecting to root (sign out), allow it
       if (url === baseUrl || url === `${baseUrl}/`) {
-        console.log('✅ auth.ts redirect - Allowing root redirect (sign out)');
         return url;
       }
       // For sign-in, redirect to dashboard
-      if (url.startsWith(baseUrl)) {
-        console.log('✅ auth.ts redirect - Allowing internal redirect');
-        return url;
-      }
-      console.log('🚀 auth.ts redirect - Default redirect to dashboard');
+      if (url.startsWith(baseUrl)) return url;
       return `${baseUrl}/dashboard`;
     },
   },

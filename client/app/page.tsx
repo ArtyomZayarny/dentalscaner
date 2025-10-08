@@ -11,12 +11,7 @@ export default function HomePage() {
 
   // Redirect authenticated users to dashboard
   useEffect(() => {
-    console.log('🔍 page.tsx - Session status:', status);
-    console.log('🔍 page.tsx - Session data:', session);
-    console.log('🔍 page.tsx - Current URL:', window.location.pathname);
-
     if (status === 'authenticated' && session) {
-      console.log('🚀 page.tsx - Redirecting to dashboard');
       router.replace('/dashboard');
     }
   }, [session, status, router]);
