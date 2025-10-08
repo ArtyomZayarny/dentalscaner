@@ -96,7 +96,7 @@ export const authOptions: NextAuthOptions = {
     },
     async redirect({ url, baseUrl }) {
       // If redirecting to root (sign out), allow it
-      if (url === baseUrl || url === `${baseUrl}/`) {
+      if (url === baseUrl || url === `${baseUrl}/` || url === '/') {
         return url;
       }
       // For sign-in, redirect to dashboard

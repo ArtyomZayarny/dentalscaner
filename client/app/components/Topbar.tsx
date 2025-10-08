@@ -12,11 +12,7 @@ function Topbar({ onMenuToggle }: TopbarProps) {
   const { data: session } = useSession();
 
   const handleSignOut = () => {
-    signOut();
-    // Force redirect to landing page after signout
-    setTimeout(() => {
-      window.location.href = '/';
-    }, 100);
+    signOut({ callbackUrl: '/' });
   };
 
   return (
