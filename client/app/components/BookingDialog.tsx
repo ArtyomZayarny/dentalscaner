@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useMemo } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -265,7 +266,19 @@ export default function BookingDialog({
             onClick={() => handleDoctorSelect(doctor.id)}
           >
             <div className="flex items-center gap-3">
-              <div className="text-2xl">👨‍⚕️</div>
+              <div className="w-10 h-10 relative rounded-full overflow-hidden flex-shrink-0 bg-gradient-to-b from-blue-50 to-white">
+                <Image
+                  src={
+                    doctor.avatar?.startsWith('http')
+                      ? `/images/doctors/doctor-1.png`
+                      : doctor.avatar || `/images/doctors/doctor-1.png`
+                  }
+                  alt={doctor.name}
+                  fill
+                  className="object-cover object-top"
+                  sizes="40px"
+                />
+              </div>
               <div className="flex-1">
                 <h4 className="font-medium">{doctor.name}</h4>
                 <p className="text-sm text-gray-600">{doctor.specialization}</p>

@@ -46,8 +46,12 @@ function Card() {
       <div className="relative w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
         <Image
           className="object-cover"
-          src={'/clinic-preview.png'}
-          alt="Dental clinic"
+          src={
+            procedure
+              ? (procedure as { image?: string }).image || `/images/procedures/procedure-1.png`
+              : '/clinic-preview.png'
+          }
+          alt={procedure?.name || 'Dental clinic'}
           fill
           sizes="128px"
         />

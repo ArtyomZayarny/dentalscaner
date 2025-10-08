@@ -1,6 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import Image from 'next/image';
 
 import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../context/appContext';
@@ -81,10 +82,19 @@ function ProcedurePage() {
       {/* Procedures Grid */}
       <List
         data={filteredProcedures}
-        renderItem={(procedure) => (
+        renderItem={(procedure, index) => (
           <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full">
-            <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-              <div className="text-6xl">🦷</div>
+            <div className="h-48 relative overflow-hidden">
+              <Image
+                src={
+                  (procedure as { image?: string }).image ||
+                  `/images/procedures/procedure-${index + 1}.png`
+                }
+                alt={procedure.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
             </div>
             <div className="p-6 flex flex-col flex-grow">
               <div className="flex items-center justify-between mb-2">

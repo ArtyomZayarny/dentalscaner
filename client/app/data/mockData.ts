@@ -5,7 +5,7 @@ export const mockDoctors: Doctor[] = [
     id: '550e8400-e29b-41d4-a716-446655440001',
     name: 'Dr. Sarah Johnson',
     specialization: 'General Dentistry',
-    avatar: '/doctors/doctor-1.jpg',
+    avatar: '/images/doctors/doctor-1.png',
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -13,7 +13,7 @@ export const mockDoctors: Doctor[] = [
     id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Dr. Michael Chen',
     specialization: 'Orthodontics',
-    avatar: '/doctors/doctor-2.jpg',
+    avatar: '/images/doctors/doctor-2.png',
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -21,7 +21,7 @@ export const mockDoctors: Doctor[] = [
     id: '550e8400-e29b-41d4-a716-446655440003',
     name: 'Dr. Emily Rodriguez',
     specialization: 'Endodontics',
-    avatar: '/doctors/doctor-3.jpg',
+    avatar: '/images/doctors/doctor-3.png',
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -177,7 +177,7 @@ export const mockProcedures: Procedure[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  
+
   // Orthodontics Procedures
   {
     id: '550e8400-e29b-41d4-a716-446655440206',
@@ -215,7 +215,7 @@ export const mockProcedures: Procedure[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  
+
   // Endodontics Procedures
   {
     id: '550e8400-e29b-41d4-a716-446655440210',
@@ -244,7 +244,7 @@ export const mockProcedures: Procedure[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  
+
   // Oral Surgery Procedures
   {
     id: '550e8400-e29b-41d4-a716-446655440213',
@@ -273,7 +273,7 @@ export const mockProcedures: Procedure[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  
+
   // Periodontics Procedures
   {
     id: '550e8400-e29b-41d4-a716-446655440216',
@@ -302,7 +302,7 @@ export const mockProcedures: Procedure[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  
+
   // Prosthodontics Procedures
   {
     id: '550e8400-e29b-41d4-a716-446655440219',
@@ -340,7 +340,7 @@ export const mockProcedures: Procedure[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  
+
   // Pediatric Dentistry Procedures
   {
     id: '550e8400-e29b-41d4-a716-446655440223',
@@ -363,13 +363,13 @@ export const mockProcedures: Procedure[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440225',
     name: 'Dental Sealants',
-    description: 'Protective coating for children\'s molars',
+    description: "Protective coating for children's molars",
     duration: 30,
     price: 100,
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  
+
   // Cosmetic Dentistry Procedures
   {
     id: '550e8400-e29b-41d4-a716-446655440226',

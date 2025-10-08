@@ -40,15 +40,9 @@ export default function HomePage() {
                 Dentalscaner
               </Link>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center">
               <Link href="/login" className="text-blue-600 hover:text-blue-800 font-medium">
                 Sign In
-              </Link>
-              <Link
-                href="/login"
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-              >
-                Get Started
               </Link>
             </div>
           </nav>

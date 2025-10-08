@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useMemo } from 'react';
+import Image from 'next/image';
 import { useAppContext } from '../context/appContext';
 import Loading from '../components/Loading';
 // Removed unused Doctor import
@@ -90,10 +91,20 @@ function DoctorsPage() {
       {/* Doctors Grid */}
       <List
         data={filteredDoctors}
-        renderItem={(doctor) => (
+        renderItem={(doctor, index) => (
           <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-              <div className="text-6xl">👨‍⚕️</div>
+            <div className="h-48 relative overflow-hidden bg-gradient-to-b from-blue-50 to-white">
+              <Image
+                src={
+                  doctor.avatar?.startsWith('http')
+                    ? `/images/doctors/doctor-${index + 1}.png`
+                    : doctor.avatar || `/images/doctors/doctor-1.png`
+                }
+                alt={doctor.name}
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
             </div>
             <div className="p-6">
               <div className="flex items-center justify-between mb-2">
@@ -117,8 +128,20 @@ function DoctorsPage() {
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
                   <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
-                      <div className="text-3xl">👨‍⚕️</div>
+                    <DialogTitle className="flex items-center gap-3">
+                      <div className="w-12 h-12 relative rounded-full overflow-hidden bg-gradient-to-b from-blue-50 to-white">
+                        <Image
+                          src={
+                            doctor.avatar?.startsWith('http')
+                              ? `/images/doctors/doctor-1.png`
+                              : doctor.avatar || `/images/doctors/doctor-1.png`
+                          }
+                          alt={doctor.name}
+                          fill
+                          className="object-cover object-top"
+                          sizes="48px"
+                        />
+                      </div>
                       {doctor.name}
                     </DialogTitle>
                     <DialogDescription>

@@ -17,7 +17,7 @@ export default function StatCard({
   valueColor = 'text-gray-900',
 }: StatCardProps) {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <div className="bg-white rounded-lg shadow-sm p-6 min-h-[120px] flex flex-col justify-between">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-gray-500">{title}</p>

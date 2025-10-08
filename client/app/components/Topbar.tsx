@@ -40,9 +40,8 @@ function Topbar({ onMenuToggle }: TopbarProps) {
             <BellIcon className="text-white" />
           </div>
 
-          {/* User info and logout */}
-          <div className="hidden lg:flex items-center gap-3">
-            <div className="text-white text-sm">{session?.user?.name || session?.user?.email}</div>
+          {/* Logout button */}
+          <div className="hidden lg:flex items-center">
             <button
               onClick={handleSignOut}
               className="flex items-center text-white hover:text-gray-200 transition-colors"
