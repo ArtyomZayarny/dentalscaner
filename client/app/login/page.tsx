@@ -240,7 +240,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="w-full bg-[#EBF4FBBF] text-blue-800 py-2 px-4 rounded-lg hover:bg-[#D1E7F5] disabled:opacity-50"
             >
               {isLoading
                 ? isRegistering

@@ -1,5 +1,6 @@
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
+import Link from 'next/link';
 
 interface StatCardProps {
   title: string;
@@ -7,6 +8,8 @@ interface StatCardProps {
   icon: LucideIcon;
   iconColor?: string;
   valueColor?: string;
+  href?: string;
+  onClick?: () => void;
 }
 
 export default function StatCard({
@@ -15,9 +18,11 @@ export default function StatCard({
   icon: Icon,
   iconColor = 'text-blue-500',
   valueColor = 'text-gray-900',
+  href,
+  onClick,
 }: StatCardProps) {
-  return (
-    <div className="bg-white rounded-lg shadow-sm p-6 min-h-[120px] flex flex-col justify-between">
+  const cardContent = (
+    <div className="bg-white rounded-lg shadow-sm p-6 min-h-[120px] flex flex-col justify-between transition-all duration-200 hover:shadow-md hover:scale-[1.02] cursor-pointer">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-gray-500">{title}</p>
@@ -27,4 +32,18 @@ export default function StatCard({
       </div>
     </div>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="block">
+        {cardContent}
+      </Link>
+    );
+  }
+
+  if (onClick) {
+    return <div onClick={onClick}>{cardContent}</div>;
+  }
+
+  return cardContent;
 }

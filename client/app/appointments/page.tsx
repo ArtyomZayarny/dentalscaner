@@ -85,7 +85,7 @@ function AppointmentPage() {
               procedures={procedures}
               timeSlots={[]}
               trigger={
-                <Button className="bg-blue-600 hover:bg-blue-700">Book New Appointment</Button>
+                <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5]">Book New Appointment</Button>
               }
             />
           </div>
@@ -104,7 +104,7 @@ function AppointmentPage() {
               procedures={procedures}
               timeSlots={[]}
               trigger={
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5]">
                   Book Your First Appointment
                 </Button>
               }

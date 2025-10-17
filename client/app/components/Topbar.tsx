@@ -19,13 +19,13 @@ function Topbar({ onMenuToggle }: TopbarProps) {
     <>
       {/* Top Bar */}
       <header
-        className="bg-blue-700 flex items-center justify-between px-4 lg:px-8 font-semibold text-lg w-full"
+        className="bg-[#EBF4FBBF] flex items-center justify-between px-4 lg:px-8 font-semibold text-lg w-full"
         style={{ minHeight: '72px' }}
       >
         {/* Mobile menu button */}
         <button
           onClick={onMenuToggle}
-          className="lg:hidden p-2 text-white hover:bg-blue-600 rounded-lg transition-colors"
+          className="lg:hidden p-2 text-blue-800 hover:bg-[#D1E7F5] rounded-lg transition-colors"
         >
           <Menu className="w-6 h-6" />
         </button>

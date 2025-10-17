@@ -68,7 +68,7 @@ export default function HomePage() {
             <div className="mt-10 flex justify-center">
               <Link
                 href="/login"
-                className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg"
+                className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-800 bg-[#EBF4FBBF] hover:bg-[#D1E7F5] transition-colors shadow-lg"
               >
                 Get Started
               </Link>
@@ -95,7 +95,7 @@ export default function HomePage() {
               <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
                 <div className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-blue-800">
                       <svg
                         className="h-6 w-6"
                         fill="none"
@@ -122,7 +122,7 @@ export default function HomePage() {
 
                 <div className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-blue-800">
                       <svg
                         className="h-6 w-6"
                         fill="none"
@@ -149,7 +149,7 @@ export default function HomePage() {
 
                 <div className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-blue-800">
                       <svg
                         className="h-6 w-6"
                         fill="none"
@@ -176,7 +176,7 @@ export default function HomePage() {
 
                 <div className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-blue-800">
                       <svg
                         className="h-6 w-6"
                         fill="none"
@@ -208,7 +208,7 @@ export default function HomePage() {
         {/* CTA Section */}
         <section className="bg-blue-700 py-20 sm:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+            <h2 className="text-3xl font-extrabold text-blue-800 sm:text-4xl">
               Ready to transform your dental practice?
             </h2>
             <p className="mt-4 text-xl text-blue-100 max-w-2xl mx-auto">
@@ -242,10 +242,10 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <p>&copy; 2025 Dentalscaner. All rights reserved.</p>
             <div className="mt-4 flex justify-center space-x-6">
-              <Link href="/privacy" className="hover:text-white">
+              <Link href="/privacy" className="hover:text-blue-800">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-white">
+              <Link href="/terms" className="hover:text-blue-800">
                 Terms of Service
               </Link>
             </div>

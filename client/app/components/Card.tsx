@@ -78,7 +78,7 @@ function Card() {
 
         <div className="mt-4">
           <Link href={`/appointments/${upcomingAppointment.id}`}>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+            <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5] text-blue-800 font-semibold">
               View Details
             </Button>
           </Link>

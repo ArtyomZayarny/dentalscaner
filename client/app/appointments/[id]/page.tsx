@@ -152,7 +152,7 @@ function AppointmentDetailsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Hero Section with Background */}
-      <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+      <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-blue-800">
         <div className="absolute inset-0 bg-black opacity-20"></div>
         <div className="relative p-8 max-w-6xl mx-auto">
           <div className="flex items-center gap-4 mb-6">
@@ -160,7 +160,7 @@ function AppointmentDetailsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                className="bg-white/10 border-white/20 text-blue-800 hover:bg-white/20"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Appointments
@@ -308,7 +308,10 @@ function AppointmentDetailsPage() {
 
                 {isEditing && (
                   <div className="flex gap-3 pt-4">
-                    <Button onClick={handleSave} className="flex-1 bg-blue-600 hover:bg-blue-700">
+                    <Button
+                      onClick={handleSave}
+                      className="flex-1 bg-[#EBF4FBBF] hover:bg-[#D1E7F5]"
+                    >
                       <Save className="w-4 h-4 mr-2" />
                       Save Changes
                     </Button>
@@ -405,7 +408,7 @@ function AppointmentDetailsPage() {
                 {appointment.status === AppointmentStatus.Pending && (
                   <>
                     <Button
-                      className="w-full bg-blue-600 hover:bg-blue-700"
+                      className="w-full bg-[#EBF4FBBF] hover:bg-[#D1E7F5]"
                       onClick={() => setIsEditing(true)}
                     >
                       <Edit className="w-4 h-4 mr-2" />

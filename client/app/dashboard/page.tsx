@@ -3,7 +3,16 @@ import React from 'react';
 import { useAppContext } from '../context/appContext';
 import Loading from '../components/Loading';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, MapPin, User, CheckCircle, AlertCircle, TrendingUp, Plus } from 'lucide-react';
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  User,
+  CheckCircle,
+  AlertCircle,
+  TrendingUp,
+  Plus,
+} from 'lucide-react';
 import Link from 'next/link';
 import BookingDialog from '../components/BookingDialog';
 import StatCard from '../components/StatCard';
@@ -104,6 +113,7 @@ function OverviewPage() {
       value: totalAppointments,
       icon: Calendar,
       iconColor: 'text-blue-500',
+      href: '/appointments',
     },
     {
       title: 'Completed',
@@ -111,6 +121,7 @@ function OverviewPage() {
       icon: CheckCircle,
       iconColor: 'text-green-500',
       valueColor: 'text-green-600',
+      href: '/appointments',
     },
     {
       title: 'Pending',
@@ -118,6 +129,7 @@ function OverviewPage() {
       icon: AlertCircle,
       iconColor: 'text-yellow-500',
       valueColor: 'text-yellow-600',
+      href: '/appointments',
     },
     {
       title: 'Available Doctors',
@@ -125,6 +137,7 @@ function OverviewPage() {
       icon: User,
       iconColor: 'text-purple-500',
       valueColor: 'text-purple-600',
+      href: '/doctors',
     },
   ];
 
@@ -139,7 +152,7 @@ function OverviewPage() {
           procedures={procedures}
           timeSlots={timeSlots}
           trigger={
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full justify-start">
+            <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5] text-blue-800 w-full justify-start">
               <Plus className="mr-2 w-4 h-4" />
               Book New Appointment
             </Button>
@@ -196,7 +209,7 @@ function OverviewPage() {
               const Icon = action.icon;
               return (
                 <Link href={action.href!} className="block">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full justify-start">
+                  <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5] text-blue-800 w-full justify-start">
                     <Icon className="mr-2 w-4 h-4" />
                     {action.label}
                   </Button>
@@ -260,7 +273,11 @@ function OverviewPage() {
                 doctors={doctors}
                 procedures={procedures}
                 timeSlots={timeSlots}
-                trigger={<Button className="bg-blue-600 hover:bg-blue-700 text-white" size="sm">Book Appointment</Button>}
+                trigger={
+                  <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5] text-blue-800" size="sm">
+                    Book Appointment
+                  </Button>
+                }
               />
             </div>
           )}
