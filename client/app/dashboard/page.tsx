@@ -3,7 +3,7 @@ import React from 'react';
 import { useAppContext } from '../context/appContext';
 import Loading from '../components/Loading';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, MapPin, User, CheckCircle, AlertCircle, TrendingUp } from 'lucide-react';
+import { Calendar, Clock, MapPin, User, CheckCircle, AlertCircle, TrendingUp, Plus } from 'lucide-react';
 import Link from 'next/link';
 import BookingDialog from '../components/BookingDialog';
 import StatCard from '../components/StatCard';
@@ -138,6 +138,12 @@ function OverviewPage() {
           doctors={doctors}
           procedures={procedures}
           timeSlots={timeSlots}
+          trigger={
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full justify-start">
+              <Plus className="mr-2 w-4 h-4" />
+              Book New Appointment
+            </Button>
+          }
         />
       ),
     },
@@ -190,7 +196,7 @@ function OverviewPage() {
               const Icon = action.icon;
               return (
                 <Link href={action.href!} className="block">
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full justify-start">
                     <Icon className="mr-2 w-4 h-4" />
                     {action.label}
                   </Button>
@@ -254,7 +260,7 @@ function OverviewPage() {
                 doctors={doctors}
                 procedures={procedures}
                 timeSlots={timeSlots}
-                trigger={<Button size="sm">Book Appointment</Button>}
+                trigger={<Button className="bg-blue-600 hover:bg-blue-700 text-white" size="sm">Book Appointment</Button>}
               />
             </div>
           )}
