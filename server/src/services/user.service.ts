@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from '../entities/user.entity';
+import { extractGoogleUserInfo } from '../utils/google-jwt.util';
 
 export interface CreateUserDto {
   email: string;
@@ -121,25 +122,50 @@ export class UserService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async googleLogin(_token: string): Promise<User> {
-    // For demo purposes, create a user from Google token
-    // In production, you would verify the Google token and extract user info
+  async googleLogin(token: string): Promise<User> {
+    // Extract user information from Google JWT token
+    const googleUserInfo = extractGoogleUserInfo(token);
 
-    // Extract email from Google token (this is a simplified version)
-    // In production, you would decode the JWT token and extract real user info
-    const email = `google-user-${Date.now()}@example.com`;
+    if (!googleUserInfo) {
+      throw new Error(
+        'Invalid Google token: unable to extract user information',
+      );
+    }
 
-    // Try to find existing user by email first
+    const { email, firstName, lastName, name, picture } = googleUserInfo;
+
+    // Try to find existing user by email
     let user = await this.findByEmail(email);
 
-    if (!user) {
-      // Create a new user with proper UUID
+    if (user) {
+      // User exists - update their information with Google data
+      // This handles the case where user registered with email/password first
+      // and now is logging in with Google using the same email
+
+      // Update user data with Google information
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.avatar = picture; // Set Google profile picture as avatar
+
+      // Remove password since user is now using Google OAuth
+      user.password = undefined;
+
+      // Save updated user
+      user = await this.userRepository.save(user);
+
+      console.log(`Updated existing user ${email} with Google OAuth data`);
+    } else {
+      // User doesn't exist - create new user with Google data
       user = await this.create({
         email,
-        firstName: 'Google',
-        lastName: 'User',
+        firstName,
+        lastName,
         role: 'patient',
+        avatar: picture,
+        // No password since this is OAuth user
       });
+
+      console.log(`Created new Google OAuth user: ${email}`);
     }
 
     return user;
