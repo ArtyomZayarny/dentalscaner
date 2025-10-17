@@ -48,6 +48,25 @@ export class UserResolver {
     };
   }
 
+  @Mutation(() => LoginResponse)
+  async register(
+    @Args('email', { type: () => String }) email: string,
+    @Args('password', { type: () => String }) password: string,
+    @Args('firstName', { type: () => String }) firstName: string,
+    @Args('lastName', { type: () => String }) lastName: string,
+  ) {
+    const user = await this.userService.register(
+      email,
+      password,
+      firstName,
+      lastName,
+    );
+    return {
+      token: `token-${user.id}-${Date.now()}`, // Simple token generation for demo
+      user,
+    };
+  }
+
   @Mutation(() => GoogleLoginResponse)
   async googleLogin(@Args('token', { type: () => String }) token: string) {
     const user = await this.userService.googleLogin(token);

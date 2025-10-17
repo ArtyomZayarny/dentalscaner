@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { User } from '../entities/user.entity';
 
 export interface CreateUserDto {
   email: string;
+  password?: string;
   firstName: string;
   lastName: string;
   role?: 'patient' | 'doctor' | 'admin';
@@ -43,11 +45,20 @@ export class UserService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.userRepository.create({
+    const userData: any = {
       ...createUserDto,
       role: createUserDto.role || 'patient',
-    });
-    return this.userRepository.save(user);
+    };
+
+    // Hash password if provided
+    if (createUserDto.password) {
+      const saltRounds = 10;
+      userData.password = await bcrypt.hash(createUserDto.password, saltRounds);
+    }
+
+    const user = this.userRepository.create(userData);
+    const savedUser = await this.userRepository.save(user);
+    return savedUser as unknown as User;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
@@ -63,24 +74,50 @@ export class UserService {
     return (result.affected || 0) > 0;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async login(email: string, _password: string): Promise<User> {
-    // For demo purposes, accept any email/password combination
-    // In production, you would hash the password and verify it
-
-    let user = await this.findByEmail(email);
+  async login(email: string, password: string): Promise<User> {
+    // Find user by email
+    const user = await this.findByEmail(email);
 
     if (!user) {
-      // Create a demo user if they don't exist
-      user = await this.create({
-        email,
-        firstName: 'Demo',
-        lastName: 'User',
-        role: 'patient',
-      });
+      throw new Error('User with this email not found. Please register.');
+    }
+
+    // Check if user has a password (not OAuth user)
+    if (!user.password) {
+      throw new Error(
+        'This account uses Google sign-in. Please sign in with Google.',
+      );
+    }
+
+    // Verify password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new Error('Invalid password. Please check your input.');
     }
 
     return user;
+  }
+
+  async register(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+  ): Promise<User> {
+    // Check if user already exists
+    const existingUser = await this.findByEmail(email);
+    if (existingUser) {
+      throw new Error('User with this email already exists');
+    }
+
+    // Create new user with hashed password
+    return this.create({
+      email,
+      password,
+      firstName,
+      lastName,
+      role: 'patient',
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -63,6 +63,25 @@ export default function LoginPage() {
     setIsLoading(true);
     setError('');
 
+    // Validate required fields
+    if (!name.trim()) {
+      setError('Please enter your full name');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!email.trim()) {
+      setError('Please enter your email');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!password.trim()) {
+      setError('Please enter your password');
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const client = getApolloClient();
       if (!client) {
@@ -70,12 +89,18 @@ export default function LoginPage() {
         setIsLoading(false);
         return;
       }
+      // Split name into firstName and lastName
+      const nameParts = name.trim().split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+
       const { data } = await client.mutate({
         mutation: REGISTER_MUTATION,
         variables: {
           email,
           password,
-          name,
+          firstName,
+          lastName,
         },
       });
 

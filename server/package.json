@@ -23,7 +23,8 @@
     "health-check": "npm run test -- --passWithNoTests",
     "deploy-check": "npm run health-check && npm run build",
     "seed": "ts-node -r tsconfig-paths/register src/scripts/seed.ts",
-    "seed:dev": "npm run build && npm run seed"
+    "seed:dev": "npm run build && npm run seed",
+    "add-password-field": "ts-node -r tsconfig-paths/register src/scripts/add-password-field.ts"
   },
   "dependencies": {
     "@nestjs/apollo": "^13.1.0",
@@ -33,7 +34,9 @@
     "@nestjs/graphql": "^13.1.0",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/typeorm": "^11.0.0",
+    "@types/bcrypt": "^6.0.0",
     "apollo-server-express": "^3.13.0",
+    "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "graphql": "^16.11.0",

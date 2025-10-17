@@ -42,8 +42,11 @@ export const authOptions: NextAuthOptions = {
           }
 
           return null;
-        } catch (error) {
-          return null;
+        } catch (error: any) {
+          // Extract error message from GraphQL error
+          const errorMessage =
+            error?.message || error?.graphQLErrors?.[0]?.message || 'Login error';
+          throw new Error(errorMessage);
         }
       },
     }),
@@ -72,7 +75,8 @@ export const authOptions: NextAuthOptions = {
             user.token = data.googleLogin.token;
             return true;
           }
-        } catch (error) {
+        } catch (error: any) {
+          console.error('Google login error:', error);
           return false;
         }
       }
