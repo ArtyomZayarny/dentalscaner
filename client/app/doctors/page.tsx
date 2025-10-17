@@ -54,7 +54,7 @@ function DoctorsPage() {
   if (!user || !appointments) return <Loading />;
 
   return (
-    <div className="p-4 md:p-8 max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       <div className="mb-4 md:mb-8">
         <h1 className="text-2xl md:text-3xl font-bold mb-2">👨‍⚕️ Our Doctors</h1>
         <p className="text-gray-600 text-sm md:text-base">
@@ -63,7 +63,7 @@ function DoctorsPage() {
       </div>
 
       {/* Search and Filter Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6 mb-6 md:mb-8">
+      <div className="bg-white rounded-xl shadow-sm p-4 md:p-6 mb-6 md:mb-8">
         {/* Search Bar with Filter Button */}
         <div className="relative mb-4 md:mb-6">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -76,7 +76,7 @@ function DoctorsPage() {
           {/* Mobile Filter Toggle Button */}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="md:hidden absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+            className="md:hidden absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
           >
             {showFilters ? <X className="w-5 h-5" /> : <Filter className="w-5 h-5" />}
           </button>
@@ -90,7 +90,7 @@ function DoctorsPage() {
                 key={spec}
                 variant={selectedSpecialization === spec ? 'default' : 'outline'}
                 onClick={() => setSelectedSpecialization(spec)}
-                className="whitespace-nowrap"
+                className={`whitespace-nowrap bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer border-0`}
               >
                 {spec === 'all' ? 'All Specializations' : spec}
               </Button>
@@ -103,7 +103,7 @@ function DoctorsPage() {
       <List
         data={filteredDoctors}
         renderItem={(doctor, index) => (
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer border-0">
             <div className="h-48 relative overflow-hidden bg-gradient-to-b from-blue-50 to-white">
               <Image
                 src={
@@ -135,7 +135,9 @@ function DoctorsPage() {
 
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button className="w-full">View Details</Button>
+                  <Button className="w-full bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer">
+                    View Details
+                  </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
                   <DialogHeader>

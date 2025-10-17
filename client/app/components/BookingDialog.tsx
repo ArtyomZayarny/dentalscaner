@@ -166,17 +166,6 @@ export default function BookingDialog({
     // No clinic needed
 
     try {
-      console.log('Creating appointment with variables:', {
-        userId,
-        doctorId: selectedDoctor,
-        procedureId: selectedProcedure,
-        date: selectedDate,
-        time: selectedTime,
-        duration: selectedProcedureDetails.duration,
-        amount: selectedProcedureDetails.price,
-        notes: notes || undefined,
-      });
-
       const { data } = await createAppointment({
         variables: {
           userId,
@@ -189,8 +178,6 @@ export default function BookingDialog({
           notes: notes || undefined,
         },
       });
-
-      console.log('Appointment created successfully:', data);
 
       const appointmentId = data.createAppointment.id;
 
@@ -206,9 +193,6 @@ export default function BookingDialog({
         }
       }
 
-      console.log('Payment endpoint URL:', `${baseUrl}/payment/create-checkout-session`);
-      console.log('Sending appointment ID:', appointmentId);
-
       const paymentResponse = await fetch(`${baseUrl}/payment/create-checkout-session`, {
         method: 'POST',
         headers: {
@@ -216,9 +200,6 @@ export default function BookingDialog({
         },
         body: JSON.stringify({ appointmentId }),
       });
-
-      console.log('Payment response status:', paymentResponse.status);
-      console.log('Payment response headers:', paymentResponse.headers);
 
       if (!paymentResponse.ok) {
         const errorText = await paymentResponse.text();
@@ -229,7 +210,6 @@ export default function BookingDialog({
       }
 
       const paymentData = await paymentResponse.json();
-      console.log('Payment data received:', paymentData);
 
       // Redirect to Stripe's hosted payment page
       const stripe = window.Stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -304,7 +284,7 @@ export default function BookingDialog({
         <div className="flex items-center gap-2 mb-4">
           <button
             onClick={handleBack}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
           >
             ←
           </button>
@@ -483,7 +463,9 @@ export default function BookingDialog({
     <Dialog onOpenChange={(open) => !open && resetForm()}>
       <DialogTrigger asChild>
         {trigger || (
-          <Button className={triggerClassName}>
+          <Button
+            className={`${triggerClassName} bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer`}
+          >
             <Plus className="mr-2 w-4 h-4" />
             Book New Appointment
           </Button>
@@ -506,7 +488,11 @@ export default function BookingDialog({
 
           {step === 'details' && (
             <DialogFooter className="mt-6">
-              <Button type="submit" disabled={creatingAppointment}>
+              <Button
+                type="submit"
+                disabled={creatingAppointment}
+                className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer"
+              >
                 {creatingAppointment ? 'Creating Appointment...' : 'Confirm Booking'}
               </Button>
             </DialogFooter>

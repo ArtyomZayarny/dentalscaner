@@ -41,7 +41,10 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="flex items-center">
-              <Link href="/login" className="text-blue-600 hover:text-blue-800 font-medium">
+              <Link
+                href="/login"
+                className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer"
+              >
                 Sign In
               </Link>
             </div>
@@ -68,7 +71,7 @@ export default function HomePage() {
             <div className="mt-10 flex justify-center">
               <Link
                 href="/login"
-                className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-800 bg-[#EBF4FBBF] hover:bg-[#D1E7F5] transition-colors shadow-lg"
+                className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-800 bg-[#C7DDEB] hover:bg-[#A8C9E0] transition-colors shadow-lg cursor-pointer"
               >
                 Get Started
               </Link>
@@ -218,7 +221,7 @@ export default function HomePage() {
             <div className="mt-8">
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 transition-colors shadow-lg"
+                className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 transition-colors shadow-lg cursor-pointer"
               >
                 Get Started Today
                 <svg
@@ -242,10 +245,10 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <p>&copy; 2025 Dentalscaner. All rights reserved.</p>
             <div className="mt-4 flex justify-center space-x-6">
-              <Link href="/privacy" className="hover:text-blue-800">
+              <Link href="/privacy" className="hover:text-blue-800 cursor-pointer">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-blue-800">
+              <Link href="/terms" className="hover:text-blue-800 cursor-pointer">
                 Terms of Service
               </Link>
             </div>

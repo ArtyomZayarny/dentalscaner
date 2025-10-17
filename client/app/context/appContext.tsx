@@ -2,11 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { useQuery } from '@apollo/client';
-import {
-  GET_APPOINTMENTS_BY_USER,
-  GET_DOCTORS,
-  GET_PROCEDURES,
-} from '@/lib/graphql-queries';
+import { GET_APPOINTMENTS_BY_USER, GET_DOCTORS, GET_PROCEDURES } from '@/lib/graphql-queries';
 // Import generated types
 import { User, Doctor, Procedure, Appointment } from '../types/generated';
 
@@ -26,6 +22,7 @@ interface AppContextType {
   appointments: Appointment[];
   appointmentsLoading: boolean;
   appointmentsError: Error | undefined;
+  refetchAppointments: () => void;
   doctors: Doctor[];
   doctorsLoading: boolean;
   doctorsError: Error | undefined;
@@ -77,6 +74,7 @@ export function AppContextProvider({
     data: appointmentsData,
     loading: appointmentsLoading,
     error: appointmentsError,
+    refetch: refetchAppointments,
   } = useQuery(GET_APPOINTMENTS_BY_USER, {
     variables: { userId: user.id },
     skip: !user.id,
@@ -165,6 +163,7 @@ export function AppContextProvider({
     appointments,
     appointmentsLoading,
     appointmentsError,
+    refetchAppointments,
     doctors,
     doctorsLoading,
     doctorsError,

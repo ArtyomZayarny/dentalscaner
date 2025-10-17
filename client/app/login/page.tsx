@@ -157,7 +157,7 @@ export default function LoginPage() {
           <button
             onClick={handleGoogleSignIn}
             disabled={isLoading}
-            className="w-full bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg mb-4 flex items-center justify-center hover:bg-gray-50 disabled:opacity-50"
+            className="w-full bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg mb-4 flex items-center justify-center hover:bg-gray-50 disabled:opacity-50 cursor-pointer"
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
               <path
@@ -240,7 +240,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#EBF4FBBF] text-blue-800 py-2 px-4 rounded-lg hover:bg-[#D1E7F5] disabled:opacity-50"
+              className="w-full bg-[#C7DDEB] text-blue-800 py-2 px-4 rounded-lg hover:bg-[#A8C9E0] disabled:opacity-50 cursor-pointer"
             >
               {isLoading
                 ? isRegistering
@@ -260,7 +260,7 @@ export default function LoginPage() {
                 setIsRegistering(!isRegistering);
                 setError('');
               }}
-              className="text-sm text-blue-600 hover:text-blue-500"
+              className="text-sm text-blue-600 hover:text-blue-500 cursor-pointer"
             >
               {isRegistering
                 ? 'Already have an account? Sign in'

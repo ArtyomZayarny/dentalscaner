@@ -152,7 +152,7 @@ function OverviewPage() {
           procedures={procedures}
           timeSlots={timeSlots}
           trigger={
-            <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5] text-blue-800 w-full justify-start">
+            <Button className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer w-full justify-start">
               <Plus className="mr-2 w-4 h-4" />
               Book New Appointment
             </Button>
@@ -181,7 +181,7 @@ function OverviewPage() {
   ];
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">
           👋 Hello, {user.firstName} {user.lastName}!
@@ -198,7 +198,7 @@ function OverviewPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Quick Actions */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6 border-0">
           <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
           <List
             data={quickActionsData}
@@ -209,7 +209,7 @@ function OverviewPage() {
               const Icon = action.icon;
               return (
                 <Link href={action.href!} className="block">
-                  <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5] text-blue-800 w-full justify-start">
+                  <Button className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer w-full justify-start">
                     <Icon className="mr-2 w-4 h-4" />
                     {action.label}
                   </Button>
@@ -221,13 +221,13 @@ function OverviewPage() {
         </div>
 
         {/* Upcoming Appointments */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6 border-0">
           <h2 className="text-xl font-semibold mb-4">Upcoming Appointments</h2>
           <List
             data={upcomingAppointments}
             renderItem={(appointment) => (
               <Link href={`/appointments/${appointment.id}`} className="block">
-                <div className="border rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                <div className="rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer bg-white shadow-sm">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-medium">{getProcedureName(appointment.procedureId)}</h3>
                     <span
@@ -274,7 +274,10 @@ function OverviewPage() {
                 procedures={procedures}
                 timeSlots={timeSlots}
                 trigger={
-                  <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5] text-blue-800" size="sm">
+                  <Button
+                    className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer"
+                    size="sm"
+                  >
                     Book Appointment
                   </Button>
                 }

@@ -86,7 +86,7 @@ function ProcedurePage() {
   ];
 
   return (
-    <div className="p-4 md:p-8 max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       <div className="mb-4 md:mb-8">
         <h1 className="text-2xl md:text-3xl font-bold mb-2">🦷 Dental Procedures</h1>
         <p className="text-gray-600 text-sm md:text-base">
@@ -95,7 +95,7 @@ function ProcedurePage() {
       </div>
 
       {/* Search and Filter Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6 mb-6 md:mb-8">
+      <div className="bg-white rounded-xl shadow-sm p-4 md:p-6 mb-6 md:mb-8">
         {/* Search Bar with Filter Button */}
         <div className="relative mb-4 md:mb-6">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -108,7 +108,7 @@ function ProcedurePage() {
           {/* Mobile Filter Toggle Button */}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="md:hidden absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+            className="md:hidden absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
           >
             {showFilters ? <X className="w-5 h-5" /> : <Filter className="w-5 h-5" />}
           </button>
@@ -118,28 +118,18 @@ function ProcedurePage() {
         <div className={`space-y-3 ${showFilters ? 'block' : 'hidden md:block'}`}>
           <div className="flex flex-wrap gap-2 md:gap-3">
             {categories.map((category) => {
-              const Icon = category.icon;
               const isActive = selectedCategory === category.id;
 
               return (
-                <button
+                <Button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`
-                    flex items-center gap-2 px-3 md:px-4 py-2 md:py-3 rounded-lg font-medium text-xs md:text-sm
-                    transition-all duration-200 ease-in-out transform hover:scale-105
-                    border-2 border-transparent whitespace-nowrap
-                    ${
-                      isActive
-                        ? category.activeColor
-                        : `${category.color} border-gray-200 hover:border-gray-300`
-                    }
-                    ${isActive ? 'ring-2 ring-offset-2 ring-blue-200' : ''}
-                  `}
+                  className={`whitespace-nowrap bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer border-0 ${
+                    isActive ? 'ring-2 ring-offset-2 ring-blue-200' : ''
+                  }`}
                 >
-                  <Icon className="w-3 h-3 md:w-4 md:h-4" />
                   {category.name}
-                </button>
+                </Button>
               );
             })}
           </div>
@@ -150,7 +140,7 @@ function ProcedurePage() {
       <List
         data={filteredProcedures}
         renderItem={(procedure, index) => (
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full">
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full cursor-pointer border-0">
             <div className="h-48 relative overflow-hidden">
               <Image
                 src={
@@ -191,7 +181,11 @@ function ProcedurePage() {
                 doctors={doctors}
                 procedures={procedures}
                 timeSlots={timeSlots}
-                trigger={<Button className="w-full">Book Appointment</Button>}
+                trigger={
+                  <Button className="w-full bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer">
+                    Book Appointment
+                  </Button>
+                }
                 title={`Book ${procedure.name}`}
                 description="Select your preferred date, time, doctor, and clinic."
               />

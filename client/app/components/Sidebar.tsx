@@ -77,7 +77,7 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                   className={`flex items-center px-6 py-3 rounded-lg transition-colors ${
                     isActive
                       ? 'bg-blue-100 text-blue-700 font-medium shadow-sm'
-                      : 'hover:bg-gray-100 text-gray-700'
+                      : 'hover:bg-gray-100 text-gray-700 cursor-pointer'
                   }`}
                 >
                   <Icon className="mr-3 w-5 h-5" />
@@ -137,7 +137,7 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                   className={`flex items-center px-6 py-3 rounded-lg transition-colors ${
                     isActive
                       ? 'bg-blue-100 text-blue-700 font-medium shadow-sm'
-                      : 'hover:bg-gray-100 text-gray-700'
+                      : 'hover:bg-gray-100 text-gray-700 cursor-pointer'
                   }`}
                 >
                   <Icon className="mr-3 w-5 h-5" />
@@ -151,7 +151,7 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           <div className="mt-8">
             <button
               onClick={handleSignOut}
-              className="flex items-center px-6 py-3 rounded-lg transition-colors hover:bg-gray-100 text-gray-700 w-full"
+              className="flex items-center px-6 py-3 rounded-lg transition-colors hover:bg-gray-100 text-gray-700 w-full cursor-pointer"
             >
               <LogOut className="mr-3 w-5 h-5" />
               Sign Out

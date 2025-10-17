@@ -11,8 +11,15 @@ import BookingDialog from '../components/BookingDialog';
 import { useSearchParams } from 'next/navigation';
 
 function AppointmentPage() {
-  const { user, appointments, appointmentsLoading, appointmentsError, doctors, procedures } =
-    useAppContext();
+  const {
+    user,
+    appointments,
+    appointmentsLoading,
+    appointmentsError,
+    doctors,
+    procedures,
+    timeSlots,
+  } = useAppContext();
   const searchParams = useSearchParams();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
@@ -49,7 +56,7 @@ function AppointmentPage() {
   }
 
   return (
-    <>
+    <div>
       {/* Success Message */}
       {showSuccessMessage && (
         <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
@@ -63,7 +70,7 @@ function AppointmentPage() {
             </div>
             <button
               onClick={() => setShowSuccessMessage(false)}
-              className="ml-auto text-green-600 hover:text-green-800"
+              className="ml-auto text-green-600 hover:text-green-800 cursor-pointer"
             >
               ✕
             </button>
@@ -83,9 +90,9 @@ function AppointmentPage() {
               userId={user.id}
               doctors={doctors}
               procedures={procedures}
-              timeSlots={[]}
+              timeSlots={timeSlots || []}
               trigger={
-                <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5]">Book New Appointment</Button>
+                <Button className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer">Book New Appointment</Button>
               }
             />
           </div>
@@ -102,9 +109,9 @@ function AppointmentPage() {
               userId={user.id}
               doctors={doctors}
               procedures={procedures}
-              timeSlots={[]}
+              timeSlots={timeSlots || []}
               trigger={
-                <Button className="bg-[#EBF4FBBF] hover:bg-[#D1E7F5]">
+                <Button className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer">
                   Book Your First Appointment
                 </Button>
               }
@@ -114,7 +121,7 @@ function AppointmentPage() {
           <DataTable columns={columns} data={appointments} />
         )}
       </Section>
-    </>
+    </div>
   );
 }
 

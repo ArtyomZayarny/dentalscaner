@@ -310,7 +310,7 @@ function AppointmentDetailsPage() {
                   <div className="flex gap-3 pt-4">
                     <Button
                       onClick={handleSave}
-                      className="flex-1 bg-[#EBF4FBBF] hover:bg-[#D1E7F5]"
+                      className="flex-1 bg-[#C7DDEB] hover:bg-[#A8C9E0] cursor-pointer"
                     >
                       <Save className="w-4 h-4 mr-2" />
                       Save Changes
@@ -408,7 +408,7 @@ function AppointmentDetailsPage() {
                 {appointment.status === AppointmentStatus.Pending && (
                   <>
                     <Button
-                      className="w-full bg-[#EBF4FBBF] hover:bg-[#D1E7F5]"
+                      className="w-full bg-[#C7DDEB] hover:bg-[#A8C9E0] cursor-pointer"
                       onClick={() => setIsEditing(true)}
                     >
                       <Edit className="w-4 h-4 mr-2" />

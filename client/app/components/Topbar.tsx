@@ -9,7 +9,6 @@ interface TopbarProps {
 }
 
 function Topbar({ onMenuToggle }: TopbarProps) {
-  const { data: session } = useSession();
 
   const handleSignOut = () => {
     signOut({ callbackUrl: '/' });
@@ -19,13 +18,13 @@ function Topbar({ onMenuToggle }: TopbarProps) {
     <>
       {/* Top Bar */}
       <header
-        className="bg-[#EBF4FBBF] flex items-center justify-between px-4 lg:px-8 font-semibold text-lg w-full"
+        className="bg-blue-700 flex items-center justify-between px-4 lg:px-8 font-semibold text-lg w-full"
         style={{ minHeight: '72px' }}
       >
         {/* Mobile menu button */}
         <button
           onClick={onMenuToggle}
-          className="lg:hidden p-2 text-blue-800 hover:bg-[#D1E7F5] rounded-lg transition-colors"
+          className="lg:hidden p-2 text-white hover:bg-blue-600 rounded-lg transition-colors cursor-pointer"
         >
           <Menu className="w-6 h-6" />
         </button>
@@ -38,7 +37,7 @@ function Topbar({ onMenuToggle }: TopbarProps) {
           <div className="hidden lg:flex items-center">
             <button
               onClick={handleSignOut}
-              className="flex items-center text-white hover:text-gray-200 transition-colors"
+              className="flex items-center text-white hover:text-gray-200 transition-colors cursor-pointer"
               title="Sign Out"
             >
               <LogOut className="w-5 h-5" />

@@ -18,7 +18,7 @@ export default function ProtectedLayout({
           <main className="flex flex-col w-full overflow-y-scroll">
             <Topbar />
             {/* Page Content */}
-            <div className="px-8 py-4 bg-white">
+            <div className="px-8 py-4 bg-gray-300">
               <div className="mx-auto">{children}</div>
             </div>
           </main>
