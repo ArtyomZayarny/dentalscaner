@@ -31,6 +31,10 @@ export const GET_APPOINTMENTS = gql`
       id
       userId
       doctorId
+      doctor {
+        id
+        name
+      }
       procedureId
       date
       time
@@ -52,6 +56,10 @@ export const GET_APPOINTMENTS_BY_USER = gql`
       id
       userId
       doctorId
+      doctor {
+        id
+        name
+      }
       procedureId
       date
       time

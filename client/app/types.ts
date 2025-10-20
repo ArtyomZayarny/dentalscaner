@@ -2,7 +2,6 @@
 export interface IFilterOptions {
   date?: string;
   doctorId?: string;
-  clinicId?: string;
   procedureId?: string;
   status?: string;
 }
@@ -24,7 +23,6 @@ export enum BookingType {
 export interface IBookingRequest {
   userId: string;
   doctorId: string;
-  clinicId: string;
   procedureId: string;
   date: string;
   time: string;

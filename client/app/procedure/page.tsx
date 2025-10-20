@@ -187,7 +187,7 @@ function ProcedurePage() {
                   </Button>
                 }
                 title={`Book ${procedure.name}`}
-                description="Select your preferred date, time, doctor, and clinic."
+                description="Select your preferred date, time, and doctor."
               />
             </div>
           </div>

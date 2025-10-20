@@ -15,9 +15,6 @@ export class CreateAppointmentDto {
   doctorId: string;
 
   @IsUUID()
-  clinicId: string;
-
-  @IsUUID()
   procedureId: string;
 
   @IsDateString()

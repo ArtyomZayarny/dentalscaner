@@ -17,7 +17,6 @@ import {
 } from '@nestjs/graphql';
 import { User } from './user.entity';
 import { Doctor } from './doctor.entity';
-import { Clinic } from './clinic.entity';
 import { Procedure } from './procedure.entity';
 
 export enum AppointmentStatus {
@@ -108,10 +107,7 @@ export class Appointment {
   @Field(() => Doctor, { nullable: true })
   doctor: Doctor;
 
-  @ManyToOne(() => Clinic)
-  @JoinColumn({ name: 'clinicId' })
-  @Field(() => Clinic, { nullable: true })
-  clinic: Clinic;
+  // Removed clinic relation - not needed
 
   @ManyToOne(() => Procedure)
   @JoinColumn({ name: 'procedureId' })

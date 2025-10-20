@@ -17,7 +17,6 @@ import {
 import {
   Calendar,
   Clock,
-  MapPin,
   User,
   Phone,
   Mail,
@@ -180,7 +179,7 @@ function AppointmentDetailsPage() {
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Appointment Details</h1>
             <p className="text-xl text-blue-100">
-              {procedure?.name} with {doctor?.name} at Dental Clinic
+              {procedure?.name} with {doctor?.name}
             </p>
           </div>
         </div>
@@ -253,15 +252,7 @@ function AppointmentDetailsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                      <MapPin className="w-6 h-6 text-orange-600" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Clinic</label>
-                      <p className="text-gray-900 font-medium">Dental Clinic</p>
-                    </div>
-                  </div>
+                  {/* Clinic removed */}
 
                   <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
                     <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
@@ -353,50 +344,7 @@ function AppointmentDetailsPage() {
               </div>
             )}
 
-            {/* Clinic Information Card */}
-            {true && (
-              <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-                <h2 className="text-2xl font-semibold mb-6 text-gray-800">Clinic Information</h2>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                      <MapPin className="w-6 h-6 text-orange-600" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Address</label>
-                      <p className="text-gray-900 font-medium">123 Main Street, Downtown</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                      <Phone className="w-6 h-6 text-green-600" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Phone</label>
-                      <p className="text-gray-900 font-medium">+1 (555) 123-4567</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <Mail className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Email</label>
-                      <p className="text-gray-900 font-medium">info@dentalclinic.com</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <Clock className="w-6 h-6 text-purple-600" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Working Hours</label>
-                      <p className="text-gray-900 font-medium">9:00 AM - 6:00 PM</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+            {/* Clinic Information removed */}
           </div>
 
           {/* Sidebar */}

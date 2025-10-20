@@ -4,7 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Appointment, AppointmentStatus } from '@/app/types/generated';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { MoreHorizontal, Calendar, Clock, User, MapPin, Eye } from 'lucide-react';
+import { MoreHorizontal, Calendar, Clock, User, Eye } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -74,38 +74,13 @@ export const columns: ColumnDef<Appointment>[] = [
     accessorKey: 'doctorId',
     header: 'Doctor',
     cell: ({ row }) => {
-      const doctorId = row.getValue('doctorId') as string;
+      const original = row.original as Appointment;
+      const doctorName = (original as unknown as { doctor?: { id: string; name?: string } }).doctor
+        ?.name;
       return (
         <div className="flex items-center gap-2">
           <User className="w-4 h-4 text-gray-400" />
-          <span>
-            {doctorId === 'doc-1'
-              ? 'Dr. Sarah Johnson'
-              : doctorId === 'doc-2'
-              ? 'Dr. Michael Chen'
-              : doctorId === 'doc-3'
-              ? 'Dr. Emily Rodriguez'
-              : 'Unknown Doctor'}
-          </span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: 'clinicId',
-    header: 'Clinic',
-    cell: ({ row }) => {
-      const clinicId = row.getValue('clinicId') as string;
-      return (
-        <div className="flex items-center gap-2">
-          <MapPin className="w-4 h-4 text-gray-400" />
-          <span>
-            {clinicId === 'clinic-1'
-              ? 'Bright Smile Dental Clinic'
-              : clinicId === 'clinic-2'
-              ? 'Family Dental Care'
-              : 'Unknown Clinic'}
-          </span>
+          <span>{doctorName || 'Unknown Doctor'}</span>
         </div>
       );
     },

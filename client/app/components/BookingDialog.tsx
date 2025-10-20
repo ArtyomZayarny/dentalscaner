@@ -57,6 +57,12 @@ export default function BookingDialog({
   title = 'Book New Appointment',
   description = 'Schedule your next dental visit',
 }: BookingDialogProps) {
+  const formatLocalDate = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
   const [step, setStep] = useState<'doctor' | 'date' | 'time' | 'details'>('doctor');
   const [selectedDoctor, setSelectedDoctor] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
@@ -296,14 +302,14 @@ export default function BookingDialog({
           selected={selectedDateObject}
           onSelect={(date) => {
             if (date) {
-              const dateStr = date.toISOString().split('T')[0];
+              const dateStr = formatLocalDate(date);
               if (availableDates.includes(dateStr)) {
                 handleDateSelect(dateStr);
               }
             }
           }}
           disabled={(date) => {
-            const dateStr = date.toISOString().split('T')[0];
+            const dateStr = formatLocalDate(date);
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             return date < today || !availableDates.includes(dateStr);

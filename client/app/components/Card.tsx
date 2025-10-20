@@ -46,12 +46,8 @@ function Card() {
       <div className="relative w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
         <Image
           className="object-cover"
-          src={
-            procedure
-              ? (procedure as { image?: string }).image || `/images/procedures/procedure-1.png`
-              : '/clinic-preview.png'
-          }
-          alt={procedure?.name || 'Dental clinic'}
+          src={(procedure as { image?: string })?.image || `/images/procedures/procedure-1.png`}
+          alt={procedure?.name || 'Procedure image'}
           fill
           sizes="128px"
         />
@@ -59,7 +55,7 @@ function Card() {
 
       <div className="flex flex-col justify-between flex-1 min-w-0">
         <div className="flex flex-col gap-2">
-          <h4 className="font-semibold text-lg text-gray-800">Dental Clinic</h4>
+          <h4 className="font-semibold text-lg text-gray-800">Upcoming Appointment</h4>
           <p className="text-gray-600">{formatDate(upcomingAppointment.date)}</p>
           <div className="flex justify-between items-center">
             <p className="text-sm text-gray-700">

@@ -3,16 +3,7 @@ import React from 'react';
 import { useAppContext } from '../context/appContext';
 import Loading from '../components/Loading';
 import { Button } from '@/components/ui/button';
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  User,
-  CheckCircle,
-  AlertCircle,
-  TrendingUp,
-  Plus,
-} from 'lucide-react';
+import { Calendar, Clock, User, CheckCircle, AlertCircle, TrendingUp, Plus } from 'lucide-react';
 import Link from 'next/link';
 import BookingDialog from '../components/BookingDialog';
 import StatCard from '../components/StatCard';
@@ -251,10 +242,7 @@ function OverviewPage() {
                       <User className="w-4 h-4" />
                       <span>{getDoctorName(appointment.doctorId)}</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="w-4 h-4" />
-                      <span>Dental Clinic</span>
-                    </div>
+                    {/* Clinic removed */}
                   </div>
                   {appointment.notes && (
                     <p className="text-sm text-gray-500 mt-2">Notes: {appointment.notes}</p>
