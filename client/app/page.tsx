@@ -38,7 +38,7 @@ export default function HomePage() {
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <div className="flex items-center">
               <Link href="/" className="text-2xl font-bold text-blue-600">
-                Dentalscaner
+                DentalCare
               </Link>
             </div>
             <div className="flex items-center">
@@ -60,7 +60,7 @@ export default function HomePage() {
               alt="Modern dental clinic"
               fill
               priority
-              className="object-cover"
+              className="object-cover opacity-30"
               sizes="100vw"
             />
           </div>
@@ -219,7 +219,7 @@ export default function HomePage() {
               Ready to transform your dental practice?
             </h2>
             <p className="mt-4 text-xl text-blue-100 max-w-2xl mx-auto">
-              Join hundreds of satisfied dental professionals who trust Dentalscaner for their
+              Join hundreds of satisfied dental professionals who trust DentalCare for their
               practice management needs.
             </p>
             <div className="mt-8">

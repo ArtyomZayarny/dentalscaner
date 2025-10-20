@@ -12,7 +12,7 @@ const montseratSans = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: 'Dentalscaner',
+  title: 'DentalCare',
   description: 'Dental heath',
 };
 

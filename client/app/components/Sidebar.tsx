@@ -60,7 +60,7 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               alt="dentalscaner-logo"
               className="mr-2"
             />
-            <span className="font-bold text-2xl text-white">Dentalscaner</span>
+            <span className="font-bold text-2xl text-white">DentalCare</span>
           </Link>
         </div>
         <div className="flex-1 px-8 py-6 bg-[#EBF4FBBF]">
@@ -119,7 +119,7 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               alt="dentalscaner-logo"
               className="mr-2"
             />
-            <span className="font-bold text-2xl text-white">Dentalscaner</span>
+            <span className="font-bold text-2xl text-white">DentalCare</span>
           </Link>
         </div>
         <div className="flex-1 px-8 py-6">
