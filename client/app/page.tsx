@@ -60,7 +60,7 @@ export default function HomePage() {
               alt="Modern dental clinic"
               fill
               priority
-              className="object-cover opacity-30"
+              className="object-cover"
               sizes="100vw"
             />
           </div>
