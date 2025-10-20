@@ -31,14 +31,25 @@ function AppointmentPage() {
     }
   }, [searchParams]);
 
-  if (!user) return <Loading />;
+  if (!user) {
+    return <Loading message="Loading..." />;
+  }
 
+  // Show content immediately, loading state only for appointments
   if (appointmentsLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your appointments...</p>
+      <div>
+        <div className="mb-4 md:mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2 text-black">📅 All Appointments</h1>
+          <p className="text-gray-600 text-sm md:text-base">
+            Manage your dental appointments and schedule new ones
+          </p>
+        </div>
+        <div className="text-center py-12">
+          <div className="inline-flex items-center gap-2 text-primary">
+            <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary/20 border-t-primary"></div>
+            <span className="text-sm">Loading appointments...</span>
+          </div>
         </div>
       </div>
     );
@@ -78,9 +89,6 @@ function AppointmentPage() {
         </div>
       )}
 
-      {/* Greeting section */}
-      <h1 className="text-3xl font-semibold mb-8">{`Welcome ${user.firstName} ${user.lastName}`}</h1>
-
       {/*  Upcoming Appointments */}
       {/* <div className="flex flex-col gap-8">
         <Section title="Upcoming Appointments">
@@ -92,35 +100,40 @@ function AppointmentPage() {
               procedures={procedures}
               timeSlots={timeSlots || []}
               trigger={
-                <Button className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer">Book New Appointment</Button>
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer">Book New Appointment</Button>
               }
             />
           </div>
           <Card />
         </Section> */}
 
-      <Section title="All Appointments">
-        {appointments.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-gray-400 text-6xl mb-4">📅</div>
-            <h3 className="text-xl font-medium text-gray-600 mb-2">No appointments yet</h3>
-            <p className="text-gray-500 mb-6">You haven&apos;t booked any appointments yet.</p>
-            <BookingDialog
-              userId={user.id}
-              doctors={doctors}
-              procedures={procedures}
-              timeSlots={timeSlots || []}
-              trigger={
-                <Button className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer">
-                  Book Your First Appointment
-                </Button>
-              }
-            />
-          </div>
-        ) : (
-          <DataTable columns={columns} data={appointments} />
-        )}
-      </Section>
+      <div className="mb-4 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-black">📅 All Appointments</h1>
+        <p className="text-gray-600 text-sm md:text-base">
+          Manage your dental appointments and schedule new ones
+        </p>
+      </div>
+
+      {appointments.length === 0 ? (
+        <div className="text-center py-12">
+          <div className="text-gray-400 text-6xl mb-4">📅</div>
+          <h3 className="text-xl font-medium text-gray-600 mb-2">No appointments yet</h3>
+          <p className="text-gray-500 mb-6">You haven&apos;t booked any appointments yet.</p>
+          <BookingDialog
+            userId={user.id}
+            doctors={doctors}
+            procedures={procedures}
+            timeSlots={timeSlots || []}
+            trigger={
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer">
+                Book Your First Appointment
+              </Button>
+            }
+          />
+        </div>
+      ) : (
+        <DataTable columns={columns} data={appointments} />
+      )}
     </div>
   );
 }

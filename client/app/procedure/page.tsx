@@ -42,18 +42,20 @@ function ProcedurePage() {
 
   // Show loading while procedures are being fetched
   if (proceduresLoading) {
-    return <Loading />;
+    return <Loading message="Loading procedures..." />;
   }
 
-  if (!user || !appointments || !doctors || !timeSlots) return <Loading />;
+  if (!user || !appointments || !doctors || !timeSlots) {
+    return <Loading message="Loading..." />;
+  }
 
   const categories = [
     {
       id: 'all',
       name: 'All Procedures',
       icon: Activity,
-      color: 'bg-blue-500 hover:bg-blue-600 text-white',
-      activeColor: 'bg-blue-600 text-white shadow-lg shadow-blue-200',
+      color: 'bg-primary text-primary-foreground hover:bg-primary/90',
+      activeColor: 'bg-primary text-primary-foreground shadow-lg',
     },
     {
       id: 'checkup',
@@ -88,7 +90,7 @@ function ProcedurePage() {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-4 md:mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">🦷 Dental Procedures</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-black">🦷 Dental Procedures</h1>
         <p className="text-gray-600 text-sm md:text-base">
           Explore our comprehensive range of dental services and book your appointment
         </p>
@@ -103,7 +105,7 @@ function ProcedurePage() {
             placeholder="Search procedures..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 pr-12 h-12 text-base border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 rounded-lg"
+            className="pl-12 pr-12 h-12 text-base border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg"
           />
           {/* Mobile Filter Toggle Button */}
           <button
@@ -124,8 +126,8 @@ function ProcedurePage() {
                 <Button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`whitespace-nowrap bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer border-0 ${
-                    isActive ? 'ring-2 ring-offset-2 ring-blue-200' : ''
+                  className={`whitespace-nowrap bg-primary/10 hover:bg-primary/20 text-primary cursor-pointer border-0 ${
+                    isActive ? 'ring-2 ring-offset-2 ring-primary/30' : ''
                   }`}
                 >
                   {category.name}
@@ -182,7 +184,7 @@ function ProcedurePage() {
                 procedures={procedures}
                 timeSlots={timeSlots}
                 trigger={
-                  <Button className="w-full bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer">
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer">
                     Book Appointment
                   </Button>
                 }

@@ -20,10 +20,10 @@ export default function HomePage() {
   // Show loading while checking session
   if (status === 'loading') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-primary/10">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary/20 border-t-primary mx-auto"></div>
+          <p className="mt-4 text-primary font-medium">Loading...</p>
         </div>
       </div>
     );
@@ -32,19 +32,19 @@ export default function HomePage() {
   // Show landing page for unauthenticated users
   if (status === 'unauthenticated') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 to-primary/10">
         {/* Header */}
         <header className="bg-white shadow-sm">
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-blue-600">
+              <Link href="/" className="text-2xl font-bold text-primary">
                 DentalCare
               </Link>
             </div>
             <div className="flex items-center">
               <Link
                 href="/login"
-                className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer"
+                className="text-primary hover:text-primary/80 font-medium cursor-pointer"
               >
                 Sign In
               </Link>
@@ -75,7 +75,7 @@ export default function HomePage() {
             <div className="mt-10 flex justify-center">
               <Link
                 href="/login"
-                className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-800 bg-[#C7DDEB] hover:bg-[#A8C9E0] transition-colors shadow-lg cursor-pointer"
+                className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-foreground bg-primary hover:bg-primary/90 transition-colors shadow-lg cursor-pointer"
               >
                 Get Started
               </Link>
@@ -87,7 +87,7 @@ export default function HomePage() {
         <section className="py-20 sm:py-28 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="lg:text-center">
-              <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">
+              <h2 className="text-base text-primary font-semibold tracking-wide uppercase">
                 Features
               </h2>
               <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
@@ -102,7 +102,7 @@ export default function HomePage() {
               <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
                 <div className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-blue-800">
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-primary-foreground">
                       <svg
                         className="h-6 w-6"
                         fill="none"
@@ -129,7 +129,7 @@ export default function HomePage() {
 
                 <div className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-blue-800">
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-primary-foreground">
                       <svg
                         className="h-6 w-6"
                         fill="none"
@@ -156,7 +156,7 @@ export default function HomePage() {
 
                 <div className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-blue-800">
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-primary-foreground">
                       <svg
                         className="h-6 w-6"
                         fill="none"
@@ -183,7 +183,7 @@ export default function HomePage() {
 
                 <div className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-blue-800">
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-primary-foreground">
                       <svg
                         className="h-6 w-6"
                         fill="none"
@@ -213,23 +213,23 @@ export default function HomePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-blue-700 py-20 sm:py-28">
+        <section className="bg-primary py-20 sm:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-extrabold text-blue-800 sm:text-4xl">
+            <h2 className="text-3xl font-extrabold text-primary-foreground sm:text-4xl">
               Ready to transform your dental practice?
             </h2>
-            <p className="mt-4 text-xl text-blue-100 max-w-2xl mx-auto">
+            <p className="mt-4 text-xl text-primary-foreground/80 max-w-2xl mx-auto">
               Join hundreds of satisfied dental professionals who trust DentalCare for their
               practice management needs.
             </p>
             <div className="mt-8">
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 transition-colors shadow-lg cursor-pointer"
+                className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-white hover:bg-primary/10 transition-colors shadow-lg cursor-pointer"
               >
                 Get Started Today
                 <svg
-                  className="ml-3 -mr-1 h-5 w-5 text-blue-600"
+                  className="ml-3 -mr-1 h-5 w-5 text-primary"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -245,14 +245,14 @@ export default function HomePage() {
         </section>
 
         {/* Footer */}
-        <footer className="bg-gray-800 py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
-            <p>&copy; 2025 Dentalscaner. All rights reserved.</p>
+        <footer className="bg-white py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-900">
+            <p>&copy; 2025 DentalCare. All rights reserved.</p>
             <div className="mt-4 flex justify-center space-x-6">
-              <Link href="/privacy" className="hover:text-blue-800 cursor-pointer">
+              <Link href="/privacy" className="cursor-pointer text-gray-900 hover:opacity-80">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-blue-800 cursor-pointer">
+              <Link href="/terms" className="cursor-pointer text-gray-900 hover:opacity-80">
                 Terms of Service
               </Link>
             </div>
@@ -264,10 +264,10 @@ export default function HomePage() {
 
   // This should not be reached, but just in case
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-primary/10">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Loading...</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary/20 border-t-primary mx-auto"></div>
+        <p className="mt-4 text-primary font-medium">Loading...</p>
       </div>
     </div>
   );

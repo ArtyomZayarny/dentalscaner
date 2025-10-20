@@ -106,8 +106,8 @@ export default function SignInPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[url('/login-back.jpg')] bg-cover">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary/20 border-t-primary mx-auto"></div>
+          <p className="mt-4 text-primary font-medium">Loading...</p>
         </div>
       </div>
     );

@@ -21,17 +21,10 @@ function OverviewPage() {
     timeSlots,
   } = useAppContext();
 
-  if (!user) return <Loading />;
+  if (!user) return <Loading message="Loading..." fullScreen />;
 
   if (appointmentsLoading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your dashboard...</p>
-        </div>
-      </div>
-    );
+    return <Loading message="Loading your dashboard..." />;
   }
 
   if (appointmentsError) {
@@ -45,7 +38,7 @@ function OverviewPage() {
     );
   }
 
-  if (!doctors || !procedures || !timeSlots) return <Loading />;
+  if (!doctors || !procedures || !timeSlots) return <Loading message="Loading..." />;
 
   // Calculate statistics
   const totalAppointments = appointments.length;
@@ -143,7 +136,7 @@ function OverviewPage() {
           procedures={procedures}
           timeSlots={timeSlots}
           trigger={
-            <Button className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer w-full justify-start">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer w-full justify-start">
               <Plus className="mr-2 w-4 h-4" />
               Book New Appointment
             </Button>
@@ -174,7 +167,7 @@ function OverviewPage() {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">
+        <h1 className="text-3xl font-bold mb-2 text-black">
           👋 Hello, {user.firstName} {user.lastName}!
         </h1>
         <p className="text-gray-600">Welcome back to your dental care dashboard</p>
@@ -190,7 +183,7 @@ function OverviewPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Quick Actions */}
         <div className="bg-white rounded-lg shadow-sm p-6 border-0">
-          <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+          <h2 className="text-xl font-semibold mb-4 text-black">Quick Actions</h2>
           <List
             data={quickActionsData}
             renderItem={(action) => {
@@ -200,7 +193,7 @@ function OverviewPage() {
               const Icon = action.icon;
               return (
                 <Link href={action.href!} className="block">
-                  <Button className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer w-full justify-start">
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer w-full justify-start">
                     <Icon className="mr-2 w-4 h-4" />
                     {action.label}
                   </Button>
@@ -213,7 +206,7 @@ function OverviewPage() {
 
         {/* Upcoming Appointments */}
         <div className="bg-white rounded-lg shadow-sm p-6 border-0">
-          <h2 className="text-xl font-semibold mb-4">Upcoming Appointments</h2>
+          <h2 className="text-xl font-semibold mb-4 text-black">Upcoming Appointments</h2>
           <List
             data={upcomingAppointments}
             renderItem={(appointment) => (
@@ -263,7 +256,7 @@ function OverviewPage() {
                 timeSlots={timeSlots}
                 trigger={
                   <Button
-                    className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer"
                     size="sm"
                   >
                     Book Appointment

@@ -42,7 +42,7 @@ function ProfilePage() {
   return (
     <div className="p-4 md:p-8 max-w-4xl">
       <div className="mb-6 md:mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">👤 Profile</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-black">👤 Profile</h1>
         <p className="text-gray-600 text-sm md:text-base">Manage your personal information</p>
       </div>
 

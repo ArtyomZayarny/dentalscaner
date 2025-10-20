@@ -246,7 +246,7 @@ export default function BookingDialog({
             key={doctor.id}
             className={`p-4 border rounded-lg cursor-pointer transition-colors ${
               selectedDoctor === doctor.id
-                ? 'border-blue-500 bg-blue-50'
+                ? 'border-primary bg-primary/10'
                 : 'border-gray-200 hover:border-gray-300'
             }`}
             onClick={() => handleDoctorSelect(doctor.id)}
@@ -345,7 +345,7 @@ export default function BookingDialog({
             key={slot.id}
             className={`p-3 border rounded-lg cursor-pointer transition-colors text-center ${
               selectedTime === slot.time
-                ? 'border-blue-500 bg-blue-50'
+                ? 'border-primary bg-primary/10'
                 : 'border-gray-200 hover:border-gray-300'
             }`}
             onClick={() => handleTimeSelect(slot.time)}
@@ -417,10 +417,10 @@ export default function BookingDialog({
         </select>
 
         {selectedProcedureDetails && (
-          <div className="bg-blue-50 p-3 rounded-lg">
+          <div className="bg-primary/10 p-3 rounded-lg">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-gray-700">Price:</span>
-              <span className="text-lg font-bold text-blue-600">
+              <span className="text-lg font-bold text-primary">
                 ${selectedProcedureDetails.price}
               </span>
             </div>
@@ -470,7 +470,7 @@ export default function BookingDialog({
       <DialogTrigger asChild>
         {trigger || (
           <Button
-            className={`${triggerClassName} bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer`}
+            className={`${triggerClassName} bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer`}
           >
             <Plus className="mr-2 w-4 h-4" />
             Book New Appointment
@@ -497,7 +497,7 @@ export default function BookingDialog({
               <Button
                 type="submit"
                 disabled={creatingAppointment}
-                className="bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer"
               >
                 {creatingAppointment ? 'Creating Appointment...' : 'Confirm Booking'}
               </Button>

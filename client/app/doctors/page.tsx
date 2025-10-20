@@ -48,15 +48,17 @@ function DoctorsPage() {
 
   // Show loading while doctors are being fetched
   if (doctorsLoading) {
-    return <Loading />;
+    return <Loading message="Loading doctors..." />;
   }
 
-  if (!user || !appointments) return <Loading />;
+  if (!user || !appointments) {
+    return <Loading message="Loading..." />;
+  }
 
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-4 md:mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">👨‍⚕️ Our Doctors</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-black">👨‍⚕️ Our Doctors</h1>
         <p className="text-gray-600 text-sm md:text-base">
           Meet our experienced dental professionals committed to your oral health
         </p>
@@ -71,7 +73,7 @@ function DoctorsPage() {
             placeholder="Search doctors by name or specialization..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 pr-12 h-12 text-base border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 rounded-lg"
+            className="pl-12 pr-12 h-12 text-base border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg"
           />
           {/* Mobile Filter Toggle Button */}
           <button
@@ -90,7 +92,7 @@ function DoctorsPage() {
                 key={spec}
                 variant={selectedSpecialization === spec ? 'default' : 'outline'}
                 onClick={() => setSelectedSpecialization(spec)}
-                className={`whitespace-nowrap bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer border-0`}
+                className={`whitespace-nowrap bg-primary/10 hover:bg-primary/20 text-primary cursor-pointer border-0`}
               >
                 {spec === 'all' ? 'All Specializations' : spec}
               </Button>
@@ -122,7 +124,7 @@ function DoctorsPage() {
                 <h3 className="text-lg font-semibold">{doctor.name}</h3>
               </div>
 
-              <p className="text-blue-600 font-medium mb-2">
+              <p className="text-gray-900 font-medium mb-2">
                 {doctor.specialization || 'General Dentistry'}
               </p>
 
@@ -135,7 +137,7 @@ function DoctorsPage() {
 
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button className="w-full bg-[#C7DDEB] hover:bg-[#A8C9E0] text-blue-800 cursor-pointer">
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer">
                     View Details
                   </Button>
                 </DialogTrigger>

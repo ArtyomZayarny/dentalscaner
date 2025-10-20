@@ -50,8 +50,8 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   // Desktop sidebar
   if (!isMobile) {
     return (
-      <aside className="max-w-[258px] box-border bg-white border-r border-blue-500 flex flex-col w-full">
-        <div className="flex items-center px-6 py-5 border-b bg-blue-700">
+      <aside className="max-w-[258px] box-border bg-primary/10 border-r border-primary flex flex-col w-full">
+        <div className="flex items-center px-6 py-5 border-b bg-primary">
           <Link href={'/'} className="flex gap-1 justify-center">
             <Image
               width={34}
@@ -63,7 +63,7 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             <span className="font-bold text-2xl text-white">DentalCare</span>
           </Link>
         </div>
-        <div className="flex-1 px-8 py-6 bg-[#EBF4FBBF]">
+        <div className="flex-1 px-8 py-6">
           {/* Navigation */}
           <nav className="flex flex-col gap-4">
             {navigationItems.map((item) => {
@@ -76,8 +76,8 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                   href={item.href}
                   className={`flex items-center px-6 py-3 rounded-lg transition-colors ${
                     isActive
-                      ? 'bg-blue-100 text-blue-700 font-medium shadow-sm'
-                      : 'hover:bg-gray-100 text-gray-700 cursor-pointer'
+                      ? 'bg-primary/10 text-primary font-medium shadow-sm'
+                      : 'hover:bg-primary/10 hover:text-primary text-gray-700 cursor-pointer'
                   }`}
                 >
                   <Icon className="mr-3 w-5 h-5" />
@@ -105,12 +105,12 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       {/* Mobile sidebar */}
       <aside
         className={`
-        fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-[#EBF4FB] border-r border-blue-500 
+        fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white border-r border-primary 
         transform transition-transform duration-300 ease-in-out z-50 lg:hidden flex flex-col
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
       >
-        <div className="flex items-center px-6 py-5 border-b border-blue-600 bg-blue-700">
+        <div className="flex items-center px-6 py-5 border-b border-primary bg-primary">
           <Link href={'/'} className="flex gap-1 justify-center" onClick={handleLinkClick}>
             <Image
               width={34}
@@ -136,8 +136,8 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                   onClick={handleLinkClick}
                   className={`flex items-center px-6 py-3 rounded-lg transition-colors ${
                     isActive
-                      ? 'bg-blue-100 text-blue-700 font-medium shadow-sm'
-                      : 'hover:bg-gray-100 text-gray-700 cursor-pointer'
+                      ? 'bg-primary/10 text-primary font-medium shadow-sm'
+                      : 'hover:bg-primary/10 hover:text-primary text-gray-700 cursor-pointer'
                   }`}
                 >
                   <Icon className="mr-3 w-5 h-5" />

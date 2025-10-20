@@ -27,6 +27,7 @@ export default async function RootLayout({
     <html lang="en">
       <head>
         <script src="https://js.stripe.com/v3/" async></script>
+        <link rel="icon" href="/dentalscaner-logo.svg" type="image/svg+xml" />
       </head>
       <body className={montseratSans.variable}>
         <ApolloProvider>

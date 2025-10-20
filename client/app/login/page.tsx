@@ -127,10 +127,13 @@ export default function LoginPage() {
   // Show loading while checking session
   if (status === 'loading') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[url('/login-back.jpg')] bg-cover">
+      <div className="min-h-screen flex items-center justify-center relative">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-black/0"></div>
+        </div>
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary/20 border-t-primary mx-auto"></div>
+          <p className="mt-4 text-primary font-medium">Loading...</p>
         </div>
       </div>
     );
@@ -139,10 +142,17 @@ export default function LoginPage() {
   // Show sign-in form for unauthenticated users
   if (status === 'unauthenticated') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[url('/login-back.jpg')] bg-cover">
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="min-h-screen flex items-center justify-center relative">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/login-back.png"
+            alt="Dental background"
+            className="w-full h-full object-cover opacity-30"
+          />
+        </div>
+        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative z-10">
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">Welcome to Dentalscaner</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Welcome to DentalCare</h1>
             <p className="text-gray-600 mt-2">
               {isRegistering ? 'Create your account' : 'Sign in to your account'}
             </p>
@@ -240,7 +250,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#C7DDEB] text-blue-800 py-2 px-4 rounded-lg hover:bg-[#A8C9E0] disabled:opacity-50 cursor-pointer"
+              className="w-full bg-primary text-primary-foreground py-2 px-4 rounded-lg hover:bg-primary/90 disabled:opacity-50 cursor-pointer"
             >
               {isLoading
                 ? isRegistering
@@ -260,7 +270,7 @@ export default function LoginPage() {
                 setIsRegistering(!isRegistering);
                 setError('');
               }}
-              className="text-sm text-blue-600 hover:text-blue-500 cursor-pointer"
+              className="text-sm text-primary hover:text-primary/80 cursor-pointer"
             >
               {isRegistering
                 ? 'Already have an account? Sign in'
@@ -276,8 +286,8 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[url('/login-back.jpg')] bg-cover">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Loading...</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary/20 border-t-primary mx-auto"></div>
+        <p className="mt-4 text-primary font-medium">Loading...</p>
       </div>
     </div>
   );
