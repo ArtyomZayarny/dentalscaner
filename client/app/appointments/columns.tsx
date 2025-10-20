@@ -131,22 +131,18 @@ export const columns: ColumnDef<Appointment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <Link href={`/appointments/${appointment.id}`}>
-              <DropdownMenuItem>
-                <Eye className="w-4 h-4 mr-2" />
-                View Details
-              </DropdownMenuItem>
-            </Link>
+            <DropdownMenuItem asChild>
+              <Link href={`/appointments/${appointment.id}`}>
+                <div className="flex items-center">
+                  <Eye className="w-4 h-4 mr-2" />
+                  View Details
+                </div>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(appointment.id)}>
               Copy appointment ID
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            {appointment.status === AppointmentStatus.Pending && (
-              <>
-                <DropdownMenuItem>Reschedule</DropdownMenuItem>
-                <DropdownMenuItem className="text-red-600">Cancel appointment</DropdownMenuItem>
-              </>
-            )}
+            {/* Removed reschedule/cancel actions for now */}
           </DropdownMenuContent>
         </DropdownMenu>
       );

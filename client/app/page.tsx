@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function HomePage() {
   const { data: session, status } = useSession();
@@ -54,10 +55,13 @@ export default function HomePage() {
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20 sm:py-28 lg:py-36">
           <div className="absolute inset-0">
-            <img
-              className="w-full h-full object-cover opacity-30"
-              src="/clinic-preview.png"
-              alt="Dental clinic background"
+            <Image
+              src="/login-back.jpg"
+              alt="Dental background"
+              fill
+              priority
+              className="object-cover opacity-30"
+              sizes="100vw"
             />
           </div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
