@@ -56,8 +56,8 @@ export default function HomePage() {
         <section className="relative overflow-hidden py-20 sm:py-28 lg:py-36">
           <div className="absolute inset-0">
             <Image
-              src="/login-back.jpg"
-              alt="Dental background"
+              src="/dental-hero.png"
+              alt="Modern dental clinic"
               fill
               priority
               className="object-cover opacity-30"
