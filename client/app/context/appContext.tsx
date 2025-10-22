@@ -46,7 +46,7 @@ export function AppContextProvider({
   children: React.ReactNode;
 }>) {
   console.log('🏗️ AppContextProvider is rendering');
-  
+
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
   const apolloClient = useApolloClient();
 
@@ -194,7 +194,7 @@ export function AppContextProvider({
   } as unknown as AppContextType;
 
   console.log('🏗️ AppContextProvider rendering children');
-  
+
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

@@ -71,6 +71,11 @@ export function getApolloClient() {
                   return incoming;
                 },
               },
+              appointment: {
+                merge(_existing, incoming) {
+                  return incoming;
+                },
+              },
             },
           },
         },
