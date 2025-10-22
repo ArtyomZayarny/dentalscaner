@@ -46,8 +46,7 @@ async function addPasswordField() {
     `);
 
     structureResult.rows.forEach((row) => {
-        `- ${row.column_name}: ${row.data_type} (nullable: ${row.is_nullable})`,
-      );
+      // Table structure row
     });
   } catch (error) {
     console.error('❌ Error adding password field:', error);

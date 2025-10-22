@@ -142,7 +142,7 @@ function AppointmentPage() {
                 key={appointment.id}
                 appointment={{
                   ...appointment,
-                  notes: appointment.notes || undefined
+                  notes: appointment.notes || undefined,
                 }}
                 doctorName={doctor?.name || 'Unknown Doctor'}
                 procedureName={procedure?.name || 'Unknown Procedure'}

@@ -5,7 +5,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 async function forceCleanDatabase() {
-
   const client = new Client({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
@@ -30,7 +29,6 @@ async function forceCleanDatabase() {
     await client.query(
       'DROP TYPE IF EXISTS "appointments_status_enum" CASCADE;',
     );
-
   } catch (error) {
     console.error('❌ Error force cleaning database:', error);
   } finally {

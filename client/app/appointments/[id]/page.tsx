@@ -51,7 +51,6 @@ function AppointmentDetailsPage() {
     },
   });
 
-
   if (!user) return <Loading />;
 
   if (appointmentLoading) return <Loading />;

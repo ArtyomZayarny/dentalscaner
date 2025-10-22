@@ -20,9 +20,6 @@ export class PaymentController {
   @Post('create-checkout-session')
   async createCheckoutSession(@Body() body: { appointmentId: string }) {
     try {
-        'Creating checkout session for appointment:',
-        body.appointmentId,
-      );
 
       const { sessionId } = await this.appointmentService.createCheckoutSession(
         body.appointmentId,
