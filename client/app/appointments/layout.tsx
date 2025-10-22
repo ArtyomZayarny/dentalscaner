@@ -1,9 +1,9 @@
-import MobileLayout from '../components/MobileLayout';
-
 export default function AppointmentsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <MobileLayout>{children}</MobileLayout>;
+  // Временно убираем MobileLayout для диагностики
+  // Если страница начнет рендериться, проблема в MobileLayout
+  return <>{children}</>;
 }
