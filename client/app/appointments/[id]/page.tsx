@@ -40,6 +40,9 @@ function AppointmentDetailsPage() {
   console.log('  - user:', user);
   console.log('  - localStorage token:', typeof window !== 'undefined' ? localStorage.getItem('auth-token') : 'SSR');
   console.log('  - GraphQL URL:', process.env.NEXT_PUBLIC_GRAPHQL_URL);
+  console.log('  - window.location:', typeof window !== 'undefined' ? window.location.href : 'SSR');
+  console.log('  - NODE_ENV:', process.env.NODE_ENV);
+  console.log('  - VERCEL:', process.env.VERCEL);
 
   // Fetch appointment by ID using GraphQL
   const {
@@ -66,6 +69,8 @@ function AppointmentDetailsPage() {
   console.log('  - appointmentLoading:', appointmentLoading);
   console.log('  - appointmentError:', appointmentError);
   console.log('  - appointmentData:', appointmentData);
+  console.log('  - GraphQL query will be skipped:', !appointmentId);
+  console.log('  - Current URL path:', typeof window !== 'undefined' ? window.location.pathname : 'SSR');
 
   if (!user) return <Loading />;
 
