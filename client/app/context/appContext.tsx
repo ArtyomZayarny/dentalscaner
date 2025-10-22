@@ -45,7 +45,6 @@ export function AppContextProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
   const apolloClient = useApolloClient();
 
@@ -191,7 +190,6 @@ export function AppContextProvider({
     // Removed getClinicById - not needed
     getProcedureById,
   } as unknown as AppContextType;
-
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
