@@ -57,7 +57,24 @@ export function getApolloClient() {
 
     client = new ApolloClient({
       link: authLink.concat(httpLink),
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache({
+        typePolicies: {
+          Query: {
+            fields: {
+              appointments: {
+                merge(_existing = [], incoming) {
+                  return incoming;
+                },
+              },
+              appointmentsByUserId: {
+                merge(_existing = [], incoming) {
+                  return incoming;
+                },
+              },
+            },
+          },
+        },
+      }),
       defaultOptions: {
         watchQuery: {
           errorPolicy: 'all',
