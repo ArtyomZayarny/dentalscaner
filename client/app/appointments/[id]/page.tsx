@@ -28,7 +28,7 @@ console.log('📄 AppointmentDetailsPage module is being loaded');
 
 function AppointmentDetailsPage() {
   console.log('🚀 AppointmentDetailsPage component is rendering!');
-  
+
   // Simple test - return early to see if component renders at all
   return (
     <div className="p-8">
@@ -36,10 +36,10 @@ function AppointmentDetailsPage() {
       <p>If you see this, the component is working!</p>
     </div>
   );
-  
+
   const params = useParams();
   console.log('🔍 useParams result:', params);
-  
+
   const { user, doctors } = useAppContext();
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
@@ -56,10 +56,16 @@ function AppointmentDetailsPage() {
   console.log('  - appointmentId truthy:', !!appointmentId);
   console.log('  - user:', user);
   console.log('  - user exists:', !!user);
-  console.log('  - localStorage token:', typeof window !== 'undefined' ? localStorage.getItem('auth-token') : 'SSR');
+  console.log(
+    '  - localStorage token:',
+    typeof window !== 'undefined' ? localStorage.getItem('auth-token') : 'SSR',
+  );
   console.log('  - GraphQL URL:', process.env.NEXT_PUBLIC_GRAPHQL_URL);
   console.log('  - window.location:', typeof window !== 'undefined' ? window.location.href : 'SSR');
-  console.log('  - window.pathname:', typeof window !== 'undefined' ? window.location.pathname : 'SSR');
+  console.log(
+    '  - window.pathname:',
+    typeof window !== 'undefined' ? window.location.pathname : 'SSR',
+  );
   console.log('  - NODE_ENV:', process.env.NODE_ENV);
   console.log('  - VERCEL:', process.env.VERCEL);
   console.log('  - params:', params);
@@ -70,7 +76,7 @@ function AppointmentDetailsPage() {
   console.log('  - appointmentId for query:', appointmentId);
   console.log('  - skip condition (!appointmentId):', !appointmentId);
   console.log('  - will skip query:', !appointmentId);
-  
+
   const {
     data: appointmentData,
     loading: appointmentLoading,
@@ -96,12 +102,15 @@ function AppointmentDetailsPage() {
   console.log('  - appointmentError:', appointmentError);
   console.log('  - appointmentData:', appointmentData);
   console.log('  - GraphQL query will be skipped:', !appointmentId);
-  console.log('  - Current URL path:', typeof window !== 'undefined' ? window.location.pathname : 'SSR');
+  console.log(
+    '  - Current URL path:',
+    typeof window !== 'undefined' ? window.location.pathname : 'SSR',
+  );
 
   console.log('🔍 User check:');
   console.log('  - user exists:', !!user);
   console.log('  - user object:', user);
-  
+
   if (!user) {
     console.log('❌ No user, showing loading...');
     return <Loading />;
