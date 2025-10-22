@@ -5,7 +5,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 async function addPasswordField() {
-
   const client = new Client({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
@@ -35,7 +34,6 @@ async function addPasswordField() {
       ALTER TABLE "users" 
       ADD COLUMN "password" character varying
     `);
-
 
     // Show current table structure
     const structureResult = await client.query(`
