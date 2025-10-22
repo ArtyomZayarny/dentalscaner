@@ -1,9 +1,21 @@
-import { Doctor, Clinic, Procedure, AppointmentStatus } from '../types/generated';
+import { Doctor, Procedure, AppointmentStatus } from '../types/generated';
+
+interface Clinic {
+  id: string;
+  name: string;
+  address: string;
+  phone: string;
+  email: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export const mockDoctors: Doctor[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440001',
     name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@dentalclinic.com',
     specialization: 'General Dentistry',
     avatar: '/images/doctors/doctor-1.png',
     createdAt: new Date(),
@@ -12,6 +24,7 @@ export const mockDoctors: Doctor[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Dr. Michael Chen',
+    email: 'michael.chen@dentalclinic.com',
     specialization: 'Orthodontics',
     avatar: '/images/doctors/doctor-2.png',
     createdAt: new Date(),
@@ -20,6 +33,7 @@ export const mockDoctors: Doctor[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440003',
     name: 'Dr. Emily Rodriguez',
+    email: 'emily.rodriguez@dentalclinic.com',
     specialization: 'Endodontics',
     avatar: '/images/doctors/doctor-3.png',
     createdAt: new Date(),
@@ -28,6 +42,7 @@ export const mockDoctors: Doctor[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440004',
     name: 'Dr. James Wilson',
+    email: 'james.wilson@dentalclinic.com',
     specialization: 'Oral Surgery',
     avatar: '/doctors/doctor-4.jpg',
     createdAt: new Date(),
@@ -36,6 +51,7 @@ export const mockDoctors: Doctor[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440005',
     name: 'Dr. Lisa Thompson',
+    email: 'lisa.thompson@dentalclinic.com',
     specialization: 'Periodontics',
     avatar: '/doctors/doctor-5.jpg',
     createdAt: new Date(),
@@ -44,6 +60,7 @@ export const mockDoctors: Doctor[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440006',
     name: 'Dr. Robert Martinez',
+    email: 'robert.martinez@dentalclinic.com',
     specialization: 'Prosthodontics',
     avatar: '/doctors/doctor-6.jpg',
     createdAt: new Date(),
@@ -52,6 +69,7 @@ export const mockDoctors: Doctor[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440007',
     name: 'Dr. Anna Kowalski',
+    email: 'anna.kowalski@dentalclinic.com',
     specialization: 'Pediatric Dentistry',
     avatar: '/doctors/doctor-7.jpg',
     createdAt: new Date(),
@@ -60,6 +78,7 @@ export const mockDoctors: Doctor[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440008',
     name: 'Dr. David Kim',
+    email: 'david.kim@dentalclinic.com',
     specialization: 'Cosmetic Dentistry',
     avatar: '/doctors/doctor-8.jpg',
     createdAt: new Date(),

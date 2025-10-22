@@ -36,6 +36,10 @@ export const GET_APPOINTMENTS = gql`
         name
       }
       procedureId
+      procedure {
+        id
+        name
+      }
       date
       time
       duration
@@ -61,6 +65,39 @@ export const GET_APPOINTMENTS_BY_USER = gql`
         name
       }
       procedureId
+      procedure {
+        id
+        name
+      }
+      date
+      time
+      duration
+      amount
+      status
+      notes
+      stripePaymentIntentId
+      paid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const GET_APPOINTMENT_BY_ID = gql`
+  query GetAppointmentById($id: String!) {
+    appointment(id: $id) {
+      id
+      userId
+      doctorId
+      doctor {
+        id
+        name
+      }
+      procedureId
+      procedure {
+        id
+        name
+      }
       date
       time
       duration

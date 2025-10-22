@@ -51,23 +51,10 @@ export const columns: ColumnDef<Appointment>[] = [
     accessorKey: 'procedureId',
     header: 'Procedure',
     cell: ({ row }) => {
-      // In a real app, you'd get this from context or props
-      const procedureId = row.getValue('procedureId') as string;
-      return (
-        <div className="font-medium">
-          {procedureId === 'proc-1'
-            ? 'Routine Dental Check-up'
-            : procedureId === 'proc-2'
-            ? 'Professional Teeth Cleaning'
-            : procedureId === 'proc-3'
-            ? 'Cavity Filling'
-            : procedureId === 'proc-4'
-            ? 'Teeth Whitening'
-            : procedureId === 'proc-5'
-            ? 'Emergency Tooth Extraction'
-            : 'Unknown Procedure'}
-        </div>
-      );
+      const original = row.original as Appointment;
+      const procedureName = (original as unknown as { procedure?: { id: string; name?: string } })
+        .procedure?.name;
+      return <div className="font-medium">{procedureName || 'Unknown Procedure'}</div>;
     },
   },
   {

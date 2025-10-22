@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useAppContext } from '../../context/appContext';
+import { useQuery } from '@apollo/client';
+import { GET_APPOINTMENT_BY_ID } from '@/lib/graphql-queries';
 import Loading from '../../components/Loading';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -18,7 +20,6 @@ import {
   Calendar,
   Clock,
   User,
-  Phone,
   Mail,
   Edit,
   Save,
@@ -37,7 +38,7 @@ import { AppointmentStatus } from '@/app/types/generated';
 function AppointmentDetailsPage() {
   const params = useParams();
   const router = useRouter();
-  const { user, appointments, doctors, procedures } = useAppContext();
+  const { user, doctors } = useAppContext();
   const [isEditing, setIsEditing] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
   const [editForm, setEditForm] = useState({
@@ -46,10 +47,43 @@ function AppointmentDetailsPage() {
     notes: '',
   });
 
-  if (!user || !appointments) return <Loading />;
-
   const appointmentId = params.id as string;
-  const appointment = appointments.find((apt) => apt.id === appointmentId);
+
+  // Fetch appointment by ID using GraphQL
+  const {
+    data: appointmentData,
+    loading: appointmentLoading,
+    error: appointmentError,
+  } = useQuery(GET_APPOINTMENT_BY_ID, {
+    variables: { id: appointmentId },
+    skip: !appointmentId,
+  });
+
+  if (!user) return <Loading />;
+
+  if (appointmentLoading) return <Loading />;
+
+  if (appointmentError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <div className="p-8 max-w-4xl mx-auto">
+          <div className="text-center py-12">
+            <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+            <h1 className="text-2xl font-bold mb-2">Error Loading Appointment</h1>
+            <p className="text-gray-600 mb-6">{appointmentError.message}</p>
+            <Link href="/appointments">
+              <Button>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Appointments
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const appointment = appointmentData?.appointment;
 
   if (!appointment) {
     return (
@@ -74,8 +108,8 @@ function AppointmentDetailsPage() {
   }
 
   const doctor = doctors.find((d) => d.id === appointment.doctorId);
-  // Removed clinic lookup - not needed
-  const procedure = procedures.find((p) => p.id === appointment.procedureId);
+  // Use procedure from appointment data (already loaded via GraphQL)
+  const procedure = appointment.procedure;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setEditForm({ ...editForm, [e.target.name]: e.target.value });
