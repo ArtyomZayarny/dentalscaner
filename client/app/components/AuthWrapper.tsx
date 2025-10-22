@@ -24,6 +24,14 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
     }
   }, [session, status, router]);
 
+  // Save access token to localStorage when session is available
+  useEffect(() => {
+    if (session?.accessToken && typeof window !== 'undefined') {
+      console.log('🔍 AuthWrapper - Saving access token to localStorage');
+      localStorage.setItem('auth-token', session.accessToken);
+    }
+  }, [session?.accessToken]);
+
   if (status === 'loading') {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[url('/login-back.jpg')] bg-cover">
