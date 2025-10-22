@@ -38,6 +38,8 @@ function AppointmentDetailsPage() {
   console.log('🔍 AppointmentDetailsPage Debug (Production):');
   console.log('  - appointmentId:', appointmentId);
   console.log('  - user:', user);
+  console.log('  - localStorage token:', typeof window !== 'undefined' ? localStorage.getItem('auth-token') : 'SSR');
+  console.log('  - GraphQL URL:', process.env.NEXT_PUBLIC_GRAPHQL_URL);
 
   // Fetch appointment by ID using GraphQL
   const {
@@ -54,6 +56,12 @@ function AppointmentDetailsPage() {
       console.log('❌ GraphQL query error:', error);
     },
   });
+
+  console.log('🔍 GraphQL Query Debug:');
+  console.log('  - skip:', !appointmentId);
+  console.log('  - variables:', { id: appointmentId });
+  console.log('  - loading:', appointmentLoading);
+  console.log('  - error:', appointmentError);
 
   console.log('  - appointmentLoading:', appointmentLoading);
   console.log('  - appointmentError:', appointmentError);
