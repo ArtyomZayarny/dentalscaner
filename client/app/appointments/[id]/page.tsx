@@ -23,8 +23,19 @@ import {
 import Link from 'next/link';
 import { AppointmentStatus } from '@/app/types/generated';
 
+// Add this at the top level to see if the module is being loaded
+console.log('📄 AppointmentDetailsPage module is being loaded');
+
 function AppointmentDetailsPage() {
   console.log('🚀 AppointmentDetailsPage component is rendering!');
+  
+  // Simple test - return early to see if component renders at all
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold">TEST: AppointmentDetailsPage is rendering!</h1>
+      <p>If you see this, the component is working!</p>
+    </div>
+  );
   
   const params = useParams();
   console.log('🔍 useParams result:', params);
@@ -105,7 +116,7 @@ function AppointmentDetailsPage() {
           <div className="text-center py-12">
             <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
             <h1 className="text-2xl font-bold mb-2">Error Loading Appointment</h1>
-            <p className="text-gray-600 mb-6">{appointmentError.message}</p>
+            <p className="text-gray-600 mb-6">{appointmentError?.message || 'Unknown error'}</p>
             <Link href="/appointments">
               <Button>
                 <ArrowLeft className="w-4 h-4 mr-2" />
