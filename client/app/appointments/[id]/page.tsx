@@ -37,14 +37,25 @@ function AppointmentDetailsPage() {
 
   console.log('🔍 AppointmentDetailsPage Debug (Production):');
   console.log('  - appointmentId:', appointmentId);
+  console.log('  - appointmentId type:', typeof appointmentId);
+  console.log('  - appointmentId truthy:', !!appointmentId);
   console.log('  - user:', user);
+  console.log('  - user exists:', !!user);
   console.log('  - localStorage token:', typeof window !== 'undefined' ? localStorage.getItem('auth-token') : 'SSR');
   console.log('  - GraphQL URL:', process.env.NEXT_PUBLIC_GRAPHQL_URL);
   console.log('  - window.location:', typeof window !== 'undefined' ? window.location.href : 'SSR');
+  console.log('  - window.pathname:', typeof window !== 'undefined' ? window.location.pathname : 'SSR');
   console.log('  - NODE_ENV:', process.env.NODE_ENV);
   console.log('  - VERCEL:', process.env.VERCEL);
+  console.log('  - params:', params);
+  console.log('  - params.id:', params.id);
 
   // Fetch appointment by ID using GraphQL
+  console.log('🔍 About to call useQuery:');
+  console.log('  - appointmentId for query:', appointmentId);
+  console.log('  - skip condition (!appointmentId):', !appointmentId);
+  console.log('  - will skip query:', !appointmentId);
+  
   const {
     data: appointmentData,
     loading: appointmentLoading,
@@ -72,7 +83,14 @@ function AppointmentDetailsPage() {
   console.log('  - GraphQL query will be skipped:', !appointmentId);
   console.log('  - Current URL path:', typeof window !== 'undefined' ? window.location.pathname : 'SSR');
 
-  if (!user) return <Loading />;
+  console.log('🔍 User check:');
+  console.log('  - user exists:', !!user);
+  console.log('  - user object:', user);
+  
+  if (!user) {
+    console.log('❌ No user, showing loading...');
+    return <Loading />;
+  }
 
   if (appointmentLoading) return <Loading />;
 
