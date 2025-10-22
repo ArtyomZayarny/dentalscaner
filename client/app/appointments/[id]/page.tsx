@@ -35,6 +35,10 @@ function AppointmentDetailsPage() {
 
   const appointmentId = params.id as string;
 
+  console.log('🔍 AppointmentDetailsPage Debug (Production):');
+  console.log('  - appointmentId:', appointmentId);
+  console.log('  - user:', user);
+
   // Fetch appointment by ID using GraphQL
   const {
     data: appointmentData,
@@ -44,12 +48,16 @@ function AppointmentDetailsPage() {
     variables: { id: appointmentId },
     skip: !appointmentId,
     onCompleted: (data) => {
-      // GraphQL query completed
+      console.log('🔍 GraphQL query completed:', data);
     },
     onError: (error) => {
-      // GraphQL query error
+      console.log('❌ GraphQL query error:', error);
     },
   });
+
+  console.log('  - appointmentLoading:', appointmentLoading);
+  console.log('  - appointmentError:', appointmentError);
+  console.log('  - appointmentData:', appointmentData);
 
   if (!user) return <Loading />;
 

@@ -12,8 +12,14 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  console.log('🔍 AuthWrapper Debug (Production):');
+  console.log('  - status:', status);
+  console.log('  - session:', session);
+  console.log('  - isAuthenticated:', !!session);
+
   useEffect(() => {
     if (status === 'unauthenticated') {
+      console.log('❌ AuthWrapper - User not authenticated, redirecting to login');
       router.push('/login');
     }
   }, [session, status, router]);

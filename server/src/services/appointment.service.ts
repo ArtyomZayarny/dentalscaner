@@ -134,6 +134,7 @@ export class AppointmentService {
       where: { id },
       relations: { doctor: true, procedure: true },
     });
+
     if (!appointment) {
       throw new Error('Appointment not found');
     }
