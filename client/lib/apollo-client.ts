@@ -43,9 +43,6 @@ export function getApolloClient() {
       // Get the authentication token from local storage if it exists
       const token = typeof window !== 'undefined' ? localStorage.getItem('auth-token') : null;
 
-      console.log('🔍 Apollo Auth Debug:');
-      console.log('  - localStorage token:', token);
-      console.log('  - token exists:', !!token);
 
       return {
         headers: {
