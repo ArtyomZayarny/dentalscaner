@@ -52,11 +52,12 @@ function AppointmentCard({ appointment, doctorName, procedureName }: Appointment
 
   return (
     <Link href={`/appointments/${appointment.id}`} className="block">
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow cursor-pointer">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-lg text-gray-800">{procedureName}</h3>
+      <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow cursor-pointer h-full flex flex-col">
+        {/* Title section with more space for 2 lines */}
+        <div className="flex items-start justify-between mb-6 min-h-[3rem]">
+          <h3 className="font-semibold text-lg text-gray-800 leading-tight flex-1 pr-2">{procedureName}</h3>
           <span
-            className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
+            className={`px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 ${getStatusColor(
               appointment.status,
             )}`}
           >
@@ -64,27 +65,29 @@ function AppointmentCard({ appointment, doctorName, procedureName }: Appointment
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-4">
+        {/* All attributes in a single column */}
+        <div className="space-y-3 text-sm text-gray-600 mb-4 flex-1">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-teal-600" />
+            <Calendar className="w-4 h-4 text-teal-600 flex-shrink-0" />
             <span>{formatDate(appointment.date)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-cyan-600" />
+            <Clock className="w-4 h-4 text-cyan-600 flex-shrink-0" />
             <span>{formatTime(appointment.time)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <User className="w-4 h-4 text-purple-600" />
+            <User className="w-4 h-4 text-purple-600 flex-shrink-0" />
             <span>{doctorName}</span>
           </div>
           <div className="flex items-center gap-2">
-            <FileText className="w-4 h-4 text-indigo-600" />
+            <FileText className="w-4 h-4 text-indigo-600 flex-shrink-0" />
             <span className="font-semibold text-emerald-600">${appointment.amount}</span>
           </div>
         </div>
 
+        {/* Notes section at the bottom */}
         {appointment.notes && (
-          <div className="bg-amber-50 rounded-lg p-3 border border-amber-200">
+          <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 mt-auto">
             <p className="text-sm text-amber-800">
               <span className="font-medium">Notes:</span> {appointment.notes}
             </p>
