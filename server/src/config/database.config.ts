@@ -5,12 +5,6 @@ export const getDatabaseConfig = (
   configService: ConfigService,
 ): TypeOrmModuleOptions => {
   // Debug: Log environment variables
-  console.log('Database Config Debug:');
-  console.log('DATABASE_HOST:', configService.get('DATABASE_HOST'));
-  console.log('DATABASE_USER:', configService.get('DATABASE_USER'));
-  console.log('DATABASE_NAME:', configService.get('DATABASE_NAME'));
-  console.log('DATABASE_PORT:', configService.get('DATABASE_PORT'));
-  console.log('NODE_ENV:', configService.get('NODE_ENV'));
 
   return {
     type: 'postgres',

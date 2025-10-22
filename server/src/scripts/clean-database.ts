@@ -3,7 +3,6 @@ import { AppModule } from '../app.module';
 import { DataSource } from 'typeorm';
 
 async function cleanDatabase() {
-  console.log('🧹 Cleaning database...');
 
   const app = await NestFactory.createApplicationContext(AppModule);
   const dataSource = app.get(DataSource);
@@ -29,7 +28,6 @@ async function cleanDatabase() {
       'DROP TYPE IF EXISTS "appointments_status_enum" CASCADE;',
     );
 
-    console.log('✅ Database cleaned successfully!');
   } catch (error) {
     console.error('❌ Error cleaning database:', error);
   } finally {

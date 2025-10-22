@@ -25,7 +25,6 @@ export class SeederService {
   ) {}
 
   async seed() {
-    console.log('🌱 Starting database seeding...');
 
     try {
       // Clear existing data
@@ -33,19 +32,15 @@ export class SeederService {
 
       // Seed users
       const users = await this.seedUsers();
-      console.log(`✅ Seeded ${users.length} users`);
 
       // Seed doctors
       const doctors = await this.seedDoctors();
-      console.log(`✅ Seeded ${doctors.length} doctors`);
 
       // Removed clinics - not needed
 
       // Seed procedures
       const procedures = await this.seedProcedures();
-      console.log(`✅ Seeded ${procedures.length} procedures`);
 
-      console.log('🎉 Database seeding completed successfully!');
       return {
         users: users.length,
         doctors: doctors.length,
@@ -58,7 +53,6 @@ export class SeederService {
   }
 
   private async clearData() {
-    console.log('🧹 Clearing existing data...');
     // Clear all tables in the correct order (respecting foreign key constraints)
     await this.userRepository.createQueryBuilder().delete().execute();
     await this.doctorRepository.createQueryBuilder().delete().execute();

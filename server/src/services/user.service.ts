@@ -153,7 +153,6 @@ export class UserService {
       // Save updated user
       user = await this.userRepository.save(user);
 
-      console.log(`Updated existing user ${email} with Google OAuth data`);
     } else {
       // User doesn't exist - create new user with Google data
       user = await this.create({
@@ -165,7 +164,6 @@ export class UserService {
         // No password since this is OAuth user
       });
 
-      console.log(`Created new Google OAuth user: ${email}`);
     }
 
     return user;

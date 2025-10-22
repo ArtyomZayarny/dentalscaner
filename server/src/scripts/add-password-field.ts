@@ -5,7 +5,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 async function addPasswordField() {
-  console.log('🔐 Adding password field to users table...');
 
   const client = new Client({
     host: process.env.DATABASE_HOST,
@@ -18,7 +17,6 @@ async function addPasswordField() {
 
   try {
     await client.connect();
-    console.log('✅ Connected to database');
 
     // Check if password column already exists
     const checkResult = await client.query(`
@@ -29,7 +27,6 @@ async function addPasswordField() {
     `);
 
     if (checkResult.rows.length > 0) {
-      console.log('✅ Password column already exists');
       return;
     }
 
@@ -39,7 +36,6 @@ async function addPasswordField() {
       ADD COLUMN "password" character varying
     `);
 
-    console.log('✅ Password column added successfully!');
 
     // Show current table structure
     const structureResult = await client.query(`
@@ -49,9 +45,7 @@ async function addPasswordField() {
       ORDER BY ordinal_position
     `);
 
-    console.log('\n📋 Current users table structure:');
     structureResult.rows.forEach((row) => {
-      console.log(
         `- ${row.column_name}: ${row.data_type} (nullable: ${row.is_nullable})`,
       );
     });

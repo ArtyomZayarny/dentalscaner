@@ -3,7 +3,6 @@ import { AppModule } from '../app.module';
 import { DataSource } from 'typeorm';
 
 async function fixDatabase() {
-  console.log('🔧 Fixing database schema...');
 
   const app = await NestFactory.createApplicationContext(AppModule);
   const dataSource = app.get(DataSource);
@@ -23,7 +22,6 @@ async function fixDatabase() {
       ALTER TABLE appointments DROP COLUMN IF EXISTS "clinicId";
     `);
 
-    console.log('✅ Database schema fixed successfully!');
   } catch (error) {
     console.error('❌ Error fixing database:', error);
   } finally {

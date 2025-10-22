@@ -81,14 +81,10 @@ export function AppContextProvider({
     variables: { userId: user.id },
     skip: !user.id,
     onCompleted: (data) => {
-      console.log('🔍 AppContext - Appointments query completed:', data);
-      console.log('🔍 AppContext - Found appointments:', data?.appointmentsByUserId?.length || 0);
-      if (data?.appointmentsByUserId?.length > 0) {
-        console.log('🔍 AppContext - First appointment procedure:', data.appointmentsByUserId[0].procedure);
-      }
+      // Appointments query completed
     },
     onError: (error) => {
-      console.log('❌ AppContext - Appointments query error:', error);
+      // Appointments query error
     },
   });
 
@@ -132,7 +128,6 @@ export function AppContextProvider({
   };
 
   const clearCache = () => {
-    console.log('🧹 Clearing Apollo Client cache...');
     apolloClient.clearStore();
   };
 

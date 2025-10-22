@@ -1,18 +1,13 @@
 'use client';
 
 import React from 'react';
-import { LogOut, Menu } from 'lucide-react';
-import { signOut, useSession } from 'next-auth/react';
+import { Menu } from 'lucide-react';
 
 interface TopbarProps {
   onMenuToggle?: () => void;
 }
 
 function Topbar({ onMenuToggle }: TopbarProps) {
-  const handleSignOut = () => {
-    signOut({ callbackUrl: '/' });
-  };
-
   return (
     <>
       {/* Top Bar */}
@@ -30,19 +25,6 @@ function Topbar({ onMenuToggle }: TopbarProps) {
 
         {/* Desktop spacer */}
         <div className="hidden lg:block w-full mr-5"></div>
-
-        <div className="flex gap-4 items-center">
-          {/* Logout button */}
-          <div className="hidden lg:flex items-center">
-            <button
-              onClick={handleSignOut}
-              className="flex items-center text-primary-foreground hover:text-white/80 transition-colors cursor-pointer"
-              title="Sign Out"
-            >
-              <LogOut className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
       </header>
     </>
   );

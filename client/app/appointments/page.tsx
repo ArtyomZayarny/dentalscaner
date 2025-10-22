@@ -1,10 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Section from '../components/Section';
 import { Button } from '@/components/ui/button';
 
-import { DataTable } from './data-table';
-import { columns } from './columns';
+import AppointmentCard from '../components/AppointmentCard';
 import { useAppContext } from '../context/appContext';
 import Loading from '../components/Loading';
 import BookingDialog from '../components/BookingDialog';
@@ -19,8 +17,6 @@ function AppointmentPage() {
     doctors,
     procedures,
     timeSlots,
-    refetchAppointments,
-    clearCache,
   } = useAppContext();
   const searchParams = useSearchParams();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -110,31 +106,11 @@ function AppointmentPage() {
         </Section> */}
 
       <div className="mb-4 md:mb-8">
-        <div className="flex justify-between items-start">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold mb-2 text-black">📅 All Appointments</h1>
-            <p className="text-gray-600 text-sm md:text-base">
-              Manage your dental appointments and schedule new ones
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <Button 
-              onClick={clearCache}
-              variant="outline"
-              size="sm"
-              className="text-xs"
-            >
-              🧹 Clear Cache
-            </Button>
-            <Button 
-              onClick={refetchAppointments}
-              variant="outline"
-              size="sm"
-              className="text-xs"
-            >
-              🔄 Refresh
-            </Button>
-          </div>
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold mb-2 text-black">📅 All Appointments</h1>
+          <p className="text-gray-600 text-sm md:text-base">
+            Manage your dental appointments and schedule new ones
+          </p>
         </div>
       </div>
 
@@ -156,7 +132,24 @@ function AppointmentPage() {
           />
         </div>
       ) : (
-        <DataTable columns={columns} data={appointments} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {appointments.map((appointment) => {
+            const doctor = doctors?.find((d) => d.id === appointment.doctorId);
+            const procedure = procedures?.find((p) => p.id === appointment.procedureId);
+
+            return (
+              <AppointmentCard
+                key={appointment.id}
+                appointment={{
+                  ...appointment,
+                  notes: appointment.notes || undefined
+                }}
+                doctorName={doctor?.name || 'Unknown Doctor'}
+                procedureName={procedure?.name || 'Unknown Procedure'}
+              />
+            );
+          })}
+        </div>
       )}
     </div>
   );

@@ -116,7 +116,7 @@ export class AppointmentService {
 
   async findAll(): Promise<Appointment[]> {
     return this.appointmentRepository.find({
-      relations: { doctor: true },
+      relations: { doctor: true, procedure: true },
       order: { createdAt: 'DESC' },
     });
   }
@@ -124,7 +124,7 @@ export class AppointmentService {
   async findByUserId(userId: string): Promise<Appointment[]> {
     return this.appointmentRepository.find({
       where: { userId },
-      relations: { doctor: true },
+      relations: { doctor: true, procedure: true },
       order: { createdAt: 'DESC' },
     });
   }
@@ -132,7 +132,7 @@ export class AppointmentService {
   async findOne(id: string): Promise<Appointment> {
     const appointment = await this.appointmentRepository.findOne({
       where: { id },
-      relations: { doctor: true },
+      relations: { doctor: true, procedure: true },
     });
     if (!appointment) {
       throw new Error('Appointment not found');

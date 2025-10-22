@@ -5,7 +5,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 async function forceCleanDatabase() {
-  console.log('🧹 Force cleaning database...');
 
   const client = new Client({
     host: process.env.DATABASE_HOST,
@@ -18,7 +17,6 @@ async function forceCleanDatabase() {
 
   try {
     await client.connect();
-    console.log('✅ Connected to database');
 
     // Drop all tables (CASCADE will handle foreign keys)
     await client.query('DROP TABLE IF EXISTS "appointments" CASCADE;');
@@ -33,7 +31,6 @@ async function forceCleanDatabase() {
       'DROP TYPE IF EXISTS "appointments_status_enum" CASCADE;',
     );
 
-    console.log('✅ Database force cleaned successfully!');
   } catch (error) {
     console.error('❌ Error force cleaning database:', error);
   } finally {

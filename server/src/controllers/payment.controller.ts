@@ -20,18 +20,14 @@ export class PaymentController {
   @Post('create-checkout-session')
   async createCheckoutSession(@Body() body: { appointmentId: string }) {
     try {
-      console.log(
         'Creating checkout session for appointment:',
         body.appointmentId,
       );
-      console.log('Environment variables check:');
-      console.log('STRIPE_SECRET_KEY exists:', !!process.env.STRIPE_SECRET_KEY);
 
       const { sessionId } = await this.appointmentService.createCheckoutSession(
         body.appointmentId,
       );
 
-      console.log('Checkout session created successfully:', sessionId);
       return {
         sessionId,
       };
@@ -71,7 +67,6 @@ export class PaymentController {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object;
-        console.log('Checkout session completed!');
 
         // Update appointment as paid
         await this.appointmentService.confirmPayment(session.id);
@@ -80,12 +75,10 @@ export class PaymentController {
 
       case 'checkout.session.expired': {
         const expiredSession = event.data.object;
-        console.log('Checkout session expired:', expiredSession.id);
         break;
       }
 
       default:
-        console.log(`Unhandled event type ${event.type}`);
     }
 
     res.json({ received: true });

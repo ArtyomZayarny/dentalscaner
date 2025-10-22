@@ -1,21 +1,12 @@
 'use client';
 import React, { useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useAppContext } from '../../context/appContext';
 import { useQuery } from '@apollo/client';
 import { GET_APPOINTMENT_BY_ID } from '@/lib/graphql-queries';
 import Loading from '../../components/Loading';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import {
   Calendar,
   Clock,
@@ -26,21 +17,16 @@ import {
   X,
   ArrowLeft,
   AlertTriangle,
-  CheckCircle,
-  Clock as ClockIcon,
   DollarSign,
   FileText,
-  Star,
 } from 'lucide-react';
 import Link from 'next/link';
 import { AppointmentStatus } from '@/app/types/generated';
 
 function AppointmentDetailsPage() {
   const params = useParams();
-  const router = useRouter();
   const { user, doctors } = useAppContext();
   const [isEditing, setIsEditing] = useState(false);
-  const [showCancelDialog, setShowCancelDialog] = useState(false);
   const [editForm, setEditForm] = useState({
     date: '',
     time: '',
@@ -58,18 +44,13 @@ function AppointmentDetailsPage() {
     variables: { id: appointmentId },
     skip: !appointmentId,
     onCompleted: (data) => {
-      console.log('🔍 AppointmentDetailsPage - GraphQL query completed:', data);
+      // GraphQL query completed
     },
     onError: (error) => {
-      console.log('❌ AppointmentDetailsPage - GraphQL query error:', error);
+      // GraphQL query error
     },
   });
 
-  console.log('🔍 AppointmentDetailsPage Debug:');
-  console.log('  - appointmentId:', appointmentId);
-  console.log('  - appointmentLoading:', appointmentLoading);
-  console.log('  - appointmentError:', appointmentError);
-  console.log('  - appointmentData:', appointmentData);
 
   if (!user) return <Loading />;
 
@@ -141,27 +122,6 @@ function AppointmentDetailsPage() {
     setIsEditing(false);
   };
 
-  const handleCancelAppointment = () => {
-    // In a real app, this would cancel the appointment via API
-    setShowCancelDialog(false);
-    router.push('/appointments');
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return <CheckCircle className="w-5 h-5 text-green-500" />;
-      case 'confirmed':
-        return <ClockIcon className="w-5 h-5 text-blue-500" />;
-      case 'pending':
-        return <Clock className="w-5 h-5 text-yellow-500" />;
-      case 'cancelled':
-        return <X className="w-5 h-5 text-red-500" />;
-      default:
-        return <Clock className="w-5 h-5 text-gray-500" />;
-    }
-  };
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
@@ -195,301 +155,229 @@ function AppointmentDetailsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Hero Section with Background */}
-      <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-blue-800">
-        <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="relative p-8 max-w-6xl mx-auto">
-          <div className="flex items-center gap-4 mb-6">
+    <div className="max-w-7xl mx-auto">
+      {/* Hero Section with Teal Gradient */}
+      <div className="relative bg-gradient-to-r from-teal-600 to-cyan-700 text-white rounded-2xl mb-6 md:mb-8">
+        <div className="absolute inset-0 bg-black/5 rounded-2xl"></div>
+        <div className="relative p-8">
+          <div className="flex items-center justify-between mb-6">
             <Link href="/appointments">
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-white/10 border-white/20 text-blue-800 hover:bg-white/20"
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Appointments
               </Button>
             </Link>
             <div className="flex items-center gap-2">
-              {getStatusIcon(appointment.status)}
+              <Clock className="w-5 h-5 text-white" />
               <span
                 className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
                   appointment.status,
                 )}`}
               >
-                {appointment.status}
+                {appointment.status.toUpperCase()}
               </span>
             </div>
           </div>
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Appointment Details</h1>
-            <p className="text-xl text-blue-100">
+            <h1 className="text-4xl font-bold mb-2 text-white">Appointment Details</h1>
+            <p className="text-xl text-teal-100">
               {procedure?.name} with {doctor?.name}
             </p>
           </div>
         </div>
       </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main Content - Appointment Information */}
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-xl shadow-lg p-8 border">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold text-teal-800">Appointment Information</h2>
+              {appointment.status === AppointmentStatus.Pending && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsEditing(!isEditing)}
+                  className="text-teal-600 hover:bg-teal-50"
+                >
+                  {isEditing ? <X className="w-4 h-4" /> : <Edit className="w-4 h-4" />}
+                </Button>
+              )}
+            </div>
 
-      <div className="p-8 max-w-6xl mx-auto -mt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Appointment Information Card */}
-            <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-semibold text-gray-800">Appointment Information</h2>
-                {appointment.status === AppointmentStatus.Pending && (
-                  <Button variant="outline" size="sm" onClick={() => setIsEditing(!isEditing)}>
-                    {isEditing ? <X className="w-4 h-4" /> : <Edit className="w-4 h-4" />}
-                  </Button>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between py-3 border-b">
+                <div className="flex items-center gap-3">
+                  <Calendar className="w-5 h-5 text-teal-600" />
+                  <span className="text-sm font-medium text-gray-600">Date</span>
+                </div>
+                {isEditing ? (
+                  <Input
+                    name="date"
+                    type="date"
+                    value={editForm.date}
+                    onChange={handleInputChange}
+                    className="w-48"
+                  />
+                ) : (
+                  <span className="text-gray-900 font-medium">{formatDate(appointment.date)}</span>
                 )}
               </div>
 
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <Calendar className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Date</label>
-                      {isEditing ? (
-                        <Input
-                          name="date"
-                          type="date"
-                          value={editForm.date}
-                          onChange={handleInputChange}
-                          className="mt-1"
-                        />
-                      ) : (
-                        <p className="text-gray-900 font-medium">{formatDate(appointment.date)}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                      <Clock className="w-6 h-6 text-green-600" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Time</label>
-                      {isEditing ? (
-                        <Input
-                          name="time"
-                          type="time"
-                          value={editForm.time}
-                          onChange={handleInputChange}
-                          className="mt-1"
-                        />
-                      ) : (
-                        <p className="text-gray-900 font-medium">{formatTime(appointment.time)}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <User className="w-6 h-6 text-purple-600" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Doctor</label>
-                      <p className="text-gray-900 font-medium">{doctor?.name}</p>
-                    </div>
-                  </div>
-
-                  {/* Clinic removed */}
-
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
-                      <FileText className="w-6 h-6 text-indigo-600" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Procedure</label>
-                      <p className="text-gray-900 font-medium">{procedure?.name}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
-                      <DollarSign className="w-6 h-6 text-emerald-600" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Amount</label>
-                      <p className="text-gray-900 font-medium">${appointment.amount}</p>
-                    </div>
-                  </div>
+              <div className="flex items-center justify-between py-3 border-b">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-cyan-600" />
+                  <span className="text-sm font-medium text-gray-600">Time</span>
                 </div>
-
-                {appointment.notes && (
-                  <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mt-1">
-                      <FileText className="w-6 h-6 text-yellow-600" />
-                    </div>
-                    <div className="flex-1">
-                      <label className="text-sm font-medium text-gray-500">Notes</label>
-                      {isEditing ? (
-                        <textarea
-                          name="notes"
-                          value={editForm.notes}
-                          onChange={handleInputChange}
-                          className="mt-1 w-full border rounded-lg px-3 py-2 resize-none"
-                          rows={3}
-                        />
-                      ) : (
-                        <p className="text-gray-900 mt-1">{appointment.notes}</p>
-                      )}
-                    </div>
-                  </div>
+                {isEditing ? (
+                  <Input
+                    name="time"
+                    type="time"
+                    value={editForm.time}
+                    onChange={handleInputChange}
+                    className="w-48"
+                  />
+                ) : (
+                  <span className="text-gray-900 font-medium">{formatTime(appointment.time)}</span>
                 )}
+              </div>
 
-                {isEditing && (
-                  <div className="flex gap-3 pt-4">
-                    <Button
-                      onClick={handleSave}
-                      className="flex-1 bg-[#C7DDEB] hover:bg-[#A8C9E0] cursor-pointer"
-                    >
-                      <Save className="w-4 h-4 mr-2" />
-                      Save Changes
-                    </Button>
-                    <Button variant="outline" onClick={handleCancel} className="flex-1">
-                      Cancel
-                    </Button>
-                  </div>
-                )}
+              <div className="flex items-center justify-between py-3 border-b">
+                <div className="flex items-center gap-3">
+                  <User className="w-5 h-5 text-purple-600" />
+                  <span className="text-sm font-medium text-gray-600">Doctor</span>
+                </div>
+                <span className="text-gray-900 font-medium">{doctor?.name}</span>
+              </div>
+
+              <div className="flex items-center justify-between py-3 border-b">
+                <div className="flex items-center gap-3">
+                  <FileText className="w-5 h-5 text-indigo-600" />
+                  <span className="text-sm font-medium text-gray-600">Procedure</span>
+                </div>
+                <span className="text-gray-900 font-medium">{procedure?.name}</span>
+              </div>
+
+              <div className="flex items-center justify-between py-3 border-b">
+                <div className="flex items-center gap-3">
+                  <DollarSign className="w-5 h-5 text-emerald-600" />
+                  <span className="text-sm font-medium text-gray-600">Amount</span>
+                </div>
+                <span className="text-gray-900 font-medium">${appointment.amount}</span>
               </div>
             </div>
 
-            {/* Doctor Information Card */}
-            {doctor && (
-              <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-                <h2 className="text-2xl font-semibold mb-6 text-gray-800">Doctor Information</h2>
-                <div className="flex items-start gap-6">
-                  <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-indigo-200 rounded-full flex items-center justify-center">
-                    <div className="text-3xl">👨‍⚕️</div>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">{doctor.name}</h3>
-                    <p className="text-blue-600 font-medium mb-3">{doctor.specialization}</p>
-                    <p className="text-gray-600 mb-4 leading-relaxed">
-                      Professional dental care provider with expertise in{' '}
-                      {doctor.specialization || 'general dentistry'}.
-                    </p>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                        <Clock className="w-4 h-4 text-gray-400" />
-                        <span className="font-medium">Professional experience</span>
-                      </div>
-                      <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                        <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                        <span className="font-medium">Professional rating</span>
-                      </div>
-                    </div>
-                  </div>
+            {appointment.notes && (
+              <div className="flex items-start gap-4 p-4 bg-amber-50 rounded-lg border">
+                <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mt-1">
+                  <FileText className="w-6 h-6 text-amber-600" />
+                </div>
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-amber-600">Notes</label>
+                  {isEditing ? (
+                    <textarea
+                      name="notes"
+                      value={editForm.notes}
+                      onChange={handleInputChange}
+                      className="mt-1 w-full border rounded-lg px-3 py-2 resize-none"
+                      rows={3}
+                    />
+                  ) : (
+                    <p className="text-amber-900 font-medium mt-1">{appointment.notes}</p>
+                  )}
                 </div>
               </div>
             )}
 
-            {/* Clinic Information removed */}
+            {isEditing && (
+              <div className="flex gap-3 pt-4">
+                <Button
+                  onClick={handleSave}
+                  className="flex-1 bg-[#C7DDEB] hover:bg-[#A8C9E0] cursor-pointer"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  Save Changes
+                </Button>
+                <Button variant="outline" onClick={handleCancel} className="flex-1">
+                  Cancel
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Right Sidebar - Actions and Timeline */}
+        <div className="lg:col-span-1 space-y-6">
+          {/* Actions Card */}
+          <div className="bg-white rounded-xl shadow-lg p-6 border">
+            <h2 className="text-lg font-semibold mb-4 text-teal-800">Actions</h2>
+            <div className="space-y-3">
+              {appointment.status === AppointmentStatus.Pending && (
+                <Button
+                  className="w-full bg-teal-100 hover:bg-teal-200 text-teal-700"
+                  onClick={() => setIsEditing(true)}
+                >
+                  <Edit className="w-4 h-4 mr-2" />
+                  Reschedule
+                </Button>
+              )}
+              <Button variant="outline" className="w-full text-teal-600 hover:bg-teal-50">
+                <FileText className="w-4 h-4 mr-2" />
+                Download Receipt
+              </Button>
+              <Button variant="outline" className="w-full text-teal-600 hover:bg-teal-50">
+                <Mail className="w-4 h-4 mr-2" />
+                Contact Support
+              </Button>
+            </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Actions Card */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-              <h2 className="text-lg font-semibold mb-4 text-gray-800">Actions</h2>
-              <div className="space-y-3">
-                {appointment.status === AppointmentStatus.Pending && (
-                  <>
-                    <Button
-                      className="w-full bg-[#C7DDEB] hover:bg-[#A8C9E0] cursor-pointer"
-                      onClick={() => setIsEditing(true)}
-                    >
-                      <Edit className="w-4 h-4 mr-2" />
-                      Reschedule
-                    </Button>
-                    <Dialog open={showCancelDialog} onOpenChange={setShowCancelDialog}>
-                      <DialogTrigger asChild>
-                        <Button variant="destructive" className="w-full">
-                          <X className="w-4 h-4 mr-2" />
-                          Cancel Appointment
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Cancel Appointment</DialogTitle>
-                          <DialogDescription>
-                            Are you sure you want to cancel this appointment? This action cannot be
-                            undone.
-                          </DialogDescription>
-                        </DialogHeader>
-                        <DialogFooter>
-                          <Button variant="outline" onClick={() => setShowCancelDialog(false)}>
-                            Keep Appointment
-                          </Button>
-                          <Button variant="destructive" onClick={handleCancelAppointment}>
-                            Cancel Appointment
-                          </Button>
-                        </DialogFooter>
-                      </DialogContent>
-                    </Dialog>
-                  </>
-                )}
-                <Button variant="outline" className="w-full">
-                  <FileText className="w-4 h-4 mr-2" />
-                  Download Receipt
-                </Button>
-                <Button variant="outline" className="w-full">
-                  <Mail className="w-4 h-4 mr-2" />
-                  Contact Support
-                </Button>
+          {/* Appointment Timeline Card */}
+          <div className="bg-white rounded-xl shadow-lg p-6 border">
+            <h2 className="text-lg font-semibold mb-4 text-teal-800">Timeline</h2>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="w-3 h-3 bg-teal-500 rounded-full mt-2"></div>
+                <div>
+                  <p className="text-sm font-medium text-teal-800">Appointment Created</p>
+                  <p className="text-xs text-teal-600">
+                    {new Date(appointment.createdAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </p>
+                </div>
               </div>
-            </div>
-
-            {/* Appointment Timeline Card */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-              <h2 className="text-lg font-semibold mb-4 text-gray-800">Timeline</h2>
-              <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="w-3 h-3 bg-cyan-500 rounded-full mt-2"></div>
+                <div>
+                  <p className="text-sm font-medium text-cyan-800">Appointment Confirmed</p>
+                  <p className="text-xs text-cyan-600">
+                    {new Date(appointment.updatedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </p>
+                </div>
+              </div>
+              {appointment.status === AppointmentStatus.Completed && (
                 <div className="flex items-start gap-3">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mt-2"></div>
+                  <div className="w-3 h-3 bg-emerald-500 rounded-full mt-2"></div>
                   <div>
-                    <p className="text-sm font-medium text-gray-800">Appointment Created</p>
-                    <p className="text-xs text-gray-500">
-                      {new Date(appointment.createdAt).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </p>
+                    <p className="text-sm font-medium text-emerald-800">Appointment Completed</p>
+                    <p className="text-xs text-gray-500">Treatment finished successfully</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full mt-2"></div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-800">Appointment Confirmed</p>
-                    <p className="text-xs text-gray-500">
-                      {new Date(appointment.updatedAt).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </p>
-                  </div>
-                </div>
-                {appointment.status === AppointmentStatus.Completed && (
-                  <div className="flex items-start gap-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full mt-2"></div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-800">Appointment Completed</p>
-                      <p className="text-xs text-gray-500">Treatment finished successfully</p>
-                    </div>
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           </div>
         </div>

@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 import { Home, Calendar, Settings, User, Stethoscope, LogOut } from 'lucide-react';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 
@@ -51,18 +50,6 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   if (!isMobile) {
     return (
       <aside className="max-w-[258px] box-border bg-primary/10 border-r border-primary flex flex-col w-full">
-        <div className="flex items-center px-6 py-5 border-b bg-primary">
-          <Link href={'/'} className="flex gap-1 justify-center">
-            <Image
-              width={34}
-              height={30}
-              src={'/dentalscaner-logo.svg'}
-              alt="dentalscaner-logo"
-              className="mr-2"
-            />
-            <span className="font-bold text-2xl text-white">DentalCare</span>
-          </Link>
-        </div>
         <div className="flex-1 px-8 py-6">
           {/* Navigation */}
           <nav className="flex flex-col gap-4">
@@ -105,23 +92,11 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       {/* Mobile sidebar */}
       <aside
         className={`
-        fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white border-r border-primary 
+        fixed top-[72px] left-0 h-[calc(100vh-72px)] w-80 max-w-[85vw] bg-white border-r border-primary 
         transform transition-transform duration-300 ease-in-out z-50 lg:hidden flex flex-col
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
       >
-        <div className="flex items-center px-6 py-5 border-b border-primary bg-primary">
-          <Link href={'/'} className="flex gap-1 justify-center" onClick={handleLinkClick}>
-            <Image
-              width={34}
-              height={30}
-              src={'/dentalscaner-logo.svg'}
-              alt="dentalscaner-logo"
-              className="mr-2"
-            />
-            <span className="font-bold text-2xl text-white">DentalCare</span>
-          </Link>
-        </div>
         <div className="flex-1 px-8 py-6">
           {/* Navigation */}
           <nav className="flex flex-col gap-4">
@@ -147,7 +122,7 @@ function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             })}
           </nav>
 
-          {/* Sign Out button for mobile */}
+          {/* Sign Out button для мобильных устройств */}
           <div className="mt-8">
             <button
               onClick={handleSignOut}
