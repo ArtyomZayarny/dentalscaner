@@ -9,6 +9,8 @@ interface AuthWrapperProps {
 }
 
 export default function AuthWrapper({ children }: AuthWrapperProps) {
+  console.log('🔐 AuthWrapper is rendering');
+  
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -18,9 +20,15 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
   console.log('  - isAuthenticated:', !!session);
 
   useEffect(() => {
+    console.log('🔍 AuthWrapper useEffect - checking authentication:');
+    console.log('  - status:', status);
+    console.log('  - session exists:', !!session);
+    
     if (status === 'unauthenticated') {
       console.log('❌ AuthWrapper - User not authenticated, redirecting to login');
       router.push('/login');
+    } else {
+      console.log('✅ AuthWrapper - User is authenticated, rendering children');
     }
   }, [session, status, router]);
 

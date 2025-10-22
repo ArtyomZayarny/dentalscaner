@@ -24,6 +24,8 @@ import Link from 'next/link';
 import { AppointmentStatus } from '@/app/types/generated';
 
 function AppointmentDetailsPage() {
+  console.log('🚀 AppointmentDetailsPage component is rendering!');
+  
   const params = useParams();
   const { user, doctors } = useAppContext();
   const [isEditing, setIsEditing] = useState(false);
