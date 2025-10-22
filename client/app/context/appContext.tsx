@@ -45,6 +45,8 @@ export function AppContextProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log('🏗️ AppContextProvider is rendering');
+  
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
   const apolloClient = useApolloClient();
 
@@ -191,7 +193,14 @@ export function AppContextProvider({
     getProcedureById,
   } as unknown as AppContextType;
 
+  console.log('🏗️ AppContextProvider rendering children');
+  
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
-export const useAppContext = () => useContext(AppContext);
+export const useAppContext = () => {
+  console.log('🎯 useAppContext hook called');
+  const context = useContext(AppContext);
+  console.log('🎯 useAppContext context:', context);
+  return context;
+};
