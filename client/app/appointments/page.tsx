@@ -19,6 +19,8 @@ function AppointmentPage() {
     doctors,
     procedures,
     timeSlots,
+    refetchAppointments,
+    clearCache,
   } = useAppContext();
   const searchParams = useSearchParams();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -108,10 +110,32 @@ function AppointmentPage() {
         </Section> */}
 
       <div className="mb-4 md:mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-black">📅 All Appointments</h1>
-        <p className="text-gray-600 text-sm md:text-base">
-          Manage your dental appointments and schedule new ones
-        </p>
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold mb-2 text-black">📅 All Appointments</h1>
+            <p className="text-gray-600 text-sm md:text-base">
+              Manage your dental appointments and schedule new ones
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button 
+              onClick={clearCache}
+              variant="outline"
+              size="sm"
+              className="text-xs"
+            >
+              🧹 Clear Cache
+            </Button>
+            <Button 
+              onClick={refetchAppointments}
+              variant="outline"
+              size="sm"
+              className="text-xs"
+            >
+              🔄 Refresh
+            </Button>
+          </div>
+        </div>
       </div>
 
       {appointments.length === 0 ? (

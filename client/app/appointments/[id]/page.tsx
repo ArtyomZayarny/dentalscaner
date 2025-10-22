@@ -57,7 +57,19 @@ function AppointmentDetailsPage() {
   } = useQuery(GET_APPOINTMENT_BY_ID, {
     variables: { id: appointmentId },
     skip: !appointmentId,
+    onCompleted: (data) => {
+      console.log('🔍 AppointmentDetailsPage - GraphQL query completed:', data);
+    },
+    onError: (error) => {
+      console.log('❌ AppointmentDetailsPage - GraphQL query error:', error);
+    },
   });
+
+  console.log('🔍 AppointmentDetailsPage Debug:');
+  console.log('  - appointmentId:', appointmentId);
+  console.log('  - appointmentLoading:', appointmentLoading);
+  console.log('  - appointmentError:', appointmentError);
+  console.log('  - appointmentData:', appointmentData);
 
   if (!user) return <Loading />;
 
