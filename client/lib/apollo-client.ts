@@ -83,9 +83,11 @@ export function getApolloClient() {
       defaultOptions: {
         watchQuery: {
           errorPolicy: 'all',
+          fetchPolicy: 'no-cache',
         },
         query: {
           errorPolicy: 'all',
+          fetchPolicy: 'no-cache',
         },
       },
     });
