@@ -27,6 +27,8 @@ function AppointmentDetailsPage() {
   console.log('🚀 AppointmentDetailsPage component is rendering!');
   
   const params = useParams();
+  console.log('🔍 useParams result:', params);
+  
   const { user, doctors } = useAppContext();
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
